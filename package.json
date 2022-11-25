@@ -1,0 +1,19 @@
+{
+  "name": "gym-website",
+  "version": "1.0.0",
+  "description": "CS 546 Section A Group 21 Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshay-patade/Gym-Website.git"
+  },
+  "author": "Group 21",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akshay-patade/Gym-Website/issues"
+  },
+  "homepage": "https://github.com/akshay-patade/Gym-Website#readme"
+}
