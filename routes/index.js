@@ -1,5 +1,6 @@
 const users = require("./users");
 const admin = require("./admin");
+const path = require("path");
 
 const constructorMethod = (app) => {
   app.use("/", users);

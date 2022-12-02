@@ -6,7 +6,12 @@ const path = require("path");
 
 router.route("/").get(async (req, res) => {
   //code here for GET
-  res.sendFile(path.resolve("views/homepage.html"));
+  res.render("home/home", {
+    title: "Welcome",
+    curr_admin: true,
+    footer: "<h1>I am footer</h1>",
+    header: "<h1>I am header</h1>",
+  });
 });
 
 module.exports = router;
