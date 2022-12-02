@@ -6,7 +6,7 @@ const path = require("path");
 
 router.route("/").get(async (req, res) => {
   //code here for GET
-  res.status(200).json({ error: "Website is working" });
+  res.sendFile(path.resolve("views/homepage.html"));
 });
 
 module.exports = router;
