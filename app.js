@@ -1,12 +1,12 @@
 //Here is where you'll set up your server as shown in lecture code
 const express = require("express");
 const app = express();
-const static = express.static(__dirname + "/css");
+const static = express.static(__dirname + "/node_modules/bootstrap/dist");
 
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 
-app.use("/css", static);
+app.use("/dist", static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
