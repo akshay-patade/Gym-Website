@@ -5,9 +5,8 @@ const path = require("path");
 //const people = index.people;
 
 router.route("/").get(async (req, res) => {
-    //code here for GET
-    res.status(200).json({ error: "Website is working" });
-  });
+  //code here for GET
+  res.status(200).json({ error: "Website is working" });
+});
 
-
-module.exports = router
+module.exports = router;
