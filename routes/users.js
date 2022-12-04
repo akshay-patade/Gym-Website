@@ -13,4 +13,13 @@ router.route("/").get(async (req, res) => {
   });
 });
 
+router.route("/login").get(async (req, res) => {
+  //code here for GET
+  res.render("login", {
+    title: "Login",
+    user_header: false,
+    user_footer: true,
+  });
+});
+
 module.exports = router;
