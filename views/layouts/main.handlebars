@@ -1,0 +1,121 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+
+    <!--
+
+TemplateMo 548 Training Studio
+
+https://templatemo.com/tm-548-training-studio
+
+-->
+    <!-- Additional CSS Files -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/font-awesome.css"
+    />
+
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+
+  <body>
+    {{#if user_header}}
+      <!-- ***** Header Area Start ***** -->
+      <header class="header-area header-sticky">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <nav class="main-nav">
+                <!-- ***** Logo Start ***** -->
+                <a href="/" class="logo">RockBottom</a>
+                <!-- ***** Logo End ***** -->
+                <!-- ***** Menu Start ***** -->
+                <ul class="nav">
+                  <li class="scroll-to-section"><a
+                      href="#top"
+                      class="active"
+                    >Home</a></li>
+                  <li class="scroll-to-section"><a
+                      href="#features"
+                    >About</a></li>
+                  <li class="scroll-to-section"><a
+                      href="#our-classes"
+                    >Classes</a></li>
+                  <li class="scroll-to-section"><a
+                      href="#schedule"
+                    >Schedules</a></li>
+                  <li class="scroll-to-section"><a
+                      href="#products"
+                    >Products</a></li>
+                  <li class="scroll-to-section"><a
+                      href="#contact-us"
+                    >Contact</a></li>
+                  <li class="main-button"><a href="login">Sign Up / Login</a></li>
+                </ul>
+                <a class="menu-trigger">
+                  <span>Menu</span>
+                </a>
+                <!-- ***** Menu End ***** -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- ***** Header Area End ***** -->
+    {{/if}}
+    {{#if admin_header}}{{/if}}
+
+    <main>
+      {{{body}}}
+    </main>
+
+    {{#if user_footer}}
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <p>Copyright &copy; 2022 RockBottom - Designed by Group 21 Section
+                A
+
+              </p>
+
+              <!-- You shall support us a little via PayPal to info@templatemo.com -->
+
+            </div>
+          </div>
+        </div>
+      </footer>
+    {{/if}}
+
+    {{#if admin_footer}}{{/if}}
+    <!-- jQuery -->
+    <script src="/public/js/jquery-2.1.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="/public/js/popper.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="/public/js/scrollreveal.min.js"></script>
+    <script src="/public/js/waypoints.min.js"></script>
+    <script src="/public/js/jquery.counterup.min.js"></script>
+    <script src="/public/js/imgfix.min.js"></script>
+    <script src="/public/js/mixitup.js"></script>
+    <script src="/public/js/accordions.js"></script>
+
+    <!-- Global Init -->
+    <script src="/public/js/custom.js"></script>
+
+  </body>
+
+</html>

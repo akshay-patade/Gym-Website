@@ -18,7 +18,6 @@
   "homepage": "https://github.com/akshay-patade/Gym-Website#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "bootstrap": "^5.2.3",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
     "mongo": "^0.1.0"
