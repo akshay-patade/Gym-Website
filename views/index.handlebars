@@ -442,8 +442,8 @@
       {{#each product_data}}
         <div class="col-sm-12 col-md-6 col-lg-4 my-3">
 
-          <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="..." />
+          <div class="card h-100 text-center" style="width: 18rem;">
+            <img src="{{this.product_img.[0]}}" class="card-img-top h-100" alt="{{this.category}}" />
             <div class="card-body">
               <h5 class="card-title">{{this.name}}</h5>
               <a href="#" class="btn btn-primary">Go somewhere</a>
