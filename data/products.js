@@ -43,8 +43,8 @@ const createProduct = async (
   const newId = insertInfo.insertedId.toString();
 
   //Retriving the movie from the id and returning it
-  const movie = await getProductById(newId);
-  return movie;
+  //   const movie = await getProductById(newId);
+  //   return movie;
 };
 
 //Function to get a product By Id
