@@ -73,4 +73,13 @@ router.route("/register").get(async (req, res) => {
   });
 });
 
+router.route("/product/:id").get(async (req, res) => {
+  //code here for GET
+  res.render("product", {
+    title: "Product",
+    user_header: false,
+    user_footer: true,
+  });
+});
+
 module.exports = router;
