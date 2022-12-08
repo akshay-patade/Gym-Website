@@ -52,15 +52,12 @@ const main = async () => {
 
   //Creating a shaker proudct
   const shaker = await product.createProduct(
-    "5lbs OPTIMUM NUTRITION GOLD STANDARD 100% WHEY PROTEIN",
-    "Post-Workout Muscle Support & Recovery 24 Grams of Protein per Serving to Help Build and Maintain Muscle. 5.5 Grams of Naturally Occurring BCAAs per Serving to Support Endurance and Recovery.The World's Best-Selling Whey Protein Powder",
-    85.55,
-    "Protien Powder",
+    "OPTIMUM NUTRITION SHAKER CUP",
+    "Ease of Mixing, Consistently Great Taste 28 Oz Capacity (Measurements to 20 OzStainless Steel Blender Ball BPA & Phthalate Free",
+    9.99,
+    "Shaker",
     [],
-    [
-      "/public/images/product/protien-1.webp",
-      "/public/images/product/protien-2.webp",
-    ],
+    ["/public/images/product/shaker-1.webp"],
     []
   );
 
