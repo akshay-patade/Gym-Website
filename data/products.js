@@ -132,8 +132,10 @@ const getProductByName = async (name) => {
   //Retriving product collections from the database
   const productCollection = await product();
 
+  let regexp = new RegExp(name, "i");
+
   //Retriving a product by Name
-  const product = await productCollection.findOne({ name: ObjectId(name) });
+  const product = await productCollection.find({ name: regexp });
 
   //Checing if the product is retrived from the database. If not throw an error
   if (product === null) throw { code: 404, message: `products not found` };

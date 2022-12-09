@@ -10,15 +10,22 @@ const product = data.products;
 router.route("/").get(async (req, res) => {
   //code here for GET
 
-  const products = await product.getAllProducts();
+  //const products = await product.getAllProducts();
 
   res.render("index", {
     title: "Welcome",
     user_header: true,
     user_footer: true,
-    product_data: products,
   });
 });
+
+router.route("/products").get(async (req, res) => {
+  //code here for GET
+
+  const products = await product.getAllProducts();
+  return res.status(200).json(products);
+});
+
 
 router.route("/login").get(async (req, res) => {
   //code here for GET
@@ -53,7 +60,5 @@ router.route("/product/:name").get(async (req, res) => {
   }
   return products;
 })
-
-
 
 module.exports = router;

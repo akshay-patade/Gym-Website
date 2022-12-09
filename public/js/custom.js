@@ -1,3 +1,4 @@
+var products = [];
 (function ($) {
   "use strict";
 
@@ -82,9 +83,18 @@
 
 
 
+    $.ajax(
+      {
+        method: 'GET',
+        url: 'http://localhost:3000/products',
+        success: function (response) {
 
-
-
+          products = response;
+          console.log(products);
+          showProducts(products);
+        }
+      }
+    )
   });
 
   // Page loading animation
@@ -108,6 +118,24 @@
     });
   }
 })(window.jQuery);
+
+
+//Using fetchapi to get all the products
+function showProducts(products) {
+
+  for (let i = 0; i < products.length; i++) {
+    document.getElementById("card").innerHTML += `
+    <div class = "col-md-4 mt-3">
+    <div class = "card p-3 ps-5 pe-5">
+      <h4 class = "text-capitalize text-center"> ${products[i].name}</h4>
+      <img src = "${products[i].product_img[0]}" width = "100%" height = "400px"/>
+      <button class = "btn btn-primary w-100 mx-auto">More</button>
+    `
+  }
+}
+
+
+
 
 
 
