@@ -60,8 +60,8 @@ const getProductById = async (productId) => {
   //Checing if the product is retrived from the database. If not throw an error
   if (product === null) throw { code: 404, message: `movie not found` };
 
-  product._id = movie._id.toString();
-  return movie;
+  product._id = product._id.toString();
+  return product;
 };
 
 //Function to get all the Products
@@ -125,9 +125,26 @@ const updateProduct = async (
   return new_product;
 };
 
+//Function to get a product By Name
+const getProductByName = async (name) => {
+  //Code to check all the parameters
+
+  //Retriving product collections from the database
+  const productCollection = await product();
+
+  //Retriving a product by Name
+  const product = await productCollection.findOne({ name: ObjectId(name) });
+
+  //Checing if the product is retrived from the database. If not throw an error
+  if (product === null) throw { code: 404, message: `products not found` };
+
+  return product;
+};
+
 module.exports = {
   createProduct,
   getProductById,
   getAllProducts,
   updateProduct,
+  getProductByName
 };

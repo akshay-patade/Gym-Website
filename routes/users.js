@@ -38,13 +38,22 @@ router.route("/register").get(async (req, res) => {
   });
 });
 
-router.route("/product/:id").get(async (req, res) => {
-  //code here for GET
-  res.render("product", {
-    title: "Product",
-    user_header: false,
-    user_footer: true,
-  });
-});
+//Filter the products by name
+router.route("/product/:name").get(async (req, res) => {
+
+  let products;
+  try {
+
+    let name = req.params.name;
+    products = await getProductByName(name);
+    res.status(200).json(products);
+  }
+  catch (e) {
+    res.status(e.code).json({ error: e.message });
+  }
+  return products;
+})
+
+
 
 module.exports = router;
