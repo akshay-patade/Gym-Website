@@ -7,6 +7,7 @@ const path = require("path");
 router.route("/").get(async (req, res) => {
   //code here for GET
   res.status(200).json({ error: "Website is working" });
+
 });
 
 router.route("/product").post(async (req, res) => {
