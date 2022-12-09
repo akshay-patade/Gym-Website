@@ -1,4 +1,8 @@
+//Initially storing all the proucts
+
 var products = [];
+var filterProducts = [];
+
 (function ($) {
   "use strict";
 
@@ -50,8 +54,10 @@ var products = [];
     });
   }
 
+
+
+
   $(document).ready(function () {
-    // $(document).on("scroll", onScroll);
 
     //smoothscroll
     $('.scroll-to-section a[href^="#"]').on("click", function (e) {
@@ -82,7 +88,7 @@ var products = [];
     });
 
 
-
+    //AJAX call to populate the products
     $.ajax(
       {
         method: 'GET',
@@ -123,20 +129,56 @@ var products = [];
 //Using fetchapi to get all the products
 function showProducts(products) {
 
+  document.getElementById("card").innerText = "";
+
   for (let i = 0; i < products.length; i++) {
     document.getElementById("card").innerHTML += `
-    <div class = "col-md-4 mt-3">
-    <div class = "card p-3 ps-5 pe-5">
-      <h4 class = "text-capitalize text-center"> ${products[i].name}</h4>
-      <img src = "${products[i].product_img[0]}" width = "100%" height = "400px"/>
-      <button class = "btn btn-primary w-100 mx-auto">More</button>
+    <div class="col-sm-12 col-md-6 col-lg-4 my-3">
+    <div class="card h-100 text-center" style="width: 18rem;">
+      <img src="${products[i].product_img[0]}" class="card-img-top h-100" alt="${products[i].category}" />
+      <div class="card-body">
+        <h5 class="card-title">${products[i].name}</h5>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+    
+    </div>
     `
   }
 }
 
+document.getElementById("product-search").addEventListener("keyup", function () {
 
+  var text = document.getElementById('product-search').value;
+  text = text.trim();
+  filterProducts = products.filter(function (a) {
 
+    let temp = a.name.toLowerCase();
+    if (temp.includes(text.toLowerCase())) {
+      return a;
+    }
+  });
 
+  if (this.value == "") {
+    document.getElementById("not-found").style.display = 'none';
+    showProducts(products);
+  }
 
+  else {
+
+    if (filterProducts.length === 0) {
+
+      document.getElementById("not-found").style.display = 'block';
+      document.getElementById("card").innerHTML = "";
+    }
+
+    else {
+
+      showProducts(filterProducts);
+      document.getElementById("not-found").style.display = 'none';
+    }
+  }
+
+});
 
 
