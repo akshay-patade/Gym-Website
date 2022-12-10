@@ -146,6 +146,7 @@ function showProducts(products) {
   }
 }
 
+//Live Searching of the product
 document.getElementById("product-search").addEventListener("keyup", function () {
 
   var text = document.getElementById('product-search').value;
@@ -180,7 +181,7 @@ document.getElementById("product-search").addEventListener("keyup", function () 
 
 });
 
-
+//Sorting the products by date or price
 if (document.querySelector('input[name="filter_by_price"]')) {
   document.querySelectorAll('input[name="filter_by_price"]').forEach((elem) => {
     elem.addEventListener("change", function (event) {
@@ -202,6 +203,25 @@ if (document.querySelector('input[name="filter_by_price"]')) {
           return b.price - a.price
         });
 
+        showProducts(products);
+      }
+
+      else if (item == "date_low_to_high") {
+
+        products.sort(function (a, b) {
+
+          return new moment(a.date, 'MM/DD/YYYY').diff(moment(b.date, 'MM/DD/YYYY'), 'days')
+        });
+
+        showProducts(products);
+      }
+
+      else if (item == "date_high_to_low") {
+
+        products.sort(function (a, b) {
+
+          return new moment(b.date, 'MM/DD/YYYY').diff(moment(a.date, 'MM/DD/YYYY'), 'days')
+        });
         showProducts(products);
       }
     });
