@@ -137,11 +137,10 @@ function showProducts(products) {
     <div class="card h-100 text-center" style="width: 18rem;">
       <img src="${products[i].product_img[0]}" class="card-img-top h-100" alt="${products[i].category}" />
       <div class="card-body">
-        <h5 class="card-title">${products[i].name}</h5>
+        <h5 class="card-title">${products[i].name}.$${products[i].price} only</h5>
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
-    </div>
-    
+    </div>  
     </div>
     `
   }
@@ -180,5 +179,33 @@ document.getElementById("product-search").addEventListener("keyup", function () 
   }
 
 });
+
+
+if (document.querySelector('input[name="filter_by_price"]')) {
+  document.querySelectorAll('input[name="filter_by_price"]').forEach((elem) => {
+    elem.addEventListener("change", function (event) {
+      var item = event.target.value;
+      if (item == "price_low_to_high") {
+
+        products.sort(function (a, b) {
+          return a.price - b.price
+        }
+
+        );
+
+        showProducts(products);
+      }
+
+      else if (item == "price_high_to_low") {
+
+        products.sort(function (a, b) {
+          return b.price - a.price
+        });
+
+        showProducts(products);
+      }
+    });
+  });
+}
 
 

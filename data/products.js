@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const product = mongoCollections.product;
 const { ObjectId } = require("mongodb");
+const moment = require("moment");
 
 //Function to create a product
 const createProduct = async (
@@ -17,6 +18,9 @@ const createProduct = async (
   //Retriving product collections from the database
   const productCollection = await product();
 
+  //Storing the date when the product was created in the database
+  let date = moment().format("MM/DD/YYYY");
+
   //Creating a new product object
   const new_product = {
     name: name,
@@ -30,6 +34,7 @@ const createProduct = async (
     show_on_website: true,
     product_img: product_img,
     color: color,
+    date: date,
   };
 
   //Inserting the new object created  in the product collection
