@@ -88,7 +88,7 @@ var filterProducts = [];
     $.ajax(
       {
         method: 'GET',
-        url: 'http://localhost:3000/products',
+        url: 'http://localhost:3000/api/products',
         success: function (response) {
 
           console.log(response);
@@ -158,7 +158,7 @@ function showProducts(products) {
       <img src="${products[i].product_img[0]}" class="card-img-top h-100" alt="${products[i].category}" />
       <div class="card-body">
         <h5 class="card-title">${products[i].name}.$${products[i].price} only</h5>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="/products/${products[i]._id}" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>  
     </div>
