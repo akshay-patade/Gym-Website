@@ -11,7 +11,7 @@ router.route("/").get(async (req, res) => {
 
   //Get all the blogs category
   try {
-    const blogCategoryId = await blog_category.getBlogCategory();
+    const blogCategoryId = await blog_category.getAllBlogCategories();
     res.status(200).render("index", {
       title: "Welcome",
       user_header: true,

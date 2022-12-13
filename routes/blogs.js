@@ -8,7 +8,6 @@ const blogs = data.blogs;
 router.route("/:id").get(async (req, res) => {
 
     try {
-
         let id = req.params.id;
         //Validate the id
         let blogData = await blogs.getBlogById(id);
@@ -35,7 +34,9 @@ router.route("/category/:id").get(async (req, res) => {
         });
     }
     catch (e) {
-        res.status(e.code).json(e.message);
+        res.status(404).render("blogNotFound", {
+            title: "BlogNotfound",
+        })
     }
 })
 
