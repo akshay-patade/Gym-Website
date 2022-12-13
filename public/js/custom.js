@@ -57,7 +57,11 @@ var filterProducts = [];
     });
   }
 
+  //datepicker
 
+  dob.max = new Date().toISOString().split("T")[0];
+
+  $(document).ready(function () {
   $(document).ready(function () {
     $(document).on("scroll", onScroll);
 
@@ -81,7 +85,6 @@ var filterProducts = [];
         $(document).on("scroll", onScroll);
       });
     });
-
 
     //AJAX call to populate the products
     $.ajax(
@@ -145,7 +148,6 @@ var filterProducts = [];
 
 //Showing all the products on the website
 function showProducts(products) {
-
   document.getElementById("card").innerText = "";
 
   for (let i = 0; i < products.length; i++) {
@@ -159,46 +161,38 @@ function showProducts(products) {
       </div>
     </div>  
     </div>
-    `
+    `;
   }
 }
 
 
 
 //Live Searching of the product
-document.getElementById("product-search").addEventListener("keyup", function () {
+document
+  .getElementById("product-search")
+  .addEventListener("keyup", function () {
+    var text = document.getElementById("product-search").value;
+    text = text.trim();
+    filterProducts = products.filter(function (a) {
+      let temp = a.name.toLowerCase();
+      if (temp.includes(text.toLowerCase())) {
+        return a;
+      }
+    });
 
-  var text = document.getElementById('product-search').value;
-  text = text.trim();
-  filterProducts = products.filter(function (a) {
-
-    let temp = a.name.toLowerCase();
-    if (temp.includes(text.toLowerCase())) {
-      return a;
+    if (this.value == "") {
+      document.getElementById("not-found").style.display = "none";
+      showProducts(products);
+    } else {
+      if (filterProducts.length === 0) {
+        document.getElementById("not-found").style.display = "block";
+        document.getElementById("card").innerHTML = "";
+      } else {
+        showProducts(filterProducts);
+        document.getElementById("not-found").style.display = "none";
+      }
     }
   });
-
-  if (this.value == "") {
-    document.getElementById("not-found").style.display = 'none';
-    showProducts(products);
-  }
-
-  else {
-
-    if (filterProducts.length === 0) {
-
-      document.getElementById("not-found").style.display = 'block';
-      document.getElementById("card").innerHTML = "";
-    }
-
-    else {
-
-      showProducts(filterProducts);
-      document.getElementById("not-found").style.display = 'none';
-    }
-  }
-
-});
 
 //Sorting the products by date or price
 if (document.querySelector('input[name="filter_by_price"]')) {
@@ -206,40 +200,32 @@ if (document.querySelector('input[name="filter_by_price"]')) {
     elem.addEventListener("change", function (event) {
       var item = event.target.value;
       if (item == "price_low_to_high") {
-
         products.sort(function (a, b) {
-          return a.price - b.price
-        }
-
-        );
-
-        showProducts(products);
-      }
-
-      else if (item == "price_high_to_low") {
-
-        products.sort(function (a, b) {
-          return b.price - a.price
+          return a.price - b.price;
         });
 
         showProducts(products);
-      }
-
-      else if (item == "date_low_to_high") {
-
+      } else if (item == "price_high_to_low") {
         products.sort(function (a, b) {
-
-          return new moment(a.date, 'MM/DD/YYYY').diff(moment(b.date, 'MM/DD/YYYY'), 'days')
+          return b.price - a.price;
         });
 
         showProducts(products);
-      }
-
-      else if (item == "date_high_to_low") {
-
+      } else if (item == "date_low_to_high") {
         products.sort(function (a, b) {
+          return new moment(a.date, "MM/DD/YYYY").diff(
+            moment(b.date, "MM/DD/YYYY"),
+            "days"
+          );
+        });
 
-          return new moment(b.date, 'MM/DD/YYYY').diff(moment(a.date, 'MM/DD/YYYY'), 'days')
+        showProducts(products);
+      } else if (item == "date_high_to_low") {
+        products.sort(function (a, b) {
+          return new moment(b.date, "MM/DD/YYYY").diff(
+            moment(a.date, "MM/DD/YYYY"),
+            "days"
+          );
         });
         showProducts(products);
       }
