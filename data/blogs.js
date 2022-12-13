@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const blog = mongoCollections.blog;
 const blogsCategory = mongoCollections.blog_category
 const { ObjectId } = require("mongodb");
+let moment = require("moment");
 
 const createBlog = async (user_id, blog_name, blog_category_id, description) => {
 
@@ -15,9 +16,9 @@ const createBlog = async (user_id, blog_name, blog_category_id, description) => 
 
     //Creating a new blog object
     const new_blog = {
-        user_id: user_id,
+        user_id: ObjectId(user_id),
         blog_name: blog_name,
-        blog_category_id: blog_category_id,
+        blog_category_id: ObjectId(blog_category_id),
         description: description,
         created_date: date,
         updated_date: date,
