@@ -44,29 +44,29 @@ const createProduct = async (
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
     throw { code: 500, message: `Could not add the product` };
 
-  // Retriving inserted movie id
+  // Retriving inserted product id
   const newId = insertInfo.insertedId.toString();
 
-  //Retriving the movie from the id and returning it
-  //   const movie = await getProductById(newId);
-  //   return movie;
+  //Retriving the product from the id and returning it
+  //   const product = await getProductById(newId);
+  //   return product;
 };
 
 //Function to get a product By Id
 const getProductById = async (productId) => {
-  //Code to check all the parameters
+  //Code to check the productId parameters
 
   //Retriving product collections from the database
   const productCollection = await product();
 
   //Retriving a product by Id
-  const product = await productCollection.findOne({ _id: ObjectId(productId) });
+  const productById = await productCollection.findOne({ _id: ObjectId(productId) });
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (product === null) throw { code: 404, message: `movie not found` };
+  if (productById === null) throw { code: 404, message: `product not found` };
 
-  product._id = product._id.toString();
-  return product;
+  productById._id = productById._id.toString();
+  return productById;
 };
 
 //Function to get all the Products
@@ -79,9 +79,9 @@ const getAllProducts = async () => {
 
   //Checking if the movieList is null or not
   if (!productList || productList.length === 0)
-    throw { code: 404, message: `Could not get movies` };
+    throw { code: 404, message: `Could not get all the products` };
 
-  //Converting the produtct id to string
+  //Converting the product id to string
   for (let i = 0; i < productList.length; i++) {
     productList[i]._id = productList[i]._id.toString();
   }
