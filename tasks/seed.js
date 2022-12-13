@@ -3,13 +3,18 @@ const data = require("../data");
 const product = data.products;
 const blogs = data.blogs;
 
+
 const main = async () => {
   const db = await dbConnection.dbConnection();
   //await db.dropDatabase();
 
+  //******************************Creating a blog category ************************************/
+
+
 
   //***************************** Popultating Proudcts *********************************************/
   //Creating a hoddie product
+
   const hoodies = await product.createProduct(
     "Relaxed Fit Hoodie for Gym",
     "Relaxed-fit sweatshirt hoodie in cotton-blend fabric with soft, brushed inside. Jersey-lined drawstring hood, kangaroo pocket, and long sleeves. Wide ribbing at cuffs and hem.",
