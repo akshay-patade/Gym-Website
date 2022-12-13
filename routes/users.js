@@ -11,22 +11,16 @@ router.route("/").get(async (req, res) => {
 
   //Get all the blogs category
   try {
-    const blogCategoryId = await blog_category.getBlogCategory();
+    const blogCategoryId = await blog_category.getAllBlogCategories();
     res.status(200).render("index", {
       title: "Welcome",
       user_header: true,
       user_footer: true,
-      blogCategoryId: blogCategoryId
+      blogCategoryId: blogCategoryId,
     });
-  }
-
-  catch (e) {
-
+  } catch (e) {
     res.status(e.code).json(e.message);
   }
-
-
-
 });
 
 router.route("/login").get(async (req, res) => {
@@ -46,8 +40,5 @@ router.route("/register").get(async (req, res) => {
     user_footer: true,
   });
 });
-
-
-
 
 module.exports = router;
