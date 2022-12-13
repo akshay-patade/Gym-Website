@@ -66,4 +66,14 @@ router.route("/product/:name").get(async (req, res) => {
   return products;
 })
 
+// Creating a route for blogs
+router.route("/blog/:name").get(async (req, res) => {
+
+  res.render("blog", {
+    title: "Blog",
+    user_header: false,
+    user_footer: true,
+  })
+})
+
 module.exports = router;
