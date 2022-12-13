@@ -1,6 +1,7 @@
 //Initially storing all the proucts
 var products = [];
 var filterProducts = [];
+
 (function ($) {
 
   "use strict";
@@ -58,10 +59,8 @@ var filterProducts = [];
   }
 
   //datepicker
+  //dob.max = new Date().toISOString().split("T")[0];
 
-  dob.max = new Date().toISOString().split("T")[0];
-
-  $(document).ready(function () {
   $(document).ready(function () {
     $(document).on("scroll", onScroll);
 
@@ -86,6 +85,7 @@ var filterProducts = [];
       });
     });
 
+
     //AJAX call to populate the products
     $.ajax(
       {
@@ -99,7 +99,7 @@ var filterProducts = [];
           $("#not-found").css("display", "block");
         }
       }
-    )
+    );
 
   });
 
@@ -123,6 +123,7 @@ var filterProducts = [];
   $(window).on('load', function () {
 
     $('#js-preloader').addClass('loaded');
+
   });
 
 
@@ -146,6 +147,7 @@ var filterProducts = [];
 
 })(window.jQuery);
 
+
 //Showing all the products on the website
 function showProducts(products) {
   document.getElementById("card").innerText = "";
@@ -164,7 +166,6 @@ function showProducts(products) {
     `;
   }
 }
-
 
 
 //Live Searching of the product
@@ -232,6 +233,3 @@ if (document.querySelector('input[name="filter_by_price"]')) {
     });
   });
 }
-
-
-
