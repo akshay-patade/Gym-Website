@@ -10,6 +10,10 @@ const main = async () => {
 
   //******************************Creating a blog category ************************************/
 
+  const diet_category = await blogs.createBlogCategory("Dieting", "Blogs related to diet");
+
+  const muscle_growth_category = await blogs.createBlogCategory("Muscle Growth", "Blogs related to muscle growth");
+
 
 
   //***************************** Popultating Proudcts *********************************************/
@@ -133,7 +137,7 @@ const main = async () => {
   After becoming a Registered Dietitian Nutritionist, she refined her breakthrough approach to healthy eating into a system simple enough for everyone to learn. To date, hundreds of her private-practice clients have successfully lost weight using the same powerful principles she developed for herself.
   
   Today, she’s excited to share those secrets with anyone who wants to lose weight without feeling hungry or deprived — with the 2B Mindset.`;
-  const diet_blog_1 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "Lose Weight without startving", "6369d8b0f932b955cbb795a5", diet_content_1);
+  const diet_blog_1 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "Lose Weight without startving", diet_category._id, diet_content_1);
 
 
   //Creating a dieting blog 2
@@ -149,7 +153,7 @@ const main = async () => {
   
   We are so used to tangible, external rewards in the way of compliments, promotions, “likes,” money, etc. that we forget that “nothing tastes better than pride.” The fact is that pride is the magic replacement we need in order to stop depending on the scale to feel good. Pride provides the dopamine hit from a job well done and is far headier than the rush we get from the scale because we can carry it around within us all the time. Try looking inward rather than at a number the next time you want a feel-good buzz. `;
 
-  const diet_blog_2 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "What Is Weighing Yourself Really About?", "6369d8b0f932b955cbb795a5", diet_content_2);
+  const diet_blog_2 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "What Is Weighing Yourself Really About?", diet_category._id, diet_content_2);
 
   //Creating a dieting blog 3
   let diet_content_3 = `I've gotten a few questions lately about how I've lost weight over the past few months, so I thought I'd write a post! I'm writing this not as a self-celebration (since it's still very recent, and since I'm still working on it), but (hopefully) as inspiration—because as a 52-year-old lover of food and avoider of exercise, I just really want to share what worked for me.
@@ -158,7 +162,7 @@ const main = async () => {
   
   Second, "skinny" has not been my primary goal. Though I had gained considerable weight over the past three years and I definitely wanted to slim down for Alex's wedding in May, what motivated me the most was just wanting to feel better and have more energy. In January, just before I bit the bullet and took the leap, I was tired, puffy, and desperate (I will write about my rock bottom sometime; it's quite a story)—and I knew I shouldn't be feeling that way. So while the eighties child in me does not necessarily bristle if someone occasionally says an encouraging "You look thinner!" or "You've lost weight!" I mostly just think about how much better I feel every day and feel grateful that I've made it over the hump. `
 
-  const diet_blog_3 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "How I Lost Weight (More Importantly: How I Got Healthier!)", "6369d8b0f932b955cbb795a5", diet_content_3);
+  const diet_blog_3 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "How I Lost Weight (More Importantly: How I Got Healthier!)", diet_category._id, diet_content_3);
 
   //Creating a Muscle growth blog 1
   let muscle_content_1 = `What Is the Difference?
@@ -166,7 +170,7 @@ const main = async () => {
   Compound lifts are more challenging but less time consuming than performing multiple different isolation exercises. If you short on time while in the gym, a full-body workout full of compound movements will give you the most from your workout. I have written blogs about how to structure those types of workouts. If you want to sculpt your body in a particular way, and are focused on correcting muscle imbalances or injury rehabilitation, each may require the use of specific isolation movements to build up specific muscle groups. So, the question is, what are your goals? Once you define your goals, you can design your workout program.Structuring a Workout
   The most efficient way to structure a workout utilizing both methods is to perform a compound movement first in your workout followed by isolation movements to complement the muscles used in the compound movement. A quick example using the bench press would be bench pressing first, followed by isolation movements to isolate the chest and triceps. You want to save the most amount of energy for your compound exercises, which is why you should perform this one first. Fatiguing the triceps before a heavy bench workout will not yield the best results for bench press. This is why isolation exercises are best performed at the end of your workout.`
 
-  const muscle_blog_1 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "The Difference Between Compound and Isolation Exercises When Lifting", "6369e38ff932b955cbb796b9", muscle_content_1)
+  const muscle_blog_1 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "The Difference Between Compound and Isolation Exercises When Lifting", muscle_growth_category._id, muscle_content_1)
 
   //Creating a Muscle growth blog 2
   let muscle_content_2 = `If you’re looking for information to help you build muscle, you’ve come to the right place.
@@ -185,7 +189,7 @@ const main = async () => {
   
   Food intake slows muscle protein breakdown and initiates muscle protein synthesis; exercise augments this effect. As such, eating food (especially protein foods) and exercising, (especially strength training) are important aspects of building more muscle.`
 
-  const muscle_blog_2 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "What Should Women Eat to Build Muscle?", "6369e38ff932b955cbb796b9", muscle_content_2)
+  const muscle_blog_2 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "What Should Women Eat to Build Muscle?", muscle_growth_category._id, muscle_content_2)
 
   let muscle_content_3 = `If you are an avid gym-goer you are probably sick and tired of hearing the same old myths in regards to muscle building.
 
@@ -227,7 +231,7 @@ const main = async () => {
   
   It is true that consuming good quality protein after a strength training session can enhance muscle growth; however, there does not seem to be a relationship between the amount of protein and the amount of muscle gained, so eating more than the recommended amount won't necessarily enhance your gains. Follow your plan and about 20g of protein in the three-hour period after a workout and adequate protein at regular intervals throughout the day seems to be the most effective.`
 
-  const muscle_blog_3 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "MUSCLE BUILDING MYTHS", "6369e38ff932b955cbb796b9", muscle_content_3)
+  const muscle_blog_3 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "MUSCLE BUILDING MYTHS", muscle_growth_category._id, muscle_content_3)
 
   // ****************************** Populating Blogs End ***************************************************/
 

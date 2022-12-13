@@ -10,7 +10,7 @@ const createBlogCategory = async (name, description) => {
 
     //Code to check all the parameters of the Blog Category
 
-    //Retriving blog collections Category from the database
+    //Retriving blog Category collections Category from the database
     const blogCategoryCollection = await blogsCategory();
 
     //Creating a new blog Category
@@ -24,26 +24,40 @@ const createBlogCategory = async (name, description) => {
     const insertInfo = await blogCategoryCollection.insertOne(new_blog_category);
 
 
-    //Checking if the blog is successfully inserted or not
+    //Checking if the blog Category is successfully inserted or not
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
         throw { code: 500, message: `Could not add the blog` };
 
     // Retriving inserted blog id
     const newId = insertInfo.insertedId.toString();
 
+    const blogCategory = getBlogCategoryById(newId);
+    return blogCategory;
 }
 
 //Fetching a new blog category by id
 
-const getBlogCategoryById = async (id) => {
+const getBlogCategoryById = async (blogCategoryid) => {
 
     //Code to check the parameters of the id
+
+    //Retriving blog Category collections Category from the database
+    const blogCategoryCollection = await blogsCategory();
+
+    //Retriving a blogCategory by Id
+    const blogCategoryById = await blogCategoryCollection.findOne({ _id: ObjectId(blogCategoryid) });
+
+    //Checing if the blogCategory is retrived from the database. If not throw an error
+    if (blogCategoryById === null) throw { code: 404, message: `blogCategory not found` };
+
+    blogCategoryById._id = blogCategoryById._id.toString();
+
+    return blogCategoryById;
 }
 
 
 //Get All the Blogs Category
 const getBlogCategory = async () => {
-
     //Retriving blog Category collections from the database
     const blogCategoryCollection = await blogsCategory();
 
