@@ -48,13 +48,13 @@ const getBlogById = async (blogId) => {
     const blogCollection = await blog();
 
     //Retriving a blog by Id
-    const blog = await blogCollection.findOne({ _id: ObjectId(blogId) });
+    const blogById = await blogCollection.findOne({ _id: ObjectId(blogId) });
 
     //Checing if the blog is retrived from the database. If not throw an error
-    if (!blog) throw { code: 404, message: `blog not found` };
+    if (!blogById) throw { code: 404, message: `blog not found` };
 
-    blog._id = blog._id.toString();
-    return blog;
+    blogById._id = blogById._id.toString();
+    return blogById;
 }
 
 //Get the blog by Category (either dieting or muscle growth)

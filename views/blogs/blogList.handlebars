@@ -1,0 +1,7 @@
+<ul class="list-group">
+    {{#each blogs}}
+    <a href="/blogs/{{this._id}}" target="_blank">
+        <li class="list-group-item">{{this.blog_name}}</li>
+    </a>
+    {{/each}}
+</ul>
