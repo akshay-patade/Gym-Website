@@ -26,7 +26,6 @@ router.route("/products").get(async (req, res) => {
     products = await product.getAllProducts();
   }
   catch (e) {
-
     res.status(e.code).json(e.message);
   }
   return res.status(200).json(products);
