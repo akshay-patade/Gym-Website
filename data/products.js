@@ -79,9 +79,9 @@ const getAllProducts = async () => {
 
   //Checking if the movieList is null or not
   if (!productList || productList.length === 0)
-    throw { code: 404, message: `Could not get movies` };
+    throw { code: 404, message: `Could not get all the products` };
 
-  //Converting the produtct id to string
+  //Converting the product id to string
   for (let i = 0; i < productList.length; i++) {
     productList[i]._id = productList[i]._id.toString();
   }

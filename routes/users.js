@@ -21,8 +21,14 @@ router.route("/").get(async (req, res) => {
 
 router.route("/products").get(async (req, res) => {
   //code here for GET
+  let products;
+  try {
+    products = await product.getAllProducts();
+  }
+  catch (e) {
 
-  const products = await product.getAllProducts();
+    res.status(e.code).json(e.message);
+  }
   return res.status(200).json(products);
 });
 

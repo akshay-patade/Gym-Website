@@ -91,9 +91,13 @@ var filterProducts = [];
         url: 'http://localhost:3000/products',
         success: function (response) {
 
+          console.log(response);
           products = response;
           console.log(products);
           showProducts(products);
+        },
+        error: function (jqXHR, exception) {
+          $("#not-found").css("display", "block");
         }
       }
     )
@@ -119,7 +123,6 @@ var filterProducts = [];
   $(window).on('load', function () {
 
     $('#js-preloader').addClass('loaded');
-
   });
 
 
