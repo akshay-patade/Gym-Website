@@ -44,17 +44,17 @@ const createProduct = async (
   if (!insertInfo.acknowledged || !insertInfo.insertedId)
     throw { code: 500, message: `Could not add the product` };
 
-  // Retriving inserted movie id
+  // Retriving inserted product id
   const newId = insertInfo.insertedId.toString();
 
-  //Retriving the movie from the id and returning it
-  //   const movie = await getProductById(newId);
-  //   return movie;
+  //Retriving the product from the id and returning it
+  //   const product = await getProductById(newId);
+  //   return product;
 };
 
 //Function to get a product By Id
 const getProductById = async (productId) => {
-  //Code to check all the parameters
+  //Code to check the productId parameters
 
   //Retriving product collections from the database
   const productCollection = await product();
