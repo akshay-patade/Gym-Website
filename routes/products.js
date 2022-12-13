@@ -13,7 +13,6 @@ router.route("/:id").get(async (req, res) => {
 
         //validating the id;
         let id = req.params.id;
-
         let product = await product.getProductById(id);
         res.status(200).render("product", {
             title: "Product",
