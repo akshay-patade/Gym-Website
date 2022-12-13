@@ -3,11 +3,11 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const product = data.products;
+const blog = data.blogs;
 
 //Get all the products
 router.route("/products").get(async (req, res) => {
     //code here for GET
-    console.log("I am getting hit");
     let products;
     try {
         products = await product.getAllProducts();
@@ -27,6 +27,20 @@ router.route("/products/:id").get(async (req, res) => {
         user_footer: true,
     })
     return products;
+})
+
+//Get the Blogs category 
+router.route("/blogs/category").get(async (req, res) => {
+
+    let blogs_category;
+    try {
+        blogs_category = await blog.getBlogCategory();
+        return res.status(200).json(blogs_category);
+    }
+    catch (e) {
+
+        return res.status(e.code).json(e.message);
+    }
 })
 
 module.exports = router;

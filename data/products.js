@@ -60,13 +60,13 @@ const getProductById = async (productId) => {
   const productCollection = await product();
 
   //Retriving a product by Id
-  const product = await productCollection.findOne({ _id: ObjectId(productId) });
+  const productById = await productCollection.findOne({ _id: ObjectId(productId) });
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (product === null) throw { code: 404, message: `movie not found` };
+  if (productById === null) throw { code: 404, message: `product not found` };
 
-  product._id = product._id.toString();
-  return product;
+  productById._id = productById._id.toString();
+  return productById;
 };
 
 //Function to get all the Products

@@ -1,5 +1,4 @@
 //Initially storing all the proucts
-
 var products = [];
 var filterProducts = [];
 (function ($) {
@@ -90,10 +89,7 @@ var filterProducts = [];
         method: 'GET',
         url: 'http://localhost:3000/api/products',
         success: function (response) {
-
-          console.log(response);
           products = response;
-          console.log(products);
           showProducts(products);
         },
         error: function (jqXHR, exception) {
@@ -101,6 +97,7 @@ var filterProducts = [];
         }
       }
     )
+
   });
 
   function onScroll(event) {
@@ -146,14 +143,14 @@ var filterProducts = [];
 
 })(window.jQuery);
 
-//Using fetchapi to get all the products
+//Showing all the products on the website
 function showProducts(products) {
 
   document.getElementById("card").innerText = "";
 
   for (let i = 0; i < products.length; i++) {
     document.getElementById("card").innerHTML += `
-    <div class="col-sm-12 col-md-6 col-lg-4 my-3">
+    <div class="col-sm-12 col-md-6 col-lg-4 mt-3 justify-content-center">
     <div class="card h-100 text-center" style="width: 18rem;">
       <img src="${products[i].product_img[0]}" class="card-img-top h-100" alt="${products[i].category}" />
       <div class="card-body">
@@ -165,6 +162,8 @@ function showProducts(products) {
     `
   }
 }
+
+
 
 //Live Searching of the product
 document.getElementById("product-search").addEventListener("keyup", function () {
@@ -247,3 +246,6 @@ if (document.querySelector('input[name="filter_by_price"]')) {
     });
   });
 }
+
+
+

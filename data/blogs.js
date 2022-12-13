@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const blog = mongoCollections.blog;
+const blogsCategory = mongoCollections.blog_category
 const { ObjectId } = require("mongodb");
 
 const createBlog = async (user_id, blog_name, blog_category_id, description) => {
@@ -50,7 +51,7 @@ const getBlogById = async (blogId) => {
     const blog = await blogCollection.findOne({ _id: ObjectId(blogId) });
 
     //Checing if the blog is retrived from the database. If not throw an error
-    if (blog === null) throw { code: 404, message: `blog not found` };
+    if (!blog) throw { code: 404, message: `blog not found` };
 
     blog._id = blog._id.toString();
     return blog;
@@ -61,14 +62,14 @@ const getBlogByCategoryId = async (categoryId) => {
 
     //Code to validate the categoryId
 
-    //Retriving product collections from the database
+    //Retriving blog collections from the database
     const blogCollection = await blog();
 
     //Retriving a blog by CategoryId
-    const blogs = await blogCollection.find({ blog_category_id: ObjectId(categoryId) });
+    const blogs = await blogCollection.find({ blog_category_id: ObjectId(categoryId) }).toArray();
 
     //Checing if the blog is retrived from the database. If not throw an error
-    if (blogs === null) throw { code: 404, message: `blog not found` };
+    if (!blogs) throw { code: 404, message: `blog not found` };
 
     //Converting the blogs id to string
     for (let i = 0; i < blog.length; i++)
@@ -78,9 +79,30 @@ const getBlogByCategoryId = async (categoryId) => {
 
 }
 
+//Get All the Blogs Category
+const getBlogCategory = async () => {
+
+    //Retriving blog Category collections from the database
+    const blogCategoryCollection = await blogsCategory();
+
+    //Retriving all the blog Collection from the database
+    const blogCategorydata = await blogCategoryCollection.find({}).toArray();;
+
+    if (!blogCategorydata) throw { code: '404', messsage: 'No blogs found' };
+
+    //Converting the blogs Category id to string
+    for (let i = 0; i < blogCategorydata.length; i++)
+        blogCategorydata[i]._id = blogCategorydata[i]._id.toString();
+
+    return blogCategorydata;
+}
+
+
+
 
 module.exports = {
     createBlog,
     getBlogById,
-    getBlogByCategoryId
+    getBlogByCategoryId,
+    getBlogCategory
 };
