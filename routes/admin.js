@@ -4,9 +4,14 @@ const path = require("path");
 //const index = require("../data");
 //const people = index.people;
 
-router.route("/admin").get(async (req, res) => {
+router.route("/").get(async (req, res) => {
   //code here for GET
   res.status(200).json({ error: "Website is working" });
+
+});
+
+router.route("/product").post(async (req, res) => {
+  //code here for GET
 });
 
 module.exports = router;
