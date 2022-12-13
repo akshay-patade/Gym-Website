@@ -57,7 +57,7 @@ const getBlogCategoryById = async (blogCategoryid) => {
 
 
 //Get All the Blogs Category
-const getBlogCategory = async () => {
+const getAllBlogCategories = async () => {
     //Retriving blog Category collections from the database
     const blogCategoryCollection = await blogsCategory();
 
@@ -157,7 +157,7 @@ module.exports = {
     createBlog,
     getBlogById,
     getBlogByCategoryId,
-    getBlogCategory,
+    getAllBlogCategories,
     createBlogCategory,
 
 };

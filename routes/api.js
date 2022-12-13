@@ -34,7 +34,7 @@ router.route("/blogs/category").get(async (req, res) => {
 
     let blogs_category;
     try {
-        blogs_category = await blog.getBlogCategory();
+        blogs_category = await blog.getAllBlogCategories();
         return res.status(200).json(blogs_category);
     }
     catch (e) {
