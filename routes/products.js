@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const product = data.products;
+const xss = require("xss");
 
 //Get all the products
 router.route("/").get(async (req, res) => {
@@ -19,32 +20,34 @@ router.route("/").get(async (req, res) => {
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
-            message: "No Products Found. Sorry for the inconvenience. Please check after some time."
+            message: e.message
         })
     }
 })
 
-//Get the product by Id
-router.route("/:id").get(async (req, res) => {
-
-
+// Get all the products by Name
+router.route("/searchByName").post(async (req, res) => {
 
     try {
 
-        //validating the id;
-        let id = req.params.id;
-        let product = await product.getProductById(id);
-        res.status(200).render("product", {
-            title: "Product",
-            user_header: false,
-            user_footer: false,
-            product
+        let name = xss(req.body.search);
+        //Checking to validate the name
+
+        let productByName = await product.getProductByName(name);
+        res.status(200).render("products/products", {
+
+            title: "Product Found",
+            products: productByName
         })
     }
 
     catch (e) {
-        res.status(e.code).json(e.message);
+        res.status(e.code).render("products/productsNotFound", {
+            title: "Not found",
+            message: e.message
+        })
     }
 })
+
 
 module.exports = router;

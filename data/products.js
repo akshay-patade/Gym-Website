@@ -79,7 +79,7 @@ const getAllProducts = async () => {
 
   //Checking if the movieList is null or not
   if (!productList || productList.length === 0)
-    throw { code: 404, message: `Could not get all the products` };
+    throw { code: 404, message: `No Products Found. Sorry for the inconvenience. Please check after some time` };
 
   //Converting the product id to string
   for (let i = 0; i < productList.length; i++) {
@@ -140,12 +140,11 @@ const getProductByName = async (name) => {
   let regexp = new RegExp(name, "i");
 
   //Retriving a product by Name
-  const product = await productCollection.find({ name: regexp });
+  const products = await productCollection.find({ name: regexp }).toArray();
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (product === null) throw { code: 404, message: `products not found` };
-
-  return product;
+  if (!products || products.length === 0) throw { code: 404, message: `No products found related to ${name} found. Please go back and try again` };
+  return products;
 };
 
 module.exports = {

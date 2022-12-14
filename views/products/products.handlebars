@@ -1,6 +1,12 @@
 <div class="container">
+    <form method="POST" action="/products/searchByName">
+        <div class="mt-5">
+            <label for="search" class="form-label mt-5">Search product</label>
+            <input type="name" class="form-control" id="search" name="search">
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </div>
+    </form>
     <div class="row mt-5">
-
         {{#each products}}
         <div class="col-sm-12 col-md-6 col-xl-4 mt-5">
             <div class="card h-100 text-center" style="width: 18rem;">
