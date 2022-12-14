@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const blog_category = data.blogs;
+const users = data.users;
 
 router.route("/").get(async (req, res) => {
   //code here for GET
@@ -40,5 +41,38 @@ router.route("/register").get(async (req, res) => {
     user_footer: true,
   });
 });
+
+router
+  .route("/forgotPassword")
+  .get(async (req, res) => {
+    //code here for GET
+    res.status(200).render("forgotPassword", {
+      title: "Forgot Password",
+      user_header: true,
+      user_footer: true,
+    });
+  })
+  .post(async (req, res) => {
+    const data = req.body;
+    // try {
+    //   if (!data.email) {
+    //     throw "No email id Provided";
+    //   }
+    //   UserData = await users.getUserByEmail(data.email);
+    //   if (UserData) {
+    //code here for GET
+    res.status(200).render("confirmLinkSent", {
+      title: "confirmation",
+      user_header: true,
+      user_footer: true,
+      done,
+    });
+    //   }
+    // } catch (error) {
+    //   res.status(404).render("UserNotFound", {
+    //     title: "User Not Found",
+    //   });
+    // }
+  });
 
 module.exports = router;

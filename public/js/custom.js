@@ -62,18 +62,18 @@ var filterProducts = [];
   $("#dob").attr("max", today);
 
   //Email ID validation
-  $(".error").hide();
-  $(".emailID").on("change", function () {
-    var email = $(this).val();
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
-    if (!email.match(mailformat)) {
-      $(this).next().text("Please Enter Valid Email ID.");
-      $(this).next().show();
-    } else {
-      $(this).next().text("");
-      $(this).next().hide();
-    }
-  });
+  // $(".error").hide();
+  // $(".emailID").on("change", function () {
+  //   var email = $(this).val();
+  //   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
+  //   if (!email.match(mailformat)) {
+  //     $(this).next().text("Please Enter Valid Email ID.");
+  //     $(this).next().show();
+  //   } else {
+  //     $(this).next().text("");
+  //     $(this).next().hide();
+  //   }
+  // });
 
   //Firstname and Lastname validation
 
@@ -100,6 +100,153 @@ var filterProducts = [];
       $(this).next().text("");
       $(this).next().hide();
     }
+  });
+
+  //Register Form
+  // const RegForm = document.getElementById("registerForm");
+  // if (RegForm) {
+  //   RegForm.addEventListener("submit", (event) => {
+  //     event.preventDefault();
+
+  //     if () {
+
+  //     }
+  //   });
+  // }
+  // $("#registerForm").validate({
+  //   submitHandler: function (form) {
+  //     form.submit();
+  //   },
+  // });
+
+  $("#registerForm").validate({
+    // Specify validation rules
+    rules: {
+      firstname: "required",
+      lastname: "required",
+      address: "required",
+      gender: "required",
+      dob: "required",
+
+      zipcode: {
+        required: true,
+        number: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      cell: {
+        required: true,
+        number: true,
+        minlength: 10,
+        maxlength: 10,
+      },
+      password: {
+        required: true,
+        minlength: 8,
+      },
+      cpassword: {
+        required: true,
+        minlength: 8,
+        equalTo: "#password",
+      },
+    },
+    // Specify validation error messages
+    messages: {
+      firstname: "Please enter your firstname",
+      lastname: "Please enter your lastname",
+      address: "Please enter your address",
+      gender: "This field is required",
+      dob: "This field is required",
+      zipcode: {
+        required: "Please enter your zipcode",
+        number: "Please enter numeric value",
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 8 characters long",
+      },
+      cpassword: {
+        required: "Please enter Confirm Password",
+        minlength: "Your Confirm Password must be at least 8 characters long",
+        equalTo: "Confirm Password must match with Password",
+      },
+      email: {
+        required: "Please provide an email",
+        minlength: "Please enter a valid email address",
+      },
+      cell: {
+        required: "Please Enter Cell Number",
+        number: "Please Enter Numeric value",
+        minlength: "Cell number must be minimum of 10 digits",
+        maxlength: "Cell number can be maximum of 10 digits",
+      },
+    },
+
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+  $("#loginForm").validate({
+    // Specify validation rules
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 8,
+      },
+    },
+    // Specify validation error messages
+    messages: {
+      email: {
+        required: "Please provide an email",
+        minlength: "Please enter a valid email address",
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 8 characters long",
+      },
+    },
+
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
+  $("#forgotPasswordForm").validate({
+    // Specify validation rules
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+    },
+    // Specify validation error messages
+    messages: {
+      email: {
+        required: "Please provide an email",
+        minlength: "Please enter a valid email address",
+      },
+    },
+
+    submitHandler: function (form) {
+      // form.submit();
+      $.ajax({
+        method: "POST",
+        url: "http://localhost:3000/forgotPassword",
+        success: function (response) {
+          // console.log(response);
+          form.submit();
+        },
+        error: function (jqXHR, exception) {
+          $("#not-found").css("display", "block");
+        },
+      });
+    },
   });
 
   $(document).ready(function () {
