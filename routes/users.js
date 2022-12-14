@@ -27,7 +27,7 @@ router.route("/login").get(async (req, res) => {
   //code here for GET
   res.status(200).render("login", {
     title: "Login",
-    user_header: false,
+    user_header: true,
     user_footer: true,
   });
 });
@@ -36,7 +36,7 @@ router.route("/register").get(async (req, res) => {
   //code here for GET
   res.status(200).render("register", {
     title: "Register",
-    user_header: false,
+    user_header: true,
     user_footer: true,
   });
 });

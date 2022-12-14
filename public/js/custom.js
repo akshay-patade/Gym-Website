@@ -54,7 +54,24 @@ var filterProducts = [];
   }
 
   //datepicker
-  //dob.max = new Date().toISOString().split("T")[0];
+  dob.max = new Date().toISOString().split("T")[0];
+  //Email ID validation
+
+  $(".emailID").on("change", function () {
+    var email = $(this).val();
+    // var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var mailformat =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (email.match(mailformat)) {
+      alert("Valid email address!");
+      // document.form1.text1.focus();
+      // return true;
+    } else {
+      alert("You have entered an invalid email address!");
+      // document.form1.text1.focus();
+      // return false;
+    }
+  });
 
   $(document).ready(function () {
     $(document).on("scroll", onScroll);
