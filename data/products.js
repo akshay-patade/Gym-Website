@@ -63,7 +63,7 @@ const getProductById = async (productId) => {
   const productById = await productCollection.findOne({ _id: ObjectId(productId) });
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (productById === null) throw { code: 404, message: `product not found` };
+  if (productById === null) throw { code: 404, message: `Can't find the product. Please check after some time` };
 
   productById._id = productById._id.toString();
   return productById;

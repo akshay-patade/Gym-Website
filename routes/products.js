@@ -50,4 +50,29 @@ router.route("/searchByName").post(async (req, res) => {
     }
 })
 
+// Get the product by id
+router.route("/:id").get(async (req, res) => {
+
+    try {
+
+        let id = xss(req.params.id);
+
+        let getProductById = await product.getProductById(id);
+
+        res.status(200).render("products/productDetail", {
+
+            title: getProductById.name,
+            product: getProductById
+        })
+    }
+    catch (e) {
+        res.status(e.code).render("products/productsNotFound", {
+            title: "Not found",
+            message: e.message
+        })
+    }
+
+
+})
+
 module.exports = router;

@@ -44,7 +44,6 @@ router.route("/:id").get(async (req, res) => {
 
 // Create a route to get all the blogs of a particular Category
 router.route("/category/:id").get(async (req, res) => {
-
     try {
         let id = req.params.id;
         //Validate the id
