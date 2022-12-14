@@ -25,11 +25,7 @@ const main = async () => {
     24.99,
     "Hoodies",
     ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
-    [
-      "/public/images/product/hoodies-1.webp",
-      "/public/images/product/hoodies-2.webp",
-      "/public/images/product/hoodies-3.webp",
-    ],
+    "hoodies-1.webp",
     ["Black", "White", "Brown"]
   );
 
@@ -40,11 +36,7 @@ const main = async () => {
     19.99,
     "Joggers",
     ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
-    [
-      "/public/images/product/joggers-1.webp",
-      "/public/images/product/joggers-2.webp",
-      "/public/images/product/joggers-3.webp",
-    ],
+    "joggers-3.webp",
     ["White", "Blue", "Dark Brown"]
   );
 
@@ -55,10 +47,7 @@ const main = async () => {
     85.55,
     "Protien Powder",
     [],
-    [
-      "/public/images/product/protien-1.webp",
-      "/public/images/product/protien-2.webp",
-    ],
+    "protien-1.webp",
     []
   );
 
@@ -69,7 +58,7 @@ const main = async () => {
     9.99,
     "Shaker",
     [],
-    ["/public/images/product/shaker-1.webp"],
+    "shaker-1.webp",
     []
   );
 
@@ -80,10 +69,8 @@ const main = async () => {
     17.99,
     "Tank top",
     ["XS", "S", "M", "L", "XL", "XXL"],
-    [
-      "/public/images/product/tank-top-1.webp",
-      "/public/images/product/tank-top-2.webp",
-    ],
+    "tank-top-2.webp",
+
     ["Red", "Orange", "Black", "White", "Violet"]
   );
 
@@ -94,10 +81,7 @@ const main = async () => {
     17.99,
     "Crop top",
     ["XS", "S", "M", "L", "XL"],
-    [
-      "/public/images/product/crop-top-1.webp",
-      "/public/images/product/crop-top-2.webp",
-    ],
+    "crop-top-2.webp",
     ["Pink", "Dark Blue"]
   );
 

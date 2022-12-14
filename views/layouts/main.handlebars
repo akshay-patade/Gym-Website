@@ -21,11 +21,11 @@ https://templatemo.com/tm-548-training-studio
 
   <link rel="stylesheet" href="/public/css/main.css" />
   <link rel="stylesheet" href="/public/css/style.css" />
+
 </head>
 
 <body>
-  {{#if user_header}}
-  <!-- ***** Header Area Start ***** -->
+
   <header class="header-area header-sticky">
     <div class="container">
       <div class="row">
@@ -36,12 +36,11 @@ https://templatemo.com/tm-548-training-studio
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section"><a href="#features">About</a></li>
-              <li class="scroll-to-section"><a href="#our-classes">Classes</a></li>
-              <li class="scroll-to-section"><a href="#products">Products</a></li>
-              <li class="scroll-to-section"><a href="#blogs">Blogs</a></li>
-              <li class="scroll-to-section"><a href="#contact-us">Contact</a></li>
+              <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="/">About</a></li>
+              <li class="scroll-to-section"><a href="#our-classes">Buy Subscriptions</a></li>
+              <li class="scroll-to-section"><a href="/products">Products</a></li>
+              <li class="scroll-to-section"><a href="/blogs">Blogs</a></li>
               <li class="main-button"><a href="login">Sign Up / Login</a></li>
             </ul>
             <a class="menu-trigger">
@@ -53,15 +52,12 @@ https://templatemo.com/tm-548-training-studio
       </div>
     </div>
   </header>
-  <!-- ***** Header Area End ***** -->
-  {{/if}}
-  {{#if admin_header}}{{/if}}
+
 
   <main>
     {{{body}}}
   </main>
 
-  {{#if user_footer}}
   <footer>
     <div class="container">
       <div class="row">
@@ -75,9 +71,7 @@ https://templatemo.com/tm-548-training-studio
       </div>
     </div>
   </footer>
-  {{/if}}
 
-  {{#if admin_footer}}{{/if}}
   <!-- jQuery -->
   <script src="/public/js/jquery-2.1.0.min.js"></script>
   <script src="/public/js/jquery.validate.js"></script>
