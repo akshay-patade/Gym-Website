@@ -64,7 +64,7 @@ const getAllBlogCategories = async () => {
     //Retriving all the blog Collection from the database
     const blogCategorydata = await blogCategoryCollection.find({}).toArray();;
 
-    if (!blogCategorydata) throw { code: '404', messsage: 'No blogs found' };
+    if (!blogCategorydata) throw { code: '404', messsage: 'Admins has not posted any Blogs. Please check after some time' };
 
     //Converting the blogs Category id to string
     for (let i = 0; i < blogCategorydata.length; i++)
@@ -151,6 +151,26 @@ const getBlogByCategoryId = async (categoryId) => {
     return blogs;
 }
 
+//Get the blog Category Name
+const getBlogCategoryName = async (id) => {
+
+    //Code to validate the categoryId
+
+    //Retriving blog collections from the database
+    const blogCategoryCollection = await blogsCategory();
+
+    //Retriving a Name for particular blogCategory Id
+    const blogsCategoryName = await blogCategoryCollection.findOne({ _id: ObjectId(id) })
+
+    //Checing if the blog is retrived from the database. If not throw an error
+    if (!blogsCategoryName) throw { code: 404, message: `blog Category Name not found` };
+
+    //Converting the blogs id to string
+    blogsCategoryName._id = blogsCategoryName._id.toString();
+
+    return blogsCategoryName;
+}
+
 //******************************Blog code End  ************************************//
 
 module.exports = {
@@ -159,5 +179,6 @@ module.exports = {
     getBlogByCategoryId,
     getAllBlogCategories,
     createBlogCategory,
+    getBlogCategoryName
 
 };

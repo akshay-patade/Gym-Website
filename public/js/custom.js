@@ -1,6 +1,3 @@
-//Initially storing all the proucts
-var products = [];
-var filterProducts = [];
 
 (function ($) {
   "use strict";
@@ -321,32 +318,6 @@ var filterProducts = [];
   }
 })(window.jQuery);
 
-//Live Searching of the product
-document
-  .getElementById("product-search")
-  .addEventListener("keyup", function () {
-    var text = document.getElementById("product-search").value;
-    text = text.trim();
-    filterProducts = products.filter(function (a) {
-      let temp = a.name.toLowerCase();
-      if (temp.includes(text.toLowerCase())) {
-        return a;
-      }
-    });
-
-    if (this.value == "") {
-      document.getElementById("not-found").style.display = "none";
-      showProducts(products);
-    } else {
-      if (filterProducts.length === 0) {
-        document.getElementById("not-found").style.display = "block";
-        document.getElementById("card").innerHTML = "";
-      } else {
-        showProducts(filterProducts);
-        document.getElementById("not-found").style.display = "none";
-      }
-    }
-  });
 
 //Sorting the products by date or price
 if (document.querySelector('input[name="filter_by_price"]')) {
