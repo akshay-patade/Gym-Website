@@ -33,7 +33,7 @@ router.route("/:id").get(async (req, res) => {
 
 
         res.status(200).render("blogs/blogsData", {
-            title: blogData.name,
+            title: blogData.blog_name,
             blog: blogData
         });
     }
@@ -52,12 +52,12 @@ router.route("/category/:id").get(async (req, res) => {
         //Get the blogCategory name
         let name = await blogs.getBlogCategoryName(blogsData[0].blog_category_id);
         res.status(200).render("blogs/blogsList", {
-            title: name,
+            title: name.name,
             blogs: blogsData
         });
     }
     catch (e) {
-        res.status(404).render("blogs/blogNotFound", {
+        res.status(404).render("blogs/blogssNotFound", {
             title: "BlogNotfound",
         })
     }
