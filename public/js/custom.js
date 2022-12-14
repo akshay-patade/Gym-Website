@@ -280,18 +280,6 @@ var filterProducts = [];
         );
     });
 
-    //AJAX call to populate the products
-    $.ajax({
-      method: "GET",
-      url: "http://localhost:3000/api/products",
-      success: function (response) {
-        products = response;
-        showProducts(products);
-      },
-      error: function (jqXHR, exception) {
-        $("#not-found").css("display", "block");
-      },
-    });
   });
 
   function onScroll(event) {
@@ -332,25 +320,6 @@ var filterProducts = [];
     });
   }
 })(window.jQuery);
-
-//Showing all the products on the website
-function showProducts(products) {
-  document.getElementById("card").innerText = "";
-
-  for (let i = 0; i < products.length; i++) {
-    document.getElementById("card").innerHTML += `
-    <div class="col-sm-12 col-md-6 col-lg-4 mt-3 justify-content-center">
-    <div class="card h-100 text-center" style="width: 18rem;">
-      <img src="${products[i].product_img[0]}" class="card-img-top h-100" alt="${products[i].category}" />
-      <div class="card-body">
-        <h5 class="card-title">${products[i].name}.$${products[i].price} only</h5>
-        <a href="/products/${products[i]._id}" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>  
-    </div>
-    `;
-  }
-}
 
 //Live Searching of the product
 document

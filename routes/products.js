@@ -40,7 +40,6 @@ router.route("/searchByName").post(async (req, res) => {
             products: productByName
         })
     }
-
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
