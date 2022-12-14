@@ -24,6 +24,7 @@
     "jquery": "^3.6.2",
     "jquery-validation": "^1.19.5",
     "moment": "^2.29.4",
-    "mongo": "^0.1.0"
+    "mongo": "^0.1.0",
+    "xss": "^1.0.14"
   }
 }
