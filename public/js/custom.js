@@ -75,6 +75,33 @@ var filterProducts = [];
     }
   });
 
+  //Firstname and Lastname validation
+
+  $("#firstname").on("change", function () {
+    var value = $(this).val();
+    var res = /^[a-zA-Z]+$/.test(value);
+    // console.log(res);
+    if (res === false) {
+      $(this).next().text("Please Enter Valid Firstname");
+      $(this).next().show();
+    } else {
+      $(this).next().text("");
+      $(this).next().hide();
+    }
+  });
+  $("#lastname").on("change", function () {
+    var value = $(this).val();
+    var res = /^[a-zA-Z]+$/.test(value);
+    // console.log(res);
+    if (res === false) {
+      $(this).next().text("Please Enter Valid Lastname");
+      $(this).next().show();
+    } else {
+      $(this).next().text("");
+      $(this).next().hide();
+    }
+  });
+
   $(document).ready(function () {
     $(document).on("scroll", onScroll);
 
