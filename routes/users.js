@@ -65,7 +65,6 @@ router
       title: "confirmation",
       user_header: true,
       user_footer: true,
-      done,
     });
     //   }
     // } catch (error) {
