@@ -14,7 +14,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i><a
                                         href="/products">
-                                        <span class="ml-1">Back</span></a> </div> <i
+                                        <span class="ml-1 text-muted">Back</span></a> </div> <i
                                     class="fa fa-shopping-cart text-muted"></i>
                             </div>
                             <div class="mt-4 mb-3">
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <p class="about">{{product.description}}</p>
-                            <div class="sizes mt-5">
+                            <div class="sizes mt-3">
                                 {{#if product.size.length}}
                                 <h6 class="text-uppercase">Size</h6>
                                 {{#each product.size}}
@@ -35,6 +35,11 @@
                                     {{/if}}
 
                             </div>
+                            <p>Quantity</p>
+                            <input type="number" class="form-control" placeholder="Enter quantity" value="1">
+                            <p class="error-quantity-product" id="error-quantiy-message" name="error-quantiy-message">
+                                Quantity should be greater than 0 and less than 100
+                            </p>
                             <div class="cart mt-4 align-items-center"> <button
                                     class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button>
                             </div>

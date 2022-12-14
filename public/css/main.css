@@ -1327,3 +1327,9 @@ responsive
   padding: 5px;
 
 }
+
+
+.error-quantity-product{
+
+  display:hidden;
+}
