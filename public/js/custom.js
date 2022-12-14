@@ -54,7 +54,7 @@ var filterProducts = [];
   }
 
   //datepicker
-  dob.max = new Date().toISOString().split("T")[0];
+  //dob.max = new Date().toISOString().split("T")[0];
   //Email ID validation
 
   $(".emailID").on("change", function () {
