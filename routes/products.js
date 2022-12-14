@@ -8,10 +8,8 @@ const product = data.products;
 router.route("/").get(async (req, res) => {
 
     try {
-
         //validating the id;
         let allProducts = await product.getAllProducts();
-
         res.status(200).render("products/products", {
             title: "Products",
             products: allProducts
@@ -20,7 +18,8 @@ router.route("/").get(async (req, res) => {
 
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
-            title: "Not found"
+            title: "Not found",
+            message: "No Products Found. Sorry for the inconvenience. Please check after some time."
         })
     }
 })
