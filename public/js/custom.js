@@ -53,22 +53,25 @@ var filterProducts = [];
     });
   }
 
-  //datepicker
-  dob.max = new Date().toISOString().split("T")[0];
-  //Email ID validation
+  //Date of Birth Datepicker
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var yyyy = today.getFullYear();
+  today = yyyy + "-" + mm + "-" + dd;
+  $("#dob").attr("max", today);
 
+  //Email ID validation
+  $(".error").hide();
   $(".emailID").on("change", function () {
     var email = $(this).val();
-    var mailformat =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (email.match(mailformat)) {
-      alert("Valid email address!");
-      // document.form1.text1.focus();
-      // return true;
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
+    if (!email.match(mailformat)) {
+      $(this).next().text("Please Enter Valid Email ID.");
+      $(this).next().show();
     } else {
-      alert("You have entered an invalid email address!");
-      // document.form1.text1.focus();
-      // return false;
+      $(this).next().text("");
+      $(this).next().hide();
     }
   });
 
