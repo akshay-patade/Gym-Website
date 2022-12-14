@@ -14,8 +14,6 @@ const main = async () => {
 
   const muscle_growth_category = await blogs.createBlogCategory("Muscle Growth", "Blogs related to muscle growth");
 
-
-
   //***************************** Popultating Proudcts *********************************************/
   //Creating a hoddie product
 

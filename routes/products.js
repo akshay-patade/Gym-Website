@@ -4,10 +4,31 @@ const path = require("path");
 const data = require("../data");
 const product = data.products;
 
+//Get all the products
+router.route("/").get(async (req, res) => {
+
+    try {
+
+        //validating the id;
+        let allProducts = await product.getAllProducts();
+
+        res.status(200).render("products/products", {
+            title: "Products",
+            products: allProducts
+        })
+    }
+
+    catch (e) {
+        res.status(e.code).render("products/productsNotFound", {
+            title: "Not found"
+        })
+    }
+})
+
 //Get the product by Id
 router.route("/:id").get(async (req, res) => {
 
-    console.log("It is getting hit");
+
 
     try {
 

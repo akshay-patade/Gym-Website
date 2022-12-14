@@ -4,6 +4,8 @@ const path = require("path");
 const data = require("../data");
 const blogs = data.blogs;
 
+
+
 // Create a route to get a blog by id
 router.route("/:id").get(async (req, res) => {
 
