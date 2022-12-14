@@ -31,13 +31,15 @@ router.route("/searchByName").post(async (req, res) => {
     try {
 
         let name = xss(req.body.search);
-        //Checking to validate the name
+        //Checking to validate the id
 
-        let productByName = await product.getProductByName(name);
+        let getProductByName = await product.getProductByName(name);
+
+
         res.status(200).render("products/products", {
 
             title: "Product Found",
-            products: productByName
+            products: getProductByName
         })
     }
     catch (e) {
@@ -47,6 +49,5 @@ router.route("/searchByName").post(async (req, res) => {
         })
     }
 })
-
 
 module.exports = router;
