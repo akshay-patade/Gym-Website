@@ -44,18 +44,22 @@ router.route("/:id").get(async (req, res) => {
 // Create a route to get all the blogs of a particular Category
 router.route("/category/:id").get(async (req, res) => {
     try {
+
         let id = req.params.id;
         //Validate the id
         let blogsData = await blogs.getBlogByCategoryId(id);
+
         //Get the blogCategory name
-        let name = await blogs.getBlogCategoryName(blogsData[0].blog_category_id);
+        let blogCategoryId = blogsData[0].blog_category_id.toString();
+
+        let name = await blogs.getBlogCategoryName(blogCategoryId);
         res.status(200).render("blogs/blogsList", {
             title: name.name,
             blogs: blogsData
         });
     }
     catch (e) {
-        res.status(404).render("blogs/blogssNotFound", {
+        res.status(404).render("blogs/blogsNotFound", {
             title: "BlogNotfound",
         })
     }

@@ -1,7 +1,7 @@
 <ul class="list-group mt-5">
     {{#each blogs}}
-    <a href="/blogs/{{this._id}}" target="_blank">
-        <li class="list-group-item mt-3">{{this.blog_name}}</li>
-    </a>
+
+    <li class="list-group-item mt-3"><a href="/blogs/{{this._id}}" target="_blank">{{this.blog_name}}</a></li>
+
     {{/each}}
 </ul>
