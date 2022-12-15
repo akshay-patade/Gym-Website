@@ -324,8 +324,8 @@ const checkPassword = (field) => {
 
 /***************************** User Group Validation Start **************************************/
 
-//Validating UserCategoryName
-const checkUserCategoryName = (field) => {
+//Validating UserGroup Name
+const checkUserGroupName = (field) => {
 
     //Check if the UserCategoryName is not Empty
     if (!field)
@@ -358,9 +358,9 @@ const checkUserCategoryName = (field) => {
     return field;
 }
 
-//Validating UserCategoryDescription
+//Validating UserGroupDescription
 
-const checkUserCategoryDescription = (field) => {
+const checkUserGroupDescription = (field) => {
 
     //Check if the UserCategoryDescription is not Empty
     if (!field)
@@ -784,8 +784,8 @@ module.exports = {
     checkNumber,
     checkEmail,
     checkPassword,
-    checkUserCategoryName,
-    checkUserCategoryDescription,
+    checkUserGroupName,
+    checkUserGroupDescription,
     checkProductName,
     checkProductDescription,
     checkProductPrice,

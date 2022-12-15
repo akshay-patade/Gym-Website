@@ -24,9 +24,9 @@ const main = async () => {
 
   //****************************** Creating users and admin **********************************************/
 
-  //const admin1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
-  //const user1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
-  //const user1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+  const admin1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+  const user1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+  const user2 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
 
   //********************************* Creating users and admin ENDS ***************************************************/
 

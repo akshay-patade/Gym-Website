@@ -5,11 +5,13 @@ const { ObjectId } = require("mongodb");
 let moment = require("moment");
 const bcrypt = require("bcrypt");
 const saltRounds = 16;
+const helper = require("../helpers");
 
 //Create a UserGroup for User and Admin
 const createUserGroup = async (name, description) => {
 
   //Code to check all the parameters
+
 
   //Getting the userGroupCOllection
   const userGroupCollection = await userGroup();
