@@ -11,7 +11,8 @@ const helper = require("../helpers");
 const createUserGroup = async (name, description) => {
 
   //Code to check all the parameters
-
+  name = helper.checkUserGroupName(name);
+  description = helper.checkUserGroupDescription(description);
 
   //Getting the userGroupCOllection
   const userGroupCollection = await userGroup();

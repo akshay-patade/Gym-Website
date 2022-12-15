@@ -18,7 +18,7 @@ const checkFirstName = (field) => {
     }
 
     //Check if the firstName does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the firstName`,
@@ -53,7 +53,7 @@ const checkLastName = (field) => {
     }
 
     //Check if the lastName does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the lastName`,
@@ -88,7 +88,7 @@ const checkGender = (field) => {
     }
 
     //Check if the Gender does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Gender`,
@@ -123,7 +123,7 @@ const checkDob = (field) => {
     }
 
     //Check if the Date of Birth does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Date of Birth`,
@@ -161,7 +161,7 @@ const checkAddress = (field) => {
     }
 
     //Check if the Address does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Address`,
@@ -194,7 +194,7 @@ const checkZipCode = (field) => {
     }
 
     //Check if the Zipcode does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Zipcode`,
@@ -238,7 +238,7 @@ const checkNumber = (field) => {
     }
 
     //Check if the ContactNumber does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the ContactNumber`,
@@ -273,7 +273,7 @@ const checkEmail = (field) => {
     }
 
     //Check if the EmailId does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the EmailId`,
@@ -310,7 +310,7 @@ const checkPassword = (field) => {
     }
 
     //Check if the Password does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Password`,
@@ -340,7 +340,7 @@ const checkUserGroupName = (field) => {
     }
 
     //Check if the UserCategoryName does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the UserCategoryName`,
@@ -375,7 +375,7 @@ const checkUserGroupDescription = (field) => {
     }
 
     //Check if the UserCategoryDescription does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the UserCategoryDescription`,
@@ -412,7 +412,7 @@ const checkProductName = (field) => {
     }
 
     //Check if the UserCategoryDescription does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the productName`,
@@ -445,7 +445,7 @@ const checkProductDescription = (field) => {
     }
 
     //Check if the productDescription does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the productDescription`,
@@ -478,7 +478,7 @@ const checkProductPrice = (field) => {
     }
 
     //Check if the productDescription does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the productPrice`,
@@ -513,7 +513,7 @@ const checkProductCategory = (field) => {
     }
 
     //Check if the Category does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Category`,
@@ -546,7 +546,7 @@ const checkProductImage = (field) => {
     }
 
     //Check if the Product Image does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Product Image`,
@@ -584,7 +584,7 @@ const checkBlogName = async (field) => {
     }
 
     //Check if the Blog Name does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Blog Name`,
@@ -617,7 +617,7 @@ const checkBlogDescription = async (field) => {
     }
 
     //Check if the blog Description does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the blog Description`,
@@ -654,7 +654,7 @@ const checkSubscriptionName = async (field) => {
     }
 
     //Check if the Subscription Name does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Subscription Name`,
@@ -687,7 +687,7 @@ const checkSubscriptionDescription = async (field) => {
     }
 
     //Check if the Subscription Description does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Subscription Description`,
@@ -720,7 +720,7 @@ const checkSubscriptionAmount = async (field) => {
     }
 
     //Check if the Subscription Amount does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Subscription Amount`,
@@ -753,7 +753,7 @@ const checkSubscriptionDuration = async (field) => {
     }
 
     //Check if the Subscription Duration does not contain only spaces
-    if (field.trim().length() === 0)
+    if (field.trim().length === 0)
         throw {
             code: 400,
             message: `Dont pass only leading or trailing zeros in the Subscription Duration`,

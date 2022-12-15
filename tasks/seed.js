@@ -8,7 +8,7 @@ const subscriptionPlans = data.subscriptions;
 
 const main = async () => {
   const db = await dbConnection.dbConnection();
-  //await db.dropDatabase();
+  await db.dropDatabase();
 
   //*******************************Creating a UserGroup *******************************************/
 
