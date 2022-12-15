@@ -11,9 +11,12 @@
             <div class="card-body p-5 text-center">
 
               <div class="mb-md-3 mt-md-2 pb-3">
-                <form id="registerForm" name="registerForm" action="" method="post">
+                <form id="registerForm" name="registerForm" action="/register" method="post">
                   <h2 class="fw-bold mb-2 text-uppercase">Create an account</h2>
                   <p class="text-white-50 mb-5">Please Fill up this Form to register</p>
+                  {{#if AlreadyExist}}
+                  <div class="error"> Accout already Exist with this Email Address!</div>
+                  {{/if}}
                   <div class="row">
                     <div class="form-outline form-white mb-4 col-6">
                       <label class="form-label" for="firstname">First Name</label>
