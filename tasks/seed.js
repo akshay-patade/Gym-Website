@@ -25,8 +25,8 @@ const main = async () => {
   //****************************** Creating users and admin **********************************************/
 
   const admin1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123", adminGroup._id);
-  const user1 = await users.createUser("Shuchi", "Mehta", "female", "10/10/2002", "Jersey Heights", "07307", "8622141496", "s.mehta@stevens.edu", "Shuchi@123", userGroup._id);
-  const user2 = await users.createUser("Akshay", "Patade", "male", "10/10/1997", "Union City", "07087", "2012415349", "a.patade@stevens.edu", "Akshay@123", userGroup._id);
+  const user1 = await users.createUser("Shuchi", "Mehta", "female", "10/10/2002", "Jersey Heights", "07307", "8622141496", "smehta@stevens.edu", "Shuchi@123", userGroup._id);
+  const user2 = await users.createUser("Akshay", "Patade", "male", "10/10/1997", "Union City", "07087", "2012415349", "apatade@stevens.edu", "Akshay@123", userGroup._id);
 
 
   //********************************* Creating users and admin ENDS ***************************************************/
