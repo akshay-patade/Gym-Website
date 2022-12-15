@@ -764,6 +764,7 @@ const checkSubscriptionAmount = (field) => {
 
     field = field.trim();
 
+    let regex = /^\d{0,8}(\.\d{1,4})?$/
 
     if (!regex.test(field))
         throw {

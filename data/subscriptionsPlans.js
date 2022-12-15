@@ -49,7 +49,7 @@ const getSubscriptionPlanById = async (subscriptionPlanId) => {
     //Importing the  subscriptionsPlans collection
     const subscriptionsPlanCollection = await subscriptionsPlans();
 
-    const result = await subscriptionsPlanCollection.findOne({ _id: subscriptionPlanId });
+    const result = await subscriptionsPlanCollection.findOne({ _id: ObjectId(subscriptionPlanId) });
 
     if (!result) {
         throw {
