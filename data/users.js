@@ -10,7 +10,7 @@ const getUserByEmail = async (emailID) => {
   emailID = emailID.trim();
   emailID = emailID.toLowerCase();
 
-  //Retriving blog Category collections Category from the database
+  //Retriving User collections  from the database
   const UserCollection = await user();
 
   //Retriving a User by Email Id
@@ -24,6 +24,25 @@ const getUserByEmail = async (emailID) => {
   // throw { code: 404, message: `User not found` };
   return userbyemail;
 };
+
+const getAllUsersByName = async () => {
+
+  //Retriving User collections  from the database
+  const UserCollection = await user();
+
+  const getAllUsersByName = await UserCollection.find({}).project({ first_name: 1, last_name: 1 }).toArray();
+
+  if (!getAllUsersByName) {
+
+    for (let i = 0; i < getAllUsersByName.length; i++) {
+      getAllUsersByName._id = getAllUsersByName._id.toString();
+    }
+  }
+
+  return getAllUsersByName;
+}
+
 module.exports = {
   getUserByEmail,
+  getAllUsersByName
 };

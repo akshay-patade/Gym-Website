@@ -61,17 +61,26 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-center mt-5">
-            <div class="col-4">
-            </div>
-            <div class="col-6">
-                <h1>Comments</h1>
-            </div>
+    </div>
 
+    <div class="container mt-5 mx-auto ">
+        <h3 class="d-flex justify-content-center ">Comments posted by the registered user</h3>
+
+
+
+
+        {{#if product.comments.length}}
+        <div class="row d-flex justify-content-center">
+            {{#each product.comments}}
+            <div class="col-12"> </div>
+            <div class="col-12"></div>
+            {{/each}}
         </div>
-        <div class="overflow-auto">dfjbjbsjbdsjbdjsbdkjsbdsjbdskjdbsjdjsdb</div>
-    </div>
+        {{/if}}
 
+        <div class="overflow-auto">Somendjkbfjkbfjbsjfb bajkbsajbadbasbjdk bsjkbdsjkbdjsbdj bsb bsdjkbsdjbsdjkb
+            sjkdbsjdbsjkdbsdb</div>
     </div>
-
+    {{/if}}
+    </div>
 </section>

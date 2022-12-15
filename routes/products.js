@@ -3,7 +3,9 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const product = data.products;
+const user = data.users;
 const xss = require("xss");
+const { users } = require("../data");
 
 //Get all the products
 router.route("/").get(async (req, res) => {
@@ -54,15 +56,19 @@ router.route("/searchByName").post(async (req, res) => {
 router.route("/:id").get(async (req, res) => {
 
     try {
-
         let id = xss(req.params.id);
 
+        //Getting the product by Particular Id
         let getProductById = await product.getProductById(id);
+
+        //Get the all the users
+        let getAllUsersName = await users.getAllUsersByName();
 
         res.status(200).render("products/productDetail", {
 
             title: getProductById.name,
-            product: getProductById
+            product: getProductById,
+            users: getAllUsersName,
         })
     }
     catch (e) {
