@@ -1,4 +1,3 @@
-
 (function ($) {
   "use strict";
 
@@ -214,40 +213,61 @@
     },
   });
 
-  $("#forgotPasswordForm").validate({
-    // Specify validation rules
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-    },
-    // Specify validation error messages
-    messages: {
-      email: {
-        required: "Please provide an email",
-        minlength: "Please enter a valid email address",
-      },
-    },
+  // $("#forgotPasswordForm").validate({
+  //   // Specify validation rules
+  //   rules: {
+  //     email: {
+  //       required: true,
+  //       email: true,
+  //     },
+  //   },
+  //   // Specify validation error messages
+  //   messages: {
+  //     email: {
+  //       required: "Please provide an email",
+  //       minlength: "Please enter a valid email address",
+  //     },
+  //   },
+  //   submitHandler: function (form) {
+  //     // form.submit();
+  //     $.ajax({
+  //       method: "POST",
+  //       data:""
+  //       url: "http://localhost:3000/forgotPassword",
+  //       success: function (response) {
+  //         // console.log(response);
+  //         form.submit();
+  //       },
+  //       error: function (jqXHR, exception) {
+  //         $("#not-found").css("display", "block");
+  //       },
+  //     });
+  //   },
+  // });
 
-    submitHandler: function (form) {
-      // form.submit();
+  $(document).ready(function () {
+    $("#forgotPasswordForm").submit(function (event) {
+      var formData = {
+        email: $("#email").val(),
+      };
+
       $.ajax({
-        method: "POST",
+        type: "POST",
         url: "http://localhost:3000/forgotPassword",
-        success: function (response) {
-          // console.log(response);
-          form.submit();
-        },
-        error: function (jqXHR, exception) {
-          $("#not-found").css("display", "block");
-        },
+        data: formData,
+        // dataType: "json",
+        // encode: true,
+      }).done(function (data) {
+        console.log(data);
+        form.submit();
       });
-    },
+
+      // event.preventDefault();
+    });
   });
 
   $(document).ready(function () {
-    $(document).on("scroll", onScroll);
+    // $(document).on("scroll", onScroll);
 
     //smoothscroll
     $('.scroll-to-section a[href^="#"]').on("click", function (e) {
@@ -276,25 +296,24 @@
           }
         );
     });
-
   });
 
-  function onScroll(event) {
-    var scrollPos = $(document).scrollTop();
-    $(".nav a").each(function () {
-      var currLink = $(this);
-      var refElement = $(currLink.attr("href"));
-      if (
-        refElement.position().top <= scrollPos &&
-        refElement.position().top + refElement.height() > scrollPos
-      ) {
-        $(".nav ul li a").removeClass("active");
-        currLink.addClass("active");
-      } else {
-        currLink.removeClass("active");
-      }
-    });
-  }
+  // function onScroll(event) {
+  //   var scrollPos = $(document).scrollTop();
+  //   $(".nav a").each(function () {
+  //     var currLink = $(this);
+  //     var refElement = $(currLink.attr("href"));
+  //     if (
+  //       refElement.position().top <= scrollPos &&
+  //       refElement.position().top + refElement.height() > scrollPos
+  //     ) {
+  //       $(".nav ul li a").removeClass("active");
+  //       currLink.addClass("active");
+  //     } else {
+  //       currLink.removeClass("active");
+  //     }
+  //   });
+  // }
 
   // Page loading animation
   $(window).on("load", function () {
@@ -317,7 +336,6 @@
     });
   }
 })(window.jQuery);
-
 
 //Sorting the products by date or price
 if (document.querySelector('input[name="filter_by_price"]')) {
