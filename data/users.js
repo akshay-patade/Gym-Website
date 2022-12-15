@@ -1,9 +1,66 @@
 const mongoCollections = require("../config/mongoCollections");
 const user = mongoCollections.user;
 const { ObjectId } = require("mongodb");
+let moment = require("moment");
+const bcrypt = require("bcrypt");
+const saltRounds = 16;
+
+//Register User
+const createUser = async (
+  firstname,
+  lastname,
+  gender,
+  dob,
+  address,
+  zipcode,
+  cell,
+  email,
+  password
+) => {
+  let insertStatus = {};
+  email = email.toLowerCase();
+  const userCollection = await user();
+  const FoundUser = await userCollection.findOne({
+    email: email,
+  });
+  dob = new moment(dob).format("MM/DD/YYYY");
+  if (FoundUser !== null) throw "Username Already Exist!";
+  //     insertStatus.insertedUser = false;
+  //     insertStatus.alreadyExist = true;
+  //     return insertStatus;
+  //   }
+
+  const hashPassword = await bcrypt.hash(password, saltRounds);
+
+  let new_user = {
+    firstname: firstname,
+    lastname: lastname,
+    gender: gender,
+    dob: dob,
+    address: address,
+    zipcode: zipcode,
+    cell: cell,
+    email: email,
+    password: hashPassword,
+    profile_image: "",
+    status: true,
+  };
+  const insertInfo = await userCollection.insertOne(new_user);
+  if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+    // insertStatus.insertedUser = false;
+    // insertStatus.alreadyExist = false;
+    // insertStatus.otherErr = true;
+    // return insertStatus;
+    throw "Could not insert";
+  }
+
+  insertStatus.insertedUser = true;
+  //   insertStatus.alreadyExist = false;
+
+  return insertStatus;
+};
 
 //Get the User by Email Id
-
 const getUserByEmail = async (emailID) => {
   //Code to check the parameters of the emailID
   if (!emailID) throw "Please Provide email ID";
@@ -43,6 +100,7 @@ const getAllUsersByName = async () => {
 }
 
 module.exports = {
+  createUser,
   getUserByEmail,
   getAllUsersByName
 };
