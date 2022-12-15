@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const user = mongoCollections.user;
 const { ObjectId } = require("mongodb");
+let moment = require("moment");
 const bcrypt = require("bcrypt");
 const saltRounds = 16;
 
@@ -22,7 +23,7 @@ const createUser = async (
   const FoundUser = await userCollection.findOne({
     email: email,
   });
-
+  dob = new moment(dob).format("MM/DD/YYYY");
   if (FoundUser !== null) throw "Username Already Exist!";
   //     insertStatus.insertedUser = false;
   //     insertStatus.alreadyExist = true;
@@ -41,6 +42,8 @@ const createUser = async (
     cell: cell,
     email: email,
     password: hashPassword,
+    profile_image: "",
+    status: true,
   };
   const insertInfo = await userCollection.insertOne(new_user);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) {
