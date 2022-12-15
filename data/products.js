@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const product = mongoCollections.product;
 const { ObjectId } = require("mongodb");
 const moment = require("moment");
+const helper = require("../helpers");
 
 //Function to create a product
 const createProduct = async (
@@ -14,6 +15,14 @@ const createProduct = async (
   color
 ) => {
   //Code to check all the parameters
+  name = helper.checkProductName(name);
+  description = helper.checkProductDescription(description);
+  price = helper.checkProductPrice(price);
+  category = helper.checkProductCategory(category);
+  product_img = helper.checkProductImage(product_img);
+
+  //Converting the price to float
+  price = parseFloat(price);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -48,13 +57,15 @@ const createProduct = async (
   const newId = insertInfo.insertedId.toString();
 
   //Retriving the product from the id and returning it
-  //   const product = await getProductById(newId);
-  //   return product;
+  const productAdded = await getProductById(newId);
+  return productAdded;
 };
 
 //Function to get a product By Id
 const getProductById = async (productId) => {
+
   //Code to check the productId parameters
+  productId = helper.checkObjectId(productId);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -102,6 +113,11 @@ const updateProduct = async (
   color
 ) => {
   //Code to check all the parameters
+  name = helper.checkProductName(name);
+  description = helper.checkProductDescription(description);
+  price = helper.checkProductPrice(price);
+  category = helper.checkProductCategory(category);
+  product_img = helper.checkProductImage(product_img);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -132,7 +148,9 @@ const updateProduct = async (
 
 //Function to get a product By Name
 const getProductByName = async (name) => {
+
   //Code to check all the parameters
+  name = helper.checkProductName(name);
 
   //Retriving product collections from the database
   const productCollection = await product();

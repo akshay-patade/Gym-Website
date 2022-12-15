@@ -26,7 +26,7 @@ const main = async () => {
 
   const admin1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123", adminGroup._id);
   const user1 = await users.createUser("Shuchi", "Mehta", "female", "10/10/2002", "Jersey Heights", "07307", "8622141496", "s.mehta@stevens.edu", "Shuchi@123", userGroup._id);
-  const user2 = await users.createUser("admin", "admin", "male", "10/10/1997", "Union City", "07087", "2012415349", "a.patade@stevens.edu", "Akshay@123", userGroup._id);
+  const user2 = await users.createUser("Akshay", "Patade", "male", "10/10/1997", "Union City", "07087", "2012415349", "a.patade@stevens.edu", "Akshay@123", userGroup._id);
 
 
   //********************************* Creating users and admin ENDS ***************************************************/
@@ -57,7 +57,7 @@ const main = async () => {
   const hoodies = await product.createProduct(
     "Relaxed Fit Hoodie for Gym",
     "Relaxed-fit sweatshirt hoodie in cotton-blend fabric with soft, brushed inside. Jersey-lined drawstring hood, kangaroo pocket, and long sleeves. Wide ribbing at cuffs and hem.",
-    24.99,
+    "24.99",
     "Hoodies",
     ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
     "hoodies-1.webp",
@@ -68,7 +68,7 @@ const main = async () => {
   const joggers = await product.createProduct(
     "Regular fit Joggers",
     "Regular-fit sweatpant joggers in cotton-blend fabric with soft, brushed inside. Drawstring and covered elastic at waistband, side-seam pockets, and ribbed hems.",
-    19.99,
+    "19.99",
     "Joggers",
     ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
     "joggers-3.webp",
@@ -79,7 +79,7 @@ const main = async () => {
   const protien = await product.createProduct(
     "5lbs OPTIMUM NUTRITION GOLD STANDARD 100% WHEY PROTEIN",
     "Post-Workout Muscle Support & Recovery 24 Grams of Protein per Serving to Help Build and Maintain Muscle. 5.5 Grams of Naturally Occurring BCAAs per Serving to Support Endurance and Recovery.The World's Best-Selling Whey Protein Powder",
-    85.55,
+    "85.55",
     "Protien Powder",
     [],
     "protien-1.webp",
@@ -90,7 +90,7 @@ const main = async () => {
   const shaker = await product.createProduct(
     "OPTIMUM NUTRITION SHAKER CUP",
     "Ease of Mixing, Consistently Great Taste 28 Oz Capacity (Measurements to 20 OzStainless Steel Blender Ball BPA & Phthalate Free",
-    9.99,
+    "9.99",
     "Shaker",
     [],
     "shaker-1.webp",
@@ -101,7 +101,7 @@ const main = async () => {
   const tank_top = await product.createProduct(
     "Fast-drying Sports Tank Top",
     "Relaxed-fit tank top in fast-drying, functional fabric to help keep you dry and cool while exercising. Trimmed crew neck and deep armholes.",
-    17.99,
+    "17.99",
     "Tank top",
     ["XS", "S", "M", "L", "XL", "XXL"],
     "tank-top-2.webp",
@@ -113,7 +113,7 @@ const main = async () => {
   const crop_top = await product.createProduct(
     "Seamless Sports Top for Women",
     "Fitted crop top in fast-drying, functional fabric to help keep you dry and cool while exercising. Round, ribbed neckline, short sleeves with trim at cuffs, and a straight-cut hem with wide ribbing. Designed with a minimum number of seams for added comfort and increased freedom of movement.",
-    17.99,
+    "17.99",
     "Crop top",
     ["XS", "S", "M", "L", "XL"],
     "crop-top-2.webp",

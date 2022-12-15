@@ -3,12 +3,15 @@ const blog = mongoCollections.blog;
 const blogsCategory = mongoCollections.blog_category
 const { ObjectId } = require("mongodb");
 let moment = require("moment");
+const helper = require("../helpers");
 
 //******************************Blog Category code start  ************************************/////////////////////
 //Creating a new blog Category
 const createBlogCategory = async (name, description) => {
 
     //Code to check all the parameters of the Blog Category
+    name = helper.checkBlogName(name);
+    description = helper.checkBlogDescription(description);
 
     //Retriving blog Category collections Category from the database
     const blogCategoryCollection = await blogsCategory();
@@ -40,6 +43,7 @@ const createBlogCategory = async (name, description) => {
 const getBlogCategoryById = async (blogCategoryid) => {
 
     //Code to check the parameters of the id
+    blogCategoryid = helper.checkObjectId(blogCategoryid);
 
     //Retriving blog Category collections Category from the database
     const blogCategoryCollection = await blogsCategory();
@@ -79,6 +83,10 @@ const getAllBlogCategories = async () => {
 const createBlog = async (user_id, blog_name, blog_category_id, description) => {
 
     //Code to check all the parameters of the blog
+    blog_name = helper.checkBlogName(blog_name);
+    description = helper.checkBlogDescription(description);
+    user_id = helper.checkObjectId(user_id);
+    blog_category_id = helper.checkObjectId(blog_category_id);
 
     //Retriving blog collections from the database
     const blogCollection = await blog();
@@ -108,14 +116,15 @@ const createBlog = async (user_id, blog_name, blog_category_id, description) => 
     const newId = insertInfo.insertedId.toString();
 
     //Retriving the product from the id and returning it
-    //   const blog = await getBlogById(newId);
-    //   return blog;
+    const blogAdded = await getBlogById(newId);
+    return blogAdded;
 }
 
 //Get the blog by Id
 const getBlogById = async (blogId) => {
 
     //Code to validate the id
+    blogId = helper.checkObjectId(blogId);
 
     //Retriving product collections from the database
     const blogCollection = await blog();
@@ -134,6 +143,7 @@ const getBlogById = async (blogId) => {
 const getBlogByCategoryId = async (categoryId) => {
 
     //Code to validate the categoryId
+    categoryId = helper.checkObjectId(categoryId);
 
     //Retriving blog collections from the database
     const blogCollection = await blog();
@@ -155,6 +165,7 @@ const getBlogByCategoryId = async (categoryId) => {
 const getBlogCategoryName = async (id) => {
 
     //Code to validate the categoryId
+    id = helper.checkObjectId(id);
 
     //Retriving blog collections from the database
     const blogCategoryCollection = await blogsCategory();
