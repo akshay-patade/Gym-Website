@@ -155,7 +155,7 @@ const getUserById = async (id) => {
 
   const userCollection = await user();
 
-  const findUser = userCollection.findOne({ _id: ObjectId(id) });
+  const findUser = await userCollection.findOne({ _id: ObjectId(id) });
 
   if (!findUser) throw {
     code: 404,
