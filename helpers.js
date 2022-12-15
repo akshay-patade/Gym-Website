@@ -317,6 +317,7 @@ const checkPassword = (field) => {
         };
 
     //Code for password
+    return field
 }
 
 /****************************  User Valiation END    **************************************/
