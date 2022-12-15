@@ -28,8 +28,52 @@ const createUserGroup = async (name, description) => {
     throw { code: 500, message: `Could not insert the user group at this time` };
   }
 
-  const newId = insertInfo.insertedId.toString();
-  return newId;
+  //Return the inserted User
+  const newUser = await getUserGroupById(insertInfo.insertedId);
+
+  return newUser;
+}
+
+//Get the user group by id
+const getUserGroupById = async (id) => {
+
+  //Validate the id
+  id = helper.checkObjectId(id);
+
+  const userGroupCollection = await userGroup();
+
+  const findUserGroup = userGroupCollection.findOne({ _id: ObjectId(id) });
+
+  if (!findUserGroup) throw {
+    code: 404,
+    message: `User Group not found`,
+  };
+
+  findUserGroup._id = findUserGroup._id.toString();
+  return findUserGroup;
+}
+
+//Get the user group by id
+const getUserGroupByName = async (name) => {
+
+  //Validate the id
+  name = helper.checkUserGroupName(name);
+
+  const userGroupCollection = await userGroup();
+
+  let regex = `^${name}$`;
+
+  name = new RegExp(regex, "i");
+
+  const findUserGroupByName = userGroupCollection.findOne({ name: name });
+
+  if (!findUserGroupByName) throw {
+    code: 404,
+    message: `User Group Name not found`,
+  };
+
+  findUserGroupByName._id = findUserGroupByName._id.toString();
+  return findUserGroupByName;
 }
 
 //Register User
@@ -42,7 +86,8 @@ const createUser = async (
   zipcode,
   cell,
   email,
-  password
+  password,
+  user_group_id
 ) => {
 
   //Code to check All the parameters
@@ -55,6 +100,7 @@ const createUser = async (
   cell = helper.checkNumber(cell);
   email = helper.checkEmail(email);
   password = helper.checkPassword(password);
+  user_group_id = helper.checkObjectId(user_group_id);
 
   //Code to insert the data in the database
   let insertStatus = {};
@@ -84,6 +130,7 @@ const createUser = async (
     password: hashPassword,
     profile_image: "",
     status: true,
+    user_group_id: user_group_id
   };
   const insertInfo = await userCollection.insertOne(new_user);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) {
@@ -91,20 +138,40 @@ const createUser = async (
     // insertStatus.alreadyExist = false;
     // insertStatus.otherErr = true;
     // return insertStatus;
-    throw "Could not insert";
+    throw { code: 500, message: "Could not insert" };
   }
 
-  insertStatus.insertedUser = true;
-  //   insertStatus.alreadyExist = false;
+  const insertedUser = await getUserById(insertInfo.insertedId);
+  insertedUser._id = insertedUser._id.toString();
 
-  return insertStatus;
+  return insertedUser;
 };
+
+//Get user by id
+const getUserById = async (id) => {
+
+  //Validate the id
+  id = helper.checkObjectId(id);
+
+  const userCollection = await user();
+
+  const findUser = userCollection.findOne({ _id: ObjectId(id) });
+
+  if (!findUser) throw {
+    code: 404,
+    message: `User  not found`,
+  };
+
+  findUser._id = findUser._id.toString();
+  return findUser;
+}
 
 //Get the User by Email Id
 const getUserByEmail = async (emailID) => {
+
   //Code to check the parameters of the emailID
-  if (!emailID) throw "Please Provide email ID";
-  emailID = emailID.trim();
+  emailID = helper.checkEmail(emailID);
+
   emailID = emailID.toLowerCase();
 
   //Retriving User collections  from the database
@@ -164,9 +231,11 @@ const getUserNameWithComments = async (getProductById, getAllUsersName) => {
 }
 
 module.exports = {
+  createUserGroup,
+  getUserGroupById,
+  getUserGroupByName,
   createUser,
   getUserByEmail,
   getAllUsersByName,
   getUserNameWithComments,
-  createUserGroup
 };

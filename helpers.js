@@ -1,4 +1,39 @@
 const moment = require("moment");
+const { ObjectId } = require("mongodb");
+//*************************Validating Object ID Start ***************************************/
+
+const checkObjectId = (field) => {
+
+    //Check  if the ID is not Empty
+    if (!field)
+        throw { code: 400, message: `Please pass ID in the parameter` };
+
+    //Check if the ID is a string
+    if (typeof field !== `string`) {
+        throw {
+            code: 400,
+            message: `ID should be a string`,
+        };
+    }
+
+    //Check if the ID does not contain only spaces
+    if (field.trim().length === 0)
+        throw {
+            code: 400,
+            message: `Dont pass only leading or trailing zeros in the ID`,
+        };
+
+    field = field.trim();
+
+    if (!ObjectId.isValid(field))
+        throw { code: 400, message: `Invalid object ID` };
+
+    return field;
+}
+
+
+
+//******************************** Validating Object ID END */
 
 /**************************User Valiation Start **************************************/
 
@@ -776,6 +811,7 @@ const checkSubscriptionDuration = async (field) => {
 
 
 module.exports = {
+    checkObjectId,
     checkFirstName,
     checkLastName,
     checkGender,
