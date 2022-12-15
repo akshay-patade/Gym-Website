@@ -1,9 +1,6 @@
 /*
-
 TemplateMo 548 Training Studio
-
 https://templatemo.com/tm-548-training-studio
-
 */
 
 /* ---------------------------------------------
@@ -21,7 +18,6 @@ Table of contents
 10. preloader
 11. search
 12. portfolio
-
 --------------------------------------------- */
 /* 
 ---------------------------------------------
@@ -1326,10 +1322,4 @@ responsive
   border-radius: 5px;
   padding: 5px;
 
-}
-
-
-.error-quantity-product{
-
-  display:hidden;
 }
