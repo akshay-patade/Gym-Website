@@ -72,7 +72,6 @@
   // });
 
   //Firstname and Lastname validation
-
   $("#firstname").on("change", function () {
     var value = $(this).val();
     var res = /^[a-zA-Z]+$/.test(value);
@@ -98,25 +97,8 @@
     }
   });
 
-  //Register Form
-  // const RegForm = document.getElementById("registerForm");
-  // if (RegForm) {
-  //   RegForm.addEventListener("submit", (event) => {
-  //     event.preventDefault();
-
-  //     if () {
-
-  //     }
-  //   });
-  // }
-  // $("#registerForm").validate({
-  //   submitHandler: function (form) {
-  //     form.submit();
-  //   },
-  // });
-
+  //Register Form Validations
   $("#registerForm").validate({
-    // Specify validation rules
     rules: {
       firstname: "required",
       lastname: "required",
@@ -148,7 +130,7 @@
         equalTo: "#password",
       },
     },
-    // Specify validation error messages
+
     messages: {
       firstname: "Please enter your firstname",
       lastname: "Please enter your lastname",
@@ -184,8 +166,9 @@
       form.submit();
     },
   });
+
+  //Login Form Validations
   $("#loginForm").validate({
-    // Specify validation rules
     rules: {
       email: {
         required: true,
@@ -196,7 +179,6 @@
         minlength: 8,
       },
     },
-    // Specify validation error messages
     messages: {
       email: {
         required: "Please provide an email",
@@ -207,62 +189,39 @@
         minlength: "Your password must be at least 8 characters long",
       },
     },
-
     submitHandler: function (form) {
       form.submit();
     },
   });
 
-  // $("#forgotPasswordForm").validate({
-  //   // Specify validation rules
-  //   rules: {
-  //     email: {
-  //       required: true,
-  //       email: true,
-  //     },
-  //   },
-  //   // Specify validation error messages
-  //   messages: {
-  //     email: {
-  //       required: "Please provide an email",
-  //       minlength: "Please enter a valid email address",
-  //     },
-  //   },
-  //   submitHandler: function (form) {
-  //     // form.submit();
-  //     $.ajax({
-  //       method: "POST",
-  //       data:""
-  //       url: "http://localhost:3000/forgotPassword",
-  //       success: function (response) {
-  //         // console.log(response);
-  //         form.submit();
-  //       },
-  //       error: function (jqXHR, exception) {
-  //         $("#not-found").css("display", "block");
-  //       },
-  //     });
-  //   },
-  // });
-
+  //Forgot Password with Ajax
   $(document).ready(function () {
+    $("#forgotPasswordForm").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true,
+        },
+      },
+      messages: {
+        email: {
+          required: "Please provide an email",
+          minlength: "Please enter a valid email address",
+        },
+      },
+    });
+
     $("#forgotPasswordForm").submit(function (event) {
       var formData = {
         email: $("#email").val(),
       };
-
       $.ajax({
         type: "POST",
         url: "http://localhost:3000/forgotPassword",
         data: formData,
-        // dataType: "json",
-        // encode: true,
-      }).done(function (data) {
-        console.log(data);
-        form.submit();
+        dataType: "json",
+        encode: true,
       });
-
-      // event.preventDefault();
     });
   });
 

@@ -18,11 +18,12 @@ const getUserByEmail = async (emailID) => {
     email: emailID,
   });
 
-  console.log(userbyemail);
-
   //Checing if the User is retrived from the database. If not throw an error
   if (userbyemail !== null) userbyemail._id = userbyemail._id.toString();
 
   // throw { code: 404, message: `User not found` };
   return userbyemail;
+};
+module.exports = {
+  getUserByEmail,
 };
