@@ -142,7 +142,7 @@ const checkDob = (field) => {
             code: 400,
             message: `Date is not valid please use MM/DD/YYYY format`,
         };
-    return result;
+    return field;
 }
 
 //Validating ADDRESS

@@ -44,14 +44,27 @@ const createUser = async (
   email,
   password
 ) => {
+
+  //Code to check All the parameters
+  firstname = helper.checkFirstName(firstname);
+  lastname = helper.checkLastName(lastname);
+  gender = helper.checkGender(gender);
+  dob = helper.checkDob(dob);
+  address = helper.checkAddress(address);
+  zipcode = helper.checkZipCode(zipcode);
+  cell = helper.checkNumber(cell);
+  email = helper.checkEmail(email);
+  password = helper.checkPassword(password);
+
+  //Code to insert the data in the database
   let insertStatus = {};
   email = email.toLowerCase();
   const userCollection = await user();
   const FoundUser = await userCollection.findOne({
     email: email,
   });
-  dob = new moment(dob).format("MM/DD/YYYY");
-  if (FoundUser !== null) throw "Username Already Exist!";
+
+  if (FoundUser) throw "Username Already Exist!";
   //     insertStatus.insertedUser = false;
   //     insertStatus.alreadyExist = true;
   //     return insertStatus;
