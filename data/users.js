@@ -4,7 +4,7 @@ const userGroup = mongoCollections.user_group
 const { ObjectId } = require("mongodb");
 let moment = require("moment");
 const bcrypt = require("bcrypt");
-const saltRounds = 16;
+const saltRounds = 10;
 const helper = require("../helpers");
 
 //Create a UserGroup for User and Admin
@@ -29,7 +29,7 @@ const createUserGroup = async (name, description) => {
   }
 
   //Return the inserted User
-  const newUser = await getUserGroupById(insertInfo.insertedId);
+  const newUser = await getUserGroupById(insertInfo.insertedId.toString());
 
   return newUser;
 }
@@ -42,7 +42,7 @@ const getUserGroupById = async (id) => {
 
   const userGroupCollection = await userGroup();
 
-  const findUserGroup = userGroupCollection.findOne({ _id: ObjectId(id) });
+  const findUserGroup = await userGroupCollection.findOne({ _id: ObjectId(id) });
 
   if (!findUserGroup) throw {
     code: 404,
@@ -65,7 +65,7 @@ const getUserGroupByName = async (name) => {
 
   name = new RegExp(regex, "i");
 
-  const findUserGroupByName = userGroupCollection.findOne({ name: name });
+  const findUserGroupByName = await userGroupCollection.findOne({ name: name });
 
   if (!findUserGroupByName) throw {
     code: 404,
@@ -141,7 +141,7 @@ const createUser = async (
     throw { code: 500, message: "Could not insert" };
   }
 
-  const insertedUser = await getUserById(insertInfo.insertedId);
+  const insertedUser = await getUserById(insertInfo.insertedId.toString());
   insertedUser._id = insertedUser._id.toString();
 
   return insertedUser;
