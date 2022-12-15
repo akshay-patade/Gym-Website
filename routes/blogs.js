@@ -22,7 +22,6 @@ router.route("/").get(async (req, res) => {
     }
 })
 
-
 // Create a route to get a blog by id
 router.route("/:id").get(async (req, res) => {
 

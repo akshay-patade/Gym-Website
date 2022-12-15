@@ -1,9 +1,33 @@
 const mongoCollections = require("../config/mongoCollections");
 const user = mongoCollections.user;
+const userGroup = mongoCollections.user_group
 const { ObjectId } = require("mongodb");
 let moment = require("moment");
 const bcrypt = require("bcrypt");
 const saltRounds = 16;
+
+//Create a UserGroup for User and Admin
+const createUserGroup = async (name, description) => {
+
+  //Code to check all the parameters
+
+  //Getting the userGroupCOllection
+  const userGroupCollection = await userGroup();
+
+  let newUserGroup = {
+    name: name,
+    description: description,
+    status: true
+  }
+  const insertInfo = await userGroupCollection.insertOne(newUserGroup);
+
+  if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+    throw { code: 500, message: `Could not insert the user group at this time` };
+  }
+
+  const newId = insertInfo.insertedId.toString();
+  return newId;
+}
 
 //Register User
 const createUser = async (
@@ -99,8 +123,34 @@ const getAllUsersByName = async () => {
   return getAllUsersByName;
 }
 
+
+const getUserNameWithComments = async (getProductById, getAllUsersName) => {
+
+  let idNameMap = new Map();
+  let result = [];
+
+  //Stroring the userid as the key and firstname + lastName as the value;
+  for (let i = 0; i < getAllUsersName.length; i++)
+    idNameMap.set(getAllUsersName[i]._id, `${getAllUsersName[i].first_name}-${getAllUsersName[i].first_name}`);
+
+  //Extracting the Array of Comment objects from the getProductById variable
+  let commentObject = getProductById.comments;
+  for (let i = 0; i < commentObject.length; i++) {
+
+    let temp = {
+      name: idNameMap.get(commentObject[i].user_id),
+      comment: commentObject[i].comment
+    }
+
+    result.push(temp);
+  }
+  return result;
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
-  getAllUsersByName
+  getAllUsersByName,
+  getUserNameWithComments,
+  createUserGroup
 };

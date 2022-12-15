@@ -2,17 +2,53 @@ const dbConnection = require("../config/mongoConnection");
 const data = require("../data");
 const product = data.products;
 const blogs = data.blogs;
+const users = data.users;
+const subscriptionPlans = data.subscriptions;
 
 
 const main = async () => {
   const db = await dbConnection.dbConnection();
   //await db.dropDatabase();
 
+  //*******************************Creating a UserGroup *******************************************/
+
+  //Creating an admin Usergroup
+  const adminGroup = await users.createUserGroup("admin", "Administrator account");
+
+  //Creating an user UserGroup
+  const userGroup = await users.createUserGroup("user", "User accounts");
+
+
+  //*******************************Creating an UserGroup ENDS *******************************************/
+
+
+  //****************************** Creating users and admin **********************************************/
+
+  //const admin1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+  //const user1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+  //const user1 = await users.createUser("admin", "admin", "male", "10/10/2000", "Stevens Institue of Technology", "07030", "2012012011", "admin@stevens.edu", "Admin@123");
+
+  //********************************* Creating users and admin ENDS ***************************************************/
+
+
+  //******************************* Creating subscription Plan *********************************************************////
+
+  const subscription1 = await subscriptionPlans.createNewSubscriptionPlan("SILVER MEMBERSHIP", "Weights & Cardio at One Club. Get in and get fit with access to all the cardio and strength training equipment you could dream of at your club of enrollment. Lift your day (and plenty more) in the functional training area and turf zone, let your endorphins loose with miles of cardio, and take the guesswork out of fitness workouts for in the club and on the go.", 100, "1 month");
+  const subscription2 = await subscriptionPlans.createNewSubscriptionPlan("GOLD MEMBERSHIP", "Level up your game and your motivation with access to premium amenities and exciting RockBottom studio classes – at any location throughout your region. Drop in for a game of hoops or a cycle class, swim laps or recover in our whirlpools and saunas, or keep fit on the go with RockBottom on-demand workouts. New experiences await your mind, body and soul with tons of freedom built in.", 200, "1 month");
+  const subscription3 = await subscriptionPlans.createNewSubscriptionPlan("PLATINUM MEMBERSHIP", "Stay connected to what makes you happy. Our top-of-the-line fitness membership leaves nothing to chance – with access to our hundreds of clubs nationwide, RockBottom on-demand workouts, RockBottom studio and virtual classes, our full suite of amenities AND two Buddy Passes so you can share your gym time with friends. Because nobody likes limits, especially you", 300, "1 month");
+
+  //******************************* Creating subscription Plan ENDS *************************************************
+
   //******************************Creating a blog category ************************************/
 
   const diet_category = await blogs.createBlogCategory("Dieting", "Blogs related to diet");
 
   const muscle_growth_category = await blogs.createBlogCategory("Muscle Growth", "Blogs related to muscle growth");
+
+  //******************************Creating a blog category ENDS ************************************/
+
+
+
 
   //***************************** Popultating Proudcts *********************************************/
   //Creating a hoddie product

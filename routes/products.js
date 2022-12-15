@@ -57,18 +57,23 @@ router.route("/:id").get(async (req, res) => {
 
     try {
         let id = xss(req.params.id);
-
         //Getting the product by Particular Id
         let getProductById = await product.getProductById(id);
 
         //Get the all the users
         let getAllUsersName = await users.getAllUsersByName();
 
+        //Create an array of object to store the name along with the comments;
+
+        let usersWithComments;
+        if (getProductById && getAllUsersName)
+            usersWithComments = await users.getUserNameWithComments(getProductById, getAllUsersName);
+
         res.status(200).render("products/productDetail", {
 
             title: getProductById.name,
             product: getProductById,
-            users: getAllUsersName,
+            comments: usersWithComments,
         })
     }
     catch (e) {
@@ -77,8 +82,6 @@ router.route("/:id").get(async (req, res) => {
             message: e.message
         })
     }
-
-
 })
 
 module.exports = router;
