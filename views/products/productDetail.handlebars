@@ -9,7 +9,7 @@
                         <div class="col-md-6">
                             <div class="images p-3">
                                 <div class="text-center p-4"> <img src="/public/images/product/{{product.product_img}}"
-                                        width="250" /> </div>
+                                        width="250" alt="Image of {{product.category}}" /> </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -37,10 +37,10 @@
                                     {{#if product.size.length}}
                                     <h6 class="text-uppercase">Size</h6>
                                     {{#each product.size}}
-                                    <label class="radio"> <input type="radio" name="size" value="{{this}}">
-                                        <span>{{this}}</span>
-                                        {{/each}}
-                                        {{/if}}
+                                    <input class="mx-2" type="radio" name="size" value="{{this}}">
+                                    <span>{{this}}</span>
+                                    {{/each}}
+                                    {{/if}}
 
                                 </div>
                                 <p class="bt-1">Quantity</p>
@@ -72,7 +72,7 @@
         {{#if product.comments.length}}
         <div class="row d-flex justify-content-center">
             {{#each product.comments}}
-            <div class="col-12">Name: {{}}</div>
+            <div class="col-12">Name of the person</div>
             <div class="col-12"></div>
             {{/each}}
         </div>
@@ -80,7 +80,5 @@
 
         <div class="overflow-auto">Somendjkbfjkbfjbsjfb bajkbsajbadbasbjdk bsjkbdsjkbdjsbdj bsb bsdjkbsdjbsdjkb
             sjkdbsjdbsjkdbsdb</div>
-    </div>
-    {{/if}}
     </div>
 </section>
