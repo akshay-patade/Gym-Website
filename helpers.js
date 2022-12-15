@@ -605,7 +605,7 @@ const checkProductImage = (field) => {
 /****************************** BLOG Validation Start *******************************************/
 
 //Validating blog Name
-const checkBlogName = async (field) => {
+const checkBlogName = (field) => {
 
     //Check if the blog Name is not Empty
     if (!field)
@@ -638,7 +638,7 @@ const checkBlogName = async (field) => {
 }
 
 //Validating blog Description
-const checkBlogDescription = async (field) => {
+const checkBlogDescription = (field) => {
 
     //Check if the blog Description is not Empty
     if (!field)
@@ -675,7 +675,7 @@ const checkBlogDescription = async (field) => {
 /*****************************  Subscription Validation Start **************************************************** */
 
 //Validating Subscription Name
-const checkSubscriptionName = async (field) => {
+const checkSubscriptionName = (field) => {
 
     //Check if the Subscription Name is not Empty
     if (!field)
@@ -708,7 +708,7 @@ const checkSubscriptionName = async (field) => {
 }
 
 //Validating Subscription Description
-const checkSubscriptionDescription = async (field) => {
+const checkSubscriptionDescription = (field) => {
 
     //Check if the Subscription Description is not Empty
     if (!field)
@@ -741,7 +741,7 @@ const checkSubscriptionDescription = async (field) => {
 }
 
 //Validating Subscription Amount
-const checkSubscriptionAmount = async (field) => {
+const checkSubscriptionAmount = (field) => {
 
     //Check if the Subscription Amountn is not Empty
     if (!field)
@@ -774,7 +774,7 @@ const checkSubscriptionAmount = async (field) => {
 }
 
 //Check Subscription Duration
-const checkSubscriptionDuration = async (field) => {
+const checkSubscriptionDuration = (field) => {
 
     //Check if the Subscription Duration is not Empty
     if (!field)

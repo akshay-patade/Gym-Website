@@ -1,11 +1,20 @@
 const mongoCollections = require("../config/mongoCollections");
 const subscriptionsPlans = mongoCollections.subscription_plan;
 const { ObjectId } = require("mongodb");
+const helper = require("../helpers");
+
 
 
 const createNewSubscriptionPlan = async (name, description, membership_amount, duration) => {
 
     //Condtion to check all the parameters
+    name = helper.checkSubscriptionName(name);
+    description = helper.checkSubscriptionDescription(description);
+    membership_amount = helper.checkSubscriptionAmount(membership_amount);
+    duration = helper.checkSubscriptionDuration(duration);
+
+    //Converting the membership_amount to float
+    membership_amount = parseFloat(membership_amount);
 
     //Importing the  subscriptionsPlans collection
     const subscriptionsPlanCollection = await subscriptionsPlans();
@@ -20,10 +29,10 @@ const createNewSubscriptionPlan = async (name, description, membership_amount, d
         status: true
     }
 
-    const insertInfo = await subscriptionsPlanCollection.insertOne(newUserGroup);
+    const insertInfo = await subscriptionsPlanCollection.insertOne(subscriptionPlan);
 
     if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-        throw { code: 500, message: `Could not insert the user group at this time` };
+        throw { code: 500, message: `Could not insert the Subscription Plans at this time` };
     }
 
     const newId = insertInfo.insertedId.toString();
@@ -35,6 +44,7 @@ const createNewSubscriptionPlan = async (name, description, membership_amount, d
 const getSubscriptionPlanById = async (subscriptionPlanId) => {
 
     //Code to validate the subscription plan Id
+    subscriptionPlanId = helper.checkObjectId(subscriptionPlanId);
 
     //Importing the  subscriptionsPlans collection
     const subscriptionsPlanCollection = await subscriptionsPlans();
@@ -53,8 +63,6 @@ const getSubscriptionPlanById = async (subscriptionPlanId) => {
 }
 
 const getAllSubscriptionPlans = async () => {
-
-    //Code to validate the subscription plan Id
 
     //Importing the  subscriptionsPlans collection
     const subscriptionsPlanCollection = await subscriptionsPlans();
