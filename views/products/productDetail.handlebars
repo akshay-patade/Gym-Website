@@ -1,5 +1,6 @@
 <section class="vh-100 bg-image mt-5" style="
-    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp')
+    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp');
+    background-repeat: repeat-y;
   ">
     <div class="container mt-5">
         <div class="row d-flex justify-content-center">
@@ -64,21 +65,30 @@
     </div>
 
     <div class="container mt-5 mx-auto ">
-        <h3 class="d-flex justify-content-center ">Comments posted by the registered user</h3>
+        <h3 class="d-flex justify-content-center ">Comments posted by the Users who have purchased this product</h3>
+
+        {{#if comments.length}}
+        <div class="overflow-auto">
+
+
+            {{#each comments}}
+            <div class="col-12 mt-3">
+                <h5>Name: {{this.name}}</h5>
+            </div>
+            <div class="col-12 mt-3">
+                <h6>Comment: {{this.comment}}</h6>
+            </div>
+            <div class="col-6 d-flex-justify-content-center mt-3">
+                <i onclick="myFunction(this)" id="thumbsup"
+                    class="fa fa-thumbs-up fa-lg icon-background-color icon-pointer"></i>
+                <i onclick="myFunction(this)" id="thumbsdown"
+                    class="fa fa-thumbs-down fa-lg mx-3 icon-background-color icon-pointer"></i>
+            </div>
 
 
 
-
-        {{#if product.comments.length}}
-        <div class="row d-flex justify-content-center">
-            {{#each product.comments}}
-            <div class="col-12">Name of the person</div>
-            <div class="col-12"></div>
             {{/each}}
         </div>
         {{/if}}
-
-        <div class="overflow-auto">Somendjkbfjkbfjbsjfb bajkbsajbadbasbjdk bsjkbdsjkbdjsbdj bsb bsdjkbsdjbsdjkb
-            sjkdbsjdbsjkdbsdb</div>
     </div>
 </section>

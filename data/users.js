@@ -191,12 +191,12 @@ const getAllUsersByName = async () => {
   const UserCollection = await user();
 
   const getAllUsersByName = await UserCollection.find({})
-    .project({ first_name: 1, last_name: 1 })
+    .project({ firstname: 1, lastname: 1 })
     .toArray();
 
-  if (!getAllUsersByName) {
+  if (getAllUsersByName.length !== 0) {
     for (let i = 0; i < getAllUsersByName.length; i++) {
-      getAllUsersByName._id = getAllUsersByName._id.toString();
+      getAllUsersByName[i]._id = getAllUsersByName[i]._id.toString();
     }
   }
 
@@ -211,14 +211,23 @@ const getUserNameWithComments = async (getProductById, getAllUsersName) => {
   for (let i = 0; i < getAllUsersName.length; i++)
     idNameMap.set(
       getAllUsersName[i]._id,
-      `${getAllUsersName[i].first_name}-${getAllUsersName[i].first_name}`
+      `${getAllUsersName[i].firstname} ${getAllUsersName[i].lastname}`
     );
 
   //Extracting the Array of Comment objects from the getProductById variable
   let commentObject = getProductById.comments;
+
+  //Converting the converting the comment Object User id to String
   for (let i = 0; i < commentObject.length; i++) {
+
+    commentObject[i].user_id = commentObject[i].user_id.toString();
+  }
+
+  for (let i = 0; i < commentObject.length; i++) {
+
+    let userName = idNameMap.get(commentObject[i].user_id);
     let temp = {
-      name: idNameMap.get(commentObject[i].user_id),
+      name: userName,
       comment: commentObject[i].comment,
     };
 

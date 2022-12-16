@@ -15,14 +15,18 @@ router.route("/").get(async (req, res) => {
         let allProducts = await product.getAllProducts();
         res.status(200).render("products/products", {
             title: "Products",
-            products: allProducts
+            products: allProducts,
+            user_header: true,
+            user_footer: true
         })
     }
 
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
-            message: e.message
+            message: e.message,
+            user_header: true,
+            user_footer: true
         })
     }
 })
@@ -41,13 +45,17 @@ router.route("/searchByName").post(async (req, res) => {
         res.status(200).render("products/products", {
 
             title: "Product Found",
-            products: getProductByName
+            products: getProductByName,
+            user_header: true,
+            user_footer: true
         })
     }
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
-            message: e.message
+            message: e.message,
+            user_header: true,
+            user_footer: true
         })
     }
 })
@@ -74,12 +82,16 @@ router.route("/:id").get(async (req, res) => {
             title: getProductById.name,
             product: getProductById,
             comments: usersWithComments,
+            user_header: true,
+            user_footer: true
         })
     }
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
-            message: e.message
+            message: e.message,
+            user_header: true,
+            user_footer: true
         })
     }
 })

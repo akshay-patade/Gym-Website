@@ -1333,3 +1333,14 @@ body{
   top: 100%;
 }
 
+.icon-background-color{
+
+  color: white;
+}
+
+.icon-pointer{
+  cursor: pointer;
+}
+
+
+
