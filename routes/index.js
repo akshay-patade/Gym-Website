@@ -13,7 +13,7 @@ const constructorMethod = (app) => {
   app.use("/products", products);
 
   app.use("*", (req, res) => {
-    res.status(404).json({ error: "Not found" });
+    res.redirect("/404");
   });
 };
 

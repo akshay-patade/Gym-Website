@@ -22,6 +22,14 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+// app.use("/logout", async (req, res, next) => {
+//   if (req.method == "GET") {
+//     req.method = "POST";
+//   }
+//   next();
+// });
+
 configRoutes(app);
 
 app.listen(3000, () => {

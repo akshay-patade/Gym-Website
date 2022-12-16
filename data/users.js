@@ -255,6 +255,7 @@ const checkUser = async (email, password) => {
 
 module.exports = {
   createUserGroup,
+  getUserById,
   getUserGroupById,
   getUserGroupByName,
   createUser,
