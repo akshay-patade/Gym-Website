@@ -103,7 +103,6 @@ const checkLastName = (field) => {
             code: 400,
             message: `lastName should be atleast 2 characters long and should contain only contain letters a-z, A-Z`,
         };
-
     return field;
 }
 
