@@ -58,19 +58,7 @@
     },
     "Please check your input."
   );
-  // function age(dateString) {
-  //   let birth = new Date(dateString);
-  //   let now = new Date();
-  //   let beforeBirth =
-  //     (() => {
-  //       birth.setDate(now.getDate());
-  //       birth.setMonth(now.getMonth());
-  //       return birth.getTime();
-  //     })() < birth.getTime()
-  //       ? 0
-  //       : 1;
-  //   return now.getFullYear() - birth.getFullYear() - beforeBirth;
-  // }
+
   function AgeMustBe12(dateString) {
     const dob = new Date(dateString);
 
@@ -82,30 +70,6 @@
     // console.log(dobPlus12.valueOf() <= Date.now());
     return dobPlus12.valueOf() <= Date.now();
   }
-  // console.log(is18orOlder("10/08/2005"));
-  // $("#registerForm").submit(function (event) {
-  //   // $("#dob").on("change", function () {
-  //   $("#AgeErr").empty();
-  //   var value = $("#dob").val();
-
-  //   if (value) {
-  //     let res = AgeMustBe12(value);
-  //     console.log(res);
-  //     if (res === false) {
-  //       // console.log(this);
-  //       $("#AgeErr").append(
-  //         '<label id="dob-age-error" class="error" for="dob">Minimum age to register is 12</label>'
-  //       );
-  //       $("#dob").addClass("error");
-  //       $("#dob").removeClass("valid");
-  //     } else {
-  //       $("#AgeErr").empty();
-  //       $("#dob").removeClass("error");
-  //       $("#dob").addClass("valid");
-  //     }
-  //   }
-  //   // });
-  // });
 
   //Date of Birth Datepicker
   var today = new Date();
@@ -174,8 +138,6 @@
       zipcode: {
         required: "Please enter your zipcode",
         regex: "Please enter valid zipcode",
-        // minlength: "Zipcode must have atleast 5 digits",
-        // maxlength: "Zipcode can have maximum 6 digits",
       },
       password: {
         required: "Please provide a password",
