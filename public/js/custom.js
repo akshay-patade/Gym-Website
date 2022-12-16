@@ -49,6 +49,64 @@
     });
   }
 
+  //Add regax As Method
+  $.validator.addMethod(
+    "regex",
+    function (value, element, regexp) {
+      var re = new RegExp(regexp);
+      return this.optional(element) || re.test(value);
+    },
+    "Please check your input."
+  );
+  // function age(dateString) {
+  //   let birth = new Date(dateString);
+  //   let now = new Date();
+  //   let beforeBirth =
+  //     (() => {
+  //       birth.setDate(now.getDate());
+  //       birth.setMonth(now.getMonth());
+  //       return birth.getTime();
+  //     })() < birth.getTime()
+  //       ? 0
+  //       : 1;
+  //   return now.getFullYear() - birth.getFullYear() - beforeBirth;
+  // }
+  function AgeMustBe12(dateString) {
+    const dob = new Date(dateString);
+
+    const dobPlus12 = new Date(
+      dob.getFullYear() + 12,
+      dob.getMonth(),
+      dob.getDate() + 1
+    );
+    // console.log(dobPlus12.valueOf() <= Date.now());
+    return dobPlus12.valueOf() <= Date.now();
+  }
+  // console.log(is18orOlder("10/08/2005"));
+  // $("#registerForm").submit(function (event) {
+  //   // $("#dob").on("change", function () {
+  //   $("#AgeErr").empty();
+  //   var value = $("#dob").val();
+
+  //   if (value) {
+  //     let res = AgeMustBe12(value);
+  //     console.log(res);
+  //     if (res === false) {
+  //       // console.log(this);
+  //       $("#AgeErr").append(
+  //         '<label id="dob-age-error" class="error" for="dob">Minimum age to register is 12</label>'
+  //       );
+  //       $("#dob").addClass("error");
+  //       $("#dob").removeClass("valid");
+  //     } else {
+  //       $("#AgeErr").empty();
+  //       $("#dob").removeClass("error");
+  //       $("#dob").addClass("valid");
+  //     }
+  //   }
+  //   // });
+  // });
+
   //Date of Birth Datepicker
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
@@ -57,81 +115,34 @@
   today = yyyy + "-" + mm + "-" + dd;
   $("#dob").attr("max", today);
 
-  //Email ID validation
-  // $(".error").hide();
-  // $(".emailID").on("change", function () {
-  //   var email = $(this).val();
-  //   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
-  //   if (!email.match(mailformat)) {
-  //     $(this).next().text("Please Enter Valid Email ID.");
-  //     $(this).next().show();
-  //   } else {
-  //     $(this).next().text("");
-  //     $(this).next().hide();
-  //   }
-  // });
-
-  //Firstname and Lastname validation
-  $("#firstname").on("change", function () {
-    var value = $(this).val();
-    var res = /^[a-zA-Z]+$/.test(value);
-    console.log(value);
-    console.log(res);
-    if (res === false) {
-      $(this).next().text("Please Enter Valid Firstname");
-      $(this).next().show();
-    } else {
-      $(this).next().text("");
-      $(this).next().hide();
-    }
-  });
-  $("#firstname").on("blur", function () {
-    var value = $(this).val();
-    var res = /^[a-zA-Z]+$/.test(value);
-    // console.log(res);
-    if (res === false) {
-      $(this).next().text("Please Enter Valid Firstname");
-      $(this).next().show();
-    } else {
-      $(this).next().text("");
-      $(this).next().hide();
-    }
-  });
-  $("#lastname").on("change", function () {
-    var value = $(this).val();
-    var res = /^[a-zA-Z]+$/.test(value);
-    // console.log(res);
-    if (res === false) {
-      $(this).next().text("Please Enter Valid Lastname");
-      $(this).next().show();
-    } else {
-      $(this).next().text("");
-      $(this).next().hide();
-    }
-  });
-
   //Register Form Validations
   $("#registerForm").validate({
     rules: {
-      firstname: "required",
-      lastname: "required",
+      firstname: {
+        required: true,
+        regex: /^[a-zA-Z]+$/,
+      },
+      lastname: {
+        required: true,
+        regex: /^[a-zA-Z]+$/,
+      },
       address: "required",
       gender: "required",
-      dob: "required",
-
+      dob: {
+        required: true,
+      },
       zipcode: {
         required: true,
-        number: true,
+        regex: /^\d{5}(-\d{4})?$/,
       },
       email: {
         required: true,
-        email: true,
+        regex:
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       },
       cell: {
         required: true,
-        number: true,
-        minlength: 10,
-        maxlength: 10,
+        regex: /^[0]?[0-9]\d{9}$/,
       },
       password: {
         required: true,
@@ -145,14 +156,26 @@
     },
 
     messages: {
-      firstname: "Please enter your firstname",
-      lastname: "Please enter your lastname",
+      firstname: {
+        required: "Please enter your firstname",
+        regex:
+          "Please enter valid firstname (No space or numeric values allowed, one word only)",
+      },
+      lastname: {
+        required: "Please enter your lastname",
+        regex:
+          "Please enter valid lastname (No space or numeric values allowed, one word only)",
+      },
       address: "Please enter your address",
       gender: "This field is required",
-      dob: "This field is required",
+      dob: {
+        required: "Please Select Date of Birth",
+      },
       zipcode: {
         required: "Please enter your zipcode",
-        number: "Please enter numeric value",
+        regex: "Please enter valid zipcode",
+        // minlength: "Zipcode must have atleast 5 digits",
+        // maxlength: "Zipcode can have maximum 6 digits",
       },
       password: {
         required: "Please provide a password",
@@ -165,18 +188,23 @@
       },
       email: {
         required: "Please provide an email",
-        minlength: "Please enter a valid email address",
+        regex: "Please enter a valid email address",
       },
       cell: {
         required: "Please Enter Cell Number",
-        number: "Please Enter Numeric value",
-        minlength: "Cell number must be minimum of 10 digits",
-        maxlength: "Cell number can be maximum of 10 digits",
+        regex: "Please Enter valid Cell Number",
       },
     },
 
     submitHandler: function (form) {
-      form.submit();
+      console.log(AgeMustBe12($("#dob").val()));
+      if (AgeMustBe12($("#dob").val()) === true) {
+        form.submit();
+      } else {
+        $("#AgeErr").append(
+          '<label id="dob-age-error" class="error" for="dob">Minimum age to register is 12</label>'
+        );
+      }
     },
   });
 
@@ -185,7 +213,8 @@
     rules: {
       email: {
         required: true,
-        email: true,
+        regex:
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       },
       password: {
         required: true,
@@ -195,7 +224,7 @@
     messages: {
       email: {
         required: "Please provide an email",
-        minlength: "Please enter a valid email address",
+        regex: "Please enter a valid email address",
       },
       password: {
         required: "Please provide a password",
@@ -213,13 +242,14 @@
       rules: {
         email: {
           required: true,
-          email: true,
+          regex:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         },
       },
       messages: {
         email: {
           required: "Please provide an email",
-          minlength: "Please enter a valid email address",
+          regex: "Please enter a valid email address",
         },
       },
     });

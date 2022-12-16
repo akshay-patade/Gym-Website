@@ -115,6 +115,8 @@ const createUser = async (
 
   if (FoundUser) throw "Username Already Exist!";
 
+  dob = new moment(dob).format("MM-DD-YYYY");
+
   const hashPassword = await bcrypt.hash(password, saltRounds);
 
   let new_user = {
@@ -137,6 +139,7 @@ const createUser = async (
   }
 
   const insertedUser = await getUserById(insertInfo.insertedId.toString());
+  insertedUser.insertedUser = true;
   insertedUser._id = insertedUser._id.toString();
 
   return insertedUser;

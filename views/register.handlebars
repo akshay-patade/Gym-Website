@@ -17,6 +17,10 @@
                   {{#if AlreadyExist}}
                   <div class="error"> Account already Exist with this Email Address!</div>
                   {{/if}}
+
+                  {{#if BadInput}}
+                  <div class="error"> {{error}}</div>
+                  {{/if}}
                   <div class="row">
                     <div class="form-outline form-white mb-4 col-6">
                       <label class="form-label" for="firstname">First Name</label>
@@ -43,6 +47,7 @@
                     <div class="form-outline form-white mb-4 col-6">
                       <label class="form-label" for="dob">Date of Birth</label>
                       <input type="date" id="dob" name="dob" class="form-control form-control-lg" />
+                      <div id="AgeErr"></div>
                     </div>
                   </div>
                   <div class="row">

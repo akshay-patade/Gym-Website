@@ -61,7 +61,6 @@ router
 
     try {
       userPostData.email = userPostData.email.trim();
-      userPostData.password = userPostData.password.trim();
       const { email, password } = userPostData;
 
       const ResultStatus = await users.checkUser(email, password);
@@ -108,6 +107,8 @@ router
     });
   })
   .post(async (req, res) => {
+    const group_id = await users.getUserGroupByName("user");
+
     const userPostData = req.body;
 
     // try {
@@ -151,7 +152,8 @@ router
         zipcode,
         cell,
         email,
-        password
+        password,
+        group_id._id
       );
 
       if (ResultStatus.insertedUser === true) {
@@ -171,13 +173,20 @@ router
           user_header: true,
           user_footer: true,
         });
-      } else {
-        e = "Internal Server Error";
-        // res.status(500).json({ error: e });
-        res.status(500).render("Error", {
+      } else if (e.code === 500) {
+        res.status(e.code).render("Error", {
           hasErrors: true,
-          error: e,
+          error: "Internal Server Error",
           title: "Error",
+          user_header: true,
+          user_footer: true,
+        });
+      } else {
+        res.status(400).render("register", {
+          AlreadyExist: false,
+          BadInput: true,
+          error: e.message,
+          title: "Register",
           user_header: true,
           user_footer: true,
         });
