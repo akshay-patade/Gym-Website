@@ -1,8 +1,55 @@
+
+
 (function ($) {
   "use strict";
 
+  var thumbsup = false;
+  var thumbsdown = false;
+
   $(function () {
     $("#tabs").tabs();
+  });
+
+  $("#thumbsup").on("click", function (e) {
+
+    e.preventDefault();
+    console.log("Thumbsup is pressed");
+
+    //Check if the user is logged in
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:3000/isLoggedIn",
+    }).done(function (response) {
+
+      if (response.status) {
+
+        if (!thumbsup) {
+
+          thumbsup = true;
+
+          $("#thumbsup").removeClass("icon-background-color");
+          $("#thumbsup").addClass("thumbsup-enabled");
+        }
+
+        else {
+
+          thumbsup = false;
+          $("#thumbsup").removeClass("thumbsup-enabled");
+          $("#thumbsup").addClass("icon-background-color");
+        }
+      }
+
+      else {
+        alert("User must be logged in to drop a like")
+
+      }
+    });
+
+
+  });
+
+  $("#thumbsdown").on("click", function () {
+    console.log("ThumbDown is pressed");
   });
 
   $(window).scroll(function () {

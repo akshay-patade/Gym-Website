@@ -1342,5 +1342,15 @@ body{
   cursor: pointer;
 }
 
+.thumbsup-enabled{
+  color: red;
+}
+
+.thumbsdown-enabled{
+  color: black;
+}
+
+
+
 
 

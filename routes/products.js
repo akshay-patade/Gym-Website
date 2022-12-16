@@ -13,21 +13,55 @@ router.route("/").get(async (req, res) => {
     try {
         //validating the id;
         let allProducts = await product.getAllProducts();
-        res.status(200).render("products/products", {
-            title: "Products",
-            products: allProducts,
-            user_header: true,
-            user_footer: true
-        })
+
+        if (req.session.userdata) {
+            return res.status(200).render("products/products", {
+                title: "Products",
+                products: allProducts,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+            return res.status(200).render("products/products", {
+                title: "Products",
+                products: allProducts,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+
+            });
+        }
     }
 
     catch (e) {
-        res.status(e.code).render("products/productsNotFound", {
-            title: "Not found",
-            message: e.message,
-            user_header: true,
-            user_footer: true
-        })
+
+        if (req.session.userdata) {
+            return res.status(e.code).render("products/productsNotFound", {
+                title: "Not found",
+                message: e.message,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(e.code).render("products/productsNotFound", {
+                title: "Not found",
+                message: e.message,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
 })
 
@@ -41,22 +75,54 @@ router.route("/searchByName").post(async (req, res) => {
 
         let getProductByName = await product.getProductByName(name);
 
+        if (req.session.userdata) {
+            return res.status(200).render("products/products", {
 
-        res.status(200).render("products/products", {
+                title: "Product Found",
+                products: getProductByName,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
 
-            title: "Product Found",
-            products: getProductByName,
-            user_header: true,
-            user_footer: true
-        })
+        else {
+            return res.status(200).render("products/products", {
+
+                title: "Product Found",
+                products: getProductByName,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
     catch (e) {
-        res.status(e.code).render("products/productsNotFound", {
-            title: "Not found",
-            message: e.message,
-            user_header: true,
-            user_footer: true
-        })
+
+        if (req.session.userdata) {
+            return res.status(e.code).render("products/productsNotFound", {
+                title: "Not found",
+                message: e.message,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(e.code).render("products/productsNotFound", {
+                title: "Not found",
+                message: e.message,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
 })
 
@@ -77,21 +143,40 @@ router.route("/:id").get(async (req, res) => {
         if (getProductById && getAllUsersName)
             usersWithComments = await users.getUserNameWithComments(getProductById, getAllUsersName);
 
-        res.status(200).render("products/productDetail", {
+        if (req.session.userdata) {
+            return res.status(200).render("products/productDetail", {
 
-            title: getProductById.name,
-            product: getProductById,
-            comments: usersWithComments,
-            user_header: true,
-            user_footer: true
-        })
+                title: getProductById.name,
+                product: getProductById,
+                comments: usersWithComments,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(200).render("products/productDetail", {
+
+                title: getProductById.name,
+                product: getProductById,
+                comments: usersWithComments,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
     catch (e) {
         res.status(e.code).render("products/productsNotFound", {
             title: "Not found",
             message: e.message,
             user_header: true,
-            user_footer: true
+            user_footer: true,
+            NotloggedIn: true,
         })
     }
 })

@@ -19,18 +19,12 @@ router.route("/").get(async (req, res) => {
     return;
   }
 
-  //code here for GET
-
-  //const products = await product.getAllProducts();
-
-  //Get all the blogs category
   try {
-    const blogCategoryId = await blog_category.getAllBlogCategories();
+
     res.status(200).render("index", {
       title: "Welcome",
       user_header: true,
       user_footer: true,
-      blogCategoryId: blogCategoryId,
       NotloggedIn: true,
     });
     return;
@@ -336,6 +330,21 @@ router.route("/404").get(async (req, res) => {
     });
     return;
   }
+});
+
+
+router.route("/isLoggedIn").get(async (req, res) => {
+
+  if (req.session.userdata) {
+
+    return res.status(200).json({
+      status: true
+    });
+  }
+  return res.status(200).json({
+    status: false
+  })
+
 });
 
 module.exports = router;
