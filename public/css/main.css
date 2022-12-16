@@ -1323,3 +1323,13 @@ responsive
   padding: 5px;
 
 }
+
+body{
+  min-height: 100vh;
+}
+
+.fix-footer-issue{
+  position: sticky;
+  top: 100%;
+}
+
