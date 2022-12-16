@@ -185,6 +185,7 @@
       password: {
         required: true,
         minlength: 8,
+        regex: /^[A-Za-z0-9\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/,
       },
     },
     messages: {
@@ -195,6 +196,7 @@
       password: {
         required: "Please provide a password",
         minlength: "Your password must be at least 8 characters long",
+        regex: "Password must not include whitespace",
       },
     },
     submitHandler: function (form) {
