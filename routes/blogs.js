@@ -1,3 +1,4 @@
+const e = require("express");
 const express = require("express");
 const router = express.Router();
 const path = require("path");
@@ -9,21 +10,56 @@ router.route("/").get(async (req, res) => {
     try {
 
         let blogs_category = await blogs.getAllBlogCategories();
-        return res.status(200).render("blogs/blogsCategory", {
-            title: "Blog Category",
-            blogs_category: blogs_category,
-            user_header: true,
-            user_footer: true
 
-        });
+        if (req.session.userdata) {
+
+            return res.status(200).render("blogs/blogsCategory", {
+                title: "Blog Category",
+                blogs_category: blogs_category,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+
+            });
+        }
+
+        else {
+
+            return res.status(200).render("blogs/blogsCategory", {
+                title: "Blog Category",
+                blogs_category: blogs_category,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
     catch (e) {
 
-        return res.status(e.code).render("blogs/blogsNotFound", {
-            title: "Blogs Not Found",
-            user_header: true,
-            user_footer: true
-        });
+        if (req.session.userdata) {
+            return res.status(e.code).render("blogs/blogsNotFound", {
+                title: "Blogs Not Found",
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(e.code).render("blogs/blogsNotFound", {
+                title: "Blogs Not Found",
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+
+
+        }
     }
 })
 
@@ -36,12 +72,29 @@ router.route("/:id").get(async (req, res) => {
         let blogData = await blogs.getBlogById(id);
 
 
-        res.status(200).render("blogs/blogsData", {
-            title: blogData.blog_name,
-            blog: blogData,
-            user_header: true,
-            user_footer: true
-        });
+        if (req.session.userdata) {
+
+            return res.status(200).render("blogs/blogsData", {
+                title: blogData.blog_name,
+                blog: blogData,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(200).render("blogs/blogsData", {
+                title: blogData.blog_name,
+                blog: blogData,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
     catch (e) {
         res.status(e.code).json(e.message);
@@ -60,19 +113,53 @@ router.route("/category/:id").get(async (req, res) => {
         let blogCategoryId = blogsData[0].blog_category_id.toString();
 
         let name = await blogs.getBlogCategoryName(blogCategoryId);
-        res.status(200).render("blogs/blogsList", {
-            title: name.name,
-            blogs: blogsData,
-            user_header: true,
-            user_footer: true
-        });
+
+        if (req.session.userdata) {
+            return res.status(200).render("blogs/blogsList", {
+                title: name.name,
+                blogs: blogsData,
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(200).render("blogs/blogsList", {
+                title: name.name,
+                blogs: blogsData,
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
     catch (e) {
-        res.status(404).render("blogs/blogsNotFound", {
-            title: "BlogNotfound",
-            user_header: true,
-            user_footer: true
-        })
+
+        if (req.session.userdata) {
+
+            return res.status(404).render("blogs/blogsNotFound", {
+                title: "BlogNotfound",
+                user_header: true,
+                user_footer: true,
+                loggedIn: true,
+                UserFullname: req.session.other.UserFullname,
+                profileimage: req.session.other.profileimage,
+            });
+        }
+
+        else {
+
+            return res.status(404).render("blogs/blogsNotFound", {
+                title: "BlogNotfound",
+                user_header: true,
+                user_footer: true,
+                NotloggedIn: true,
+            });
+        }
     }
 })
 

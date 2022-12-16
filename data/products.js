@@ -150,7 +150,8 @@ const updateProduct = async (
 const getProductByName = async (name) => {
 
   //Code to check all the parameters
-  name = helper.checkProductName(name);
+
+  //name = helper.checkProductName(name);
 
   //Retriving product collections from the database
   const productCollection = await product();
