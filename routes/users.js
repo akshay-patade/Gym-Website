@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const data = require("../data");
+const helper = require("../helpers");
 const blog_category = data.blogs;
 const users = data.users;
 
@@ -24,14 +25,77 @@ router.route("/").get(async (req, res) => {
   }
 });
 
-router.route("/login").get(async (req, res) => {
-  //code here for GET
-  res.status(200).render("login", {
-    title: "Login",
-    user_header: true,
-    user_footer: true,
+router
+  .route("/login")
+  .get(async (req, res) => {
+    //code here for GET
+    res.status(200).render("login", {
+      title: "Login",
+      user_header: true,
+      user_footer: true,
+    });
+  })
+  .post(async (req, res) => {
+    // if (req.session.user) {
+    //   return res.redirect("/dashboard");
+    // }
+
+    const userPostData = req.body;
+
+    try {
+      if (!userPostData.email || !userPostData.password)
+        throw "Username and Password Must be supplied";
+
+      helper.checkEmail(userPostData.email);
+      helper.checkPassword(userPostData.password);
+    } catch (e) {
+      res.status(e.code).render("login", {
+        error: e.message,
+        hasErrors: true,
+        title: "Login",
+        user_header: true,
+        user_footer: true,
+      });
+      return;
+    }
+
+    try {
+      userPostData.email = userPostData.email.trim();
+      userPostData.password = userPostData.password.trim();
+      const { email, password } = userPostData;
+
+      const ResultStatus = await users.checkUser(email, password);
+      // console.log(ResultStatus.user_id);
+      if (ResultStatus.authenticatedUser === true) {
+        req.session.userdata = {
+          email: userPostData.email,
+          user_id: ResultStatus.user_id,
+          name: ResultStatus.name,
+        };
+        console.log(req.session.userdata);
+        // req.session.user_id = ResultStatus.user_id;
+        // res.redirect("/dashboard");
+        res.status(200).render("dashboard", {
+          title: "Dashboard",
+          user_header: true,
+          user_footer: true,
+        });
+      }
+    } catch (e) {
+      if (e == "No User found!" || e == "Wrong Password! Try Again!") {
+        res.status(404).render("login", {
+          error: e,
+          hasErrors: true,
+          title: "Login",
+          user_header: true,
+          user_footer: true,
+        });
+      } else {
+        res.status(500).json({ error: e.message });
+      }
+      return;
+    }
   });
-});
 
 router
   .route("/register")
@@ -161,7 +225,5 @@ router
       });
     }
   });
-
-
 
 module.exports = router;

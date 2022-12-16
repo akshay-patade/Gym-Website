@@ -9,14 +9,16 @@
             <div class="card-body p-5 text-center">
 
               <div class="mb-md-3 mt-md-2 pb-3">
-                <form id="loginForm" name="loginForm" action="" method="post">
+                <form id="loginForm" name="loginForm" action="/login" method="post">
                   <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                   <p class="text-white-50 mb-5">Please enter your login and
                     password!</p>
-
+                  {{#if hasErrors}}
+                  <div class="error"> {{error}}</div>
+                  {{/if}}
                   <div class="form-outline form-white mb-4">
                     <label class="form-label" for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                    <input type="text" id="email" name="email" class="form-control form-control-lg" />
 
                   </div>
 

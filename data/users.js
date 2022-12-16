@@ -1,6 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const user = mongoCollections.user;
-const userGroup = mongoCollections.user_group
+const userGroup = mongoCollections.user_group;
 const { ObjectId } = require("mongodb");
 let moment = require("moment");
 const bcrypt = require("bcrypt");
@@ -9,7 +9,6 @@ const helper = require("../helpers");
 
 //Create a UserGroup for User and Admin
 const createUserGroup = async (name, description) => {
-
   //Code to check all the parameters
   name = helper.checkUserGroupName(name);
   description = helper.checkUserGroupDescription(description);
@@ -20,42 +19,46 @@ const createUserGroup = async (name, description) => {
   let newUserGroup = {
     name: name,
     description: description,
-    status: true
-  }
+    status: true,
+  };
   const insertInfo = await userGroupCollection.insertOne(newUserGroup);
 
   if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-    throw { code: 500, message: `Could not insert the user group at this time` };
+    throw {
+      code: 500,
+      message: `Could not insert the user group at this time`,
+    };
   }
 
   //Return the inserted User
   const newUser = await getUserGroupById(insertInfo.insertedId.toString());
 
   return newUser;
-}
+};
 
 //Get the user group by id
 const getUserGroupById = async (id) => {
-
   //Validate the id
   id = helper.checkObjectId(id);
 
   const userGroupCollection = await userGroup();
 
-  const findUserGroup = await userGroupCollection.findOne({ _id: ObjectId(id) });
+  const findUserGroup = await userGroupCollection.findOne({
+    _id: ObjectId(id),
+  });
 
-  if (!findUserGroup) throw {
-    code: 404,
-    message: `User Group not found`,
-  };
+  if (!findUserGroup)
+    throw {
+      code: 404,
+      message: `User Group not found`,
+    };
 
   findUserGroup._id = findUserGroup._id.toString();
   return findUserGroup;
-}
+};
 
 //Get the user group by id
 const getUserGroupByName = async (name) => {
-
   //Validate the id
   name = helper.checkUserGroupName(name);
 
@@ -67,14 +70,15 @@ const getUserGroupByName = async (name) => {
 
   const findUserGroupByName = await userGroupCollection.findOne({ name: name });
 
-  if (!findUserGroupByName) throw {
-    code: 404,
-    message: `User Group Name not found`,
-  };
+  if (!findUserGroupByName)
+    throw {
+      code: 404,
+      message: `User Group Name not found`,
+    };
 
   findUserGroupByName._id = findUserGroupByName._id.toString();
   return findUserGroupByName;
-}
+};
 
 //Register User
 const createUser = async (
@@ -89,7 +93,6 @@ const createUser = async (
   password,
   user_group_id
 ) => {
-
   //Code to check All the parameters
   firstname = helper.checkFirstName(firstname);
   lastname = helper.checkLastName(lastname);
@@ -111,10 +114,6 @@ const createUser = async (
   });
 
   if (FoundUser) throw "Username Already Exist!";
-  //     insertStatus.insertedUser = false;
-  //     insertStatus.alreadyExist = true;
-  //     return insertStatus;
-  //   }
 
   const hashPassword = await bcrypt.hash(password, saltRounds);
 
@@ -130,14 +129,10 @@ const createUser = async (
     password: hashPassword,
     profile_image: "",
     status: true,
-    user_group_id: user_group_id
+    user_group_id: user_group_id,
   };
   const insertInfo = await userCollection.insertOne(new_user);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-    // insertStatus.insertedUser = false;
-    // insertStatus.alreadyExist = false;
-    // insertStatus.otherErr = true;
-    // return insertStatus;
     throw { code: 500, message: "Could not insert" };
   }
 
@@ -149,7 +144,6 @@ const createUser = async (
 
 //Get user by id
 const getUserById = async (id) => {
-
   //Validate the id
   id = helper.checkObjectId(id);
 
@@ -157,18 +151,18 @@ const getUserById = async (id) => {
 
   const findUser = await userCollection.findOne({ _id: ObjectId(id) });
 
-  if (!findUser) throw {
-    code: 404,
-    message: `User  not found`,
-  };
+  if (!findUser)
+    throw {
+      code: 404,
+      message: `User  not found`,
+    };
 
   findUser._id = findUser._id.toString();
   return findUser;
-}
+};
 
 //Get the User by Email Id
 const getUserByEmail = async (emailID) => {
-
   //Code to check the parameters of the emailID
   emailID = helper.checkEmail(emailID);
 
@@ -190,45 +184,71 @@ const getUserByEmail = async (emailID) => {
 };
 
 const getAllUsersByName = async () => {
-
   //Retriving User collections  from the database
   const UserCollection = await user();
 
-  const getAllUsersByName = await UserCollection.find({}).project({ first_name: 1, last_name: 1 }).toArray();
+  const getAllUsersByName = await UserCollection.find({})
+    .project({ first_name: 1, last_name: 1 })
+    .toArray();
 
   if (!getAllUsersByName) {
-
     for (let i = 0; i < getAllUsersByName.length; i++) {
       getAllUsersByName._id = getAllUsersByName._id.toString();
     }
   }
 
   return getAllUsersByName;
-}
-
+};
 
 const getUserNameWithComments = async (getProductById, getAllUsersName) => {
-
   let idNameMap = new Map();
   let result = [];
 
   //Stroring the userid as the key and firstname + lastName as the value;
   for (let i = 0; i < getAllUsersName.length; i++)
-    idNameMap.set(getAllUsersName[i]._id, `${getAllUsersName[i].first_name}-${getAllUsersName[i].first_name}`);
+    idNameMap.set(
+      getAllUsersName[i]._id,
+      `${getAllUsersName[i].first_name}-${getAllUsersName[i].first_name}`
+    );
 
   //Extracting the Array of Comment objects from the getProductById variable
   let commentObject = getProductById.comments;
   for (let i = 0; i < commentObject.length; i++) {
-
     let temp = {
       name: idNameMap.get(commentObject[i].user_id),
-      comment: commentObject[i].comment
-    }
+      comment: commentObject[i].comment,
+    };
 
     result.push(temp);
   }
   return result;
-}
+};
+
+const checkUser = async (email, password) => {
+  helper.checkEmail(email);
+  helper.checkPassword(password);
+  let result;
+  email = email.toLowerCase();
+
+  const userCollection = await user();
+
+  const FoundUser = await userCollection.findOne({
+    email: email,
+  });
+  if (FoundUser === null) throw "No User found!";
+
+  let compareToSherlock = false;
+  compareToSherlock = await bcrypt.compare(password, FoundUser.password);
+
+  if (compareToSherlock === false) throw "Wrong Password! Try Again!";
+
+  result = {
+    authenticatedUser: true,
+    user_id: FoundUser._id.toString(),
+    name: FoundUser.firstname,
+  };
+  return result;
+};
 
 module.exports = {
   createUserGroup,
@@ -238,4 +258,5 @@ module.exports = {
   getUserByEmail,
   getAllUsersByName,
   getUserNameWithComments,
+  checkUser,
 };

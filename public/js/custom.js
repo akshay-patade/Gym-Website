@@ -75,6 +75,19 @@
   $("#firstname").on("change", function () {
     var value = $(this).val();
     var res = /^[a-zA-Z]+$/.test(value);
+    console.log(value);
+    console.log(res);
+    if (res === false) {
+      $(this).next().text("Please Enter Valid Firstname");
+      $(this).next().show();
+    } else {
+      $(this).next().text("");
+      $(this).next().hide();
+    }
+  });
+  $("#firstname").on("blur", function () {
+    var value = $(this).val();
+    var res = /^[a-zA-Z]+$/.test(value);
     // console.log(res);
     if (res === false) {
       $(this).next().text("Please Enter Valid Firstname");
