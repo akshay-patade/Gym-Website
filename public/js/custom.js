@@ -236,6 +236,19 @@
     });
   });
 
+  $("#ProfileForm #email").prop("disabled", true);
+  //ProfileForm
+  let date_dob = new Date($("#ProfileForm #hiddendobVal").val());
+  let final_dob =
+    date_dob.getFullYear() +
+    "-" +
+    (date_dob.getMonth() + 1) +
+    "-" +
+    date_dob.getDate();
+  console.log(final_dob);
+  $("#ProfileForm #gender").val($("#ProfileForm #hiddenGenderVal").val());
+  $("#ProfileForm #dob").val(final_dob);
+
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);
 

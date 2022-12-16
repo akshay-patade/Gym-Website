@@ -289,20 +289,26 @@ router.route("/dashboard").get(async (req, res) => {
     });
     return;
   } else {
-    res.redirect("/");
+    res.redirect("/404");
   }
 });
 router.route("/UserProfile").get(async (req, res) => {
-  //code here for GET
-  res.status(200).render("UserProfile", {
-    title: "My Profile",
-    dashHeader: true,
-    dashfooter: true,
-    loggedIn: true,
-    UserFullname: req.session.other.UserFullname,
-    profileimage: req.session.other.profileimage,
-  });
-  return;
+  if (req.session.userdata) {
+    const Result = await users.getUserById(req.session.userdata.user_id);
+    //code here for GET
+    res.status(200).render("UserProfile", {
+      title: "My Profile",
+      dashHeader: true,
+      dashfooter: true,
+      loggedIn: true,
+      UserFullname: req.session.other.UserFullname,
+      profileimage: req.session.other.profileimage,
+      formdata: Result,
+    });
+    return;
+  } else {
+    res.redirect("/404");
+  }
 });
 router.route("/logout").get(async (req, res) => {
   req.session.destroy();
