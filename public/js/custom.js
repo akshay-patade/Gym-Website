@@ -111,10 +111,12 @@
       password: {
         required: true,
         minlength: 8,
+        regex: /^[A-Za-z0-9\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/,
       },
       cpassword: {
         required: true,
         minlength: 8,
+        regex: /^[A-Za-z0-9\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/,
         equalTo: "#password",
       },
     },
@@ -142,10 +144,12 @@
       password: {
         required: "Please provide a password",
         minlength: "Your password must be at least 8 characters long",
+        regex: "Password must not include whitespace",
       },
       cpassword: {
         required: "Please enter Confirm Password",
         minlength: "Your Confirm Password must be at least 8 characters long",
+        regex: "Password must not include whitespace",
         equalTo: "Confirm Password must match with Password",
       },
       email: {
