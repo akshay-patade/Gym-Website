@@ -5,6 +5,27 @@
     $("#tabs").tabs();
   });
 
+  $("#buysubscription").click(function () {
+
+    var value = $('#plan option:selected').val();
+    if (value == "select-plan")
+      alert("Please select the plan");
+
+    console.log(value);
+  })
+  $("#plan").change(function (e) {
+
+    e.preventDefault();
+
+    var value = $('#plan option:selected').val();
+    if (value == "select-plan") {
+      console.log("Don't do anything");
+    }
+    else {
+      console.log("Go to the server fetch the price and calculate the discount and final price");
+    }
+  })
+
   $(".like").on("click", function (e) {
 
     var temp = $(".like").attr('id');

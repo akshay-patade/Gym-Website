@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const data = require("../data");
-const user = data.users;
-const product = data.subscriptions;
+const users = data.users;
+const subscriptions = data.subscriptions;
 const xss = require("xss");
 
 
@@ -18,6 +18,10 @@ router.route("/").get(async (req, res) => {
         }
         else {
 
+            //Get all the user Info and subscription info
+            let userInfo = await users.getUserById(req.session.userdata.user_id);
+            let subscriptionInfo = await subscriptions.getAllSubscriptionPlans();
+
             return res.status(200).render("subscriptions/buySubscriptions", {
                 title: "Buy Subscriptions",
                 user_header: true,
@@ -25,6 +29,8 @@ router.route("/").get(async (req, res) => {
                 loggedIn: true,
                 UserFullname: req.session.other.UserFullname,
                 profileimage: req.session.other.profileimage,
+                userInfo: userInfo,
+                subscriptionInfo: subscriptionInfo
             });
         }
     }
