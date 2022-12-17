@@ -204,6 +204,7 @@ const getAllUsersByName = async () => {
 };
 
 const getUserNameWithComments = async (getProductById, getAllUsersName) => {
+
   let idNameMap = new Map();
   let result = [];
 
@@ -229,6 +230,7 @@ const getUserNameWithComments = async (getProductById, getAllUsersName) => {
     let temp = {
       name: userName,
       comment: commentObject[i].comment,
+      id: commentObject[i]._id.toString()
     };
 
     result.push(temp);

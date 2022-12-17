@@ -130,6 +130,7 @@ router.route("/searchByName").post(async (req, res) => {
 router.route("/:id").get(async (req, res) => {
 
     try {
+
         let id = xss(req.params.id);
         //Getting the product by Particular Id
         let getProductById = await product.getProductById(id);
@@ -144,6 +145,7 @@ router.route("/:id").get(async (req, res) => {
             usersWithComments = await users.getUserNameWithComments(getProductById, getAllUsersName);
 
         if (req.session.userdata) {
+            req.session.productId = getProductById._id;
             return res.status(200).render("products/productDetail", {
 
                 title: getProductById.name,
@@ -180,5 +182,55 @@ router.route("/:id").get(async (req, res) => {
         })
     }
 })
+
+// Add the like
+router.route("/addLike").post(async (req, res) => {
+
+    try {
+
+        let commentId = xss(req.body.commentId);
+        let productId = req.session.productId;
+        let userId = req.session.userdata.user_id;
+
+        let result = await product.addLikeProduct(commentId, productId, userId);
+
+        return res.status(200).json({
+            result
+        })
+    }
+
+    catch (e) {
+
+        return res.status(200).json({
+            status: false
+        })
+    }
+})
+
+// Add the dislike
+router.route("/addDislike").post(async (req, res) => {
+
+    try {
+
+        let commentId = xss(req.body.commentId);
+        let productId = req.session.productId;
+        let userId = req.session.userdata.user_id;
+
+        let result = await product.addDislikeProduct(commentId, productId, userId);
+
+        return res.status(200).json({
+            result
+        })
+    }
+
+    catch (e) {
+
+        return res.status(200).json({
+            status: false
+        })
+    }
+})
+
+
 
 module.exports = router;

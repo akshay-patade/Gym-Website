@@ -1,4 +1,4 @@
-<section class="vh-100 bg-image mt-5" style="
+<section class="bg-image mt-5" style="
     background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp');
     background-repeat: repeat-y;
   ">
@@ -79,11 +79,10 @@
                 <h6>Comment: {{this.comment}}</h6>
             </div>
             <div class="col-6 d-flex-justify-content-center mt-3">
-                <i id="thumbsup" class="fa fa-thumbs-up fa-lg icon-background-color icon-pointer"></i>
-                <i id="thumbsdown" class="fa fa-thumbs-down fa-lg mx-3 icon-background-color icon-pointer"></i>
+                <i id="{{this.id}}-like" class="fa fa-thumbs-up fa-lg icon-background-color icon-pointer like"></i>
+                <i id="{{this.id}}-dislike"
+                    class="fa fa-thumbs-down fa-lg mx-3 icon-background-color icon-pointer dislike"></i>
             </div>
-
-
             {{/each}}
         </div>
         {{/if}}

@@ -1,19 +1,21 @@
 
-
 (function ($) {
   "use strict";
-
-  var thumbsup = false;
-  var thumbsdown = false;
 
   $(function () {
     $("#tabs").tabs();
   });
 
-  $("#thumbsup").on("click", function (e) {
+  $(".like").on("click", function (e) {
+
+    var temp = $(".like").attr('id');
+    temp = temp.split('-');
+
+    var like = '#' + $(".like").attr('id');
+    var dislike = '#' + temp[0] + '-dislike';
+    var commentId = temp[0];
 
     e.preventDefault();
-    console.log("Thumbsup is pressed");
 
     //Check if the user is logged in
     $.ajax({
@@ -23,33 +25,80 @@
 
       if (response.status) {
 
-        if (!thumbsup) {
+        $.ajax({
 
-          thumbsup = true;
+          type: "POST",
+          url: "http://localhost:3000/products/addLike",
+          data: JSON.stringify({ commentId: commentId }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+        }).done(function (response) {
 
-          $("#thumbsup").removeClass("icon-background-color");
-          $("#thumbsup").addClass("thumbsup-enabled");
-        }
+          if (response.result.like) {
+            $(like).removeClass("icon-background-color");
+            $(like).addClass("thumbsup-enabled");
+          }
+          else {
+            $(like).addClass("icon-background-color");
+            $(like).removeClass("thumbsup-enabled");
+          }
 
-        else {
+          $(dislike).addClass("icon-background-color");
+          $(dislike).removeClass("thumbsdown-enabled");
+        });
 
-          thumbsup = false;
-          $("#thumbsup").removeClass("thumbsup-enabled");
-          $("#thumbsup").addClass("icon-background-color");
-        }
       }
-
       else {
         alert("User must be logged in to drop a like")
-
       }
     });
-
-
   });
 
-  $("#thumbsdown").on("click", function () {
-    console.log("ThumbDown is pressed");
+  $(".dislike").on("click", function (e) {
+
+    var temp = $(".dislike").attr('id');
+    temp = temp.split('-');
+
+    var dislike = '#' + $(".dislike").attr('id');
+    var like = '#' + temp[0] + '-like';
+    var commentId = temp[0];
+
+    e.preventDefault();
+
+    //Check if the user is logged in
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:3000/isLoggedIn",
+    }).done(function (response) {
+
+      if (response.status) {
+
+        $.ajax({
+
+          type: "POST",
+          url: "http://localhost:3000/products/addDislike",
+          data: JSON.stringify({ commentId: commentId }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+        }).done(function (response) {
+
+          if (response.result.dislike) {
+            $(dislike).removeClass("icon-background-color");
+            $(dislike).addClass("thumbsdown-enabled");
+          }
+          else {
+            $(dislike).addClass("icon-background-color");
+            $(dislike).removeClass("thumbsdown-enabled");
+          }
+
+          $(like).addClass("icon-background-color");
+          $(like).removeClass("thumbsup-enabled");
+        });
+      }
+      else {
+        alert("User must be logged in to drop a dislike")
+      }
+    });
   });
 
   $(window).scroll(function () {

@@ -166,10 +166,212 @@ const getProductByName = async (name) => {
   return products;
 };
 
+//Function to get a product By Name
+const addLikeProduct = async (commentId, productId, userId) => {
+
+  //Code to check all the parameters
+  commentId = helper.checkObjectId(commentId);
+  productId = helper.checkObjectId(productId);
+  userId = helper.checkObjectId(userId);
+
+  //Retriving product collections from the database
+  const productCollection = await product();
+
+  //Checking if the like is present in our product
+  let findLike = await productCollection.findOne({
+    "comments.likes.user_id": ObjectId(userId)
+  });
+
+  //Checking if the dislike is present in our product
+  let findDisLike = await productCollection.findOne({
+    "comments.dislikes.user_id": ObjectId(userId)
+  });
+
+  //User liked the comment when he has already disliked the comment
+  if (findDisLike) {
+
+    //Remove the dislike from the product
+    let insertedInfoDislike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$pull": {
+        "comments.$.dislikes": {
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    //Add the like in the database
+    let insertedInfoLike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$push": {
+        "comments.$.likes": {
+          "_id": new ObjectId(),
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    let status = {
+      like: true,
+      dislike: false
+    }
+    return status;
+  }
+
+  //User is liking the comment twice. So we will remove the like
+  if (findLike) {
+
+    //Remove the like from the product
+    let insertedInfolike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$pull": {
+        "comments.$.likes": {
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    let status = {
+      like: false,
+      dislike: false
+    }
+
+    return status;
+  }
+
+
+  //Insert the like in the product collection
+  let insertedInfo = await productCollection.updateOne(
+    {
+      "comments._id": ObjectId(commentId)
+    }, {
+    "$push": {
+      "comments.$.likes": {
+        "_id": new ObjectId(),
+        "user_id": ObjectId(userId)
+      }
+    }
+  });
+
+  let status = {
+    like: true,
+    dislike: false
+  }
+  return status;
+};
+
+//Function to get a product By Name
+const addDislikeProduct = async (commentId, productId, userId) => {
+
+  //Code to check all the parameters
+  commentId = helper.checkObjectId(commentId);
+  productId = helper.checkObjectId(productId);
+  userId = helper.checkObjectId(userId);
+
+  //Retriving product collections from the database
+  const productCollection = await product();
+
+  //Checking if the like is present in our product
+  let findLike = await productCollection.findOne({
+    "comments.likes.user_id": ObjectId(userId)
+  });
+
+  //Checking if the dislike is present in our product
+  let findDisLike = await productCollection.findOne({
+    "comments.dislikes.user_id": ObjectId(userId)
+  });
+
+  //User disliked the comment when he has already liked the comment
+  if (findLike) {
+
+    //Remove the like from the product
+    let insertedInfolike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$pull": {
+        "comments.$.likes": {
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    //Insert the dislike in the product
+    let insertedInfoDisLike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$push": {
+        "comments.$.dislikes": {
+          "_id": new ObjectId(),
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    let status = {
+      like: false,
+      dislike: true
+    }
+    return status;
+  }
+
+  if (findDisLike) {
+
+    //Remove the dislike from the product
+    let insertedInfolike = await productCollection.updateOne(
+      {
+        "comments._id": ObjectId(commentId)
+      }, {
+      "$pull": {
+        "comments.$.dislikes": {
+          "user_id": ObjectId(userId)
+        }
+      }
+    });
+
+    let status = {
+      like: false,
+      dislike: false
+    }
+
+    return status;
+  }
+
+  //Insert the like in the product collection
+  let insertedInfo = await productCollection.updateOne(
+    {
+      "comments._id": ObjectId(commentId)
+    }, {
+    "$push": {
+      "comments.$.dislikes": {
+        "_id": new ObjectId(),
+        "user_id": ObjectId(userId)
+      }
+    }
+  });
+
+  let status = {
+    like: false,
+    dislike: true
+  }
+  return status;
+};
+
+
+
 module.exports = {
   createProduct,
   getProductById,
   getAllProducts,
   updateProduct,
-  getProductByName
+  getProductByName,
+  addLikeProduct,
+  addDislikeProduct
 };
