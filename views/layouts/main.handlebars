@@ -112,34 +112,54 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
           aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-history"></i>
           <span>My Orders</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
             <a class="collapse-item" href="buttons.html">Order History</a>
+            <a class="collapse-item" href="utilities-color.html">Subscription History</a>
             {{!-- <a class="collapse-item" href="cards.html">Cards</a> --}}
           </div>
         </div>
       </li>
 
-      <!-- Nav Item - Utilities Collapse Menu -->
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Buy Subscriptions -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-          aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Membership Details</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            {{!-- <h6 class="collapse-header">Custom Utilities:</h6> --}}
-            <a class="collapse-item" href="utilities-color.html">Subscription History</a>
-            {{!-- <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a> --}}
-          </div>
-        </div>
+        <a class="nav-link" href="dashboard">
+          <i class="fas fa-fw fa-tags"></i>
+          <span>Buy Subscriptions</span></a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Products -->
+      <li class="nav-item">
+        <a class="nav-link" href="products">
+          <i class="fas fa-fw fa-shopping-cart"></i>
+          <span>Products</span></a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - blogs -->
+      <li class="nav-item">
+        <a class="nav-link" href="blogs">
+          <i class="fas fa-fw fa-th"></i>
+          <span>Blogs</span></a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="fas fa-fw fa-info"></i>
+          <span>About</span></a>
       </li>
 
 
@@ -264,7 +284,9 @@
   {{/if}}
   <!-- jQuery -->
   <script src="/public/js/jquery-2.1.0.min.js"></script>
+
   <script src="/public/js/jquery.validate.js"></script>
+
   <script src="/public/js/jquery.validate.min.js"></script>
   <!-- Bootstrap -->
   <script src="/public/js/popper.js"></script>
@@ -292,15 +314,16 @@
 
   <!-- Bootstrap core JavaScript-->
 
+
   <script src="/public/js/vendor/jquery/jquery.min.js"></script>
 
-  {{!--
-  <script src="/public/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
 
   <!-- Core plugin JavaScript-->
 
   <script src="/public/js/vendor/jquery-easing/jquery.easing.min.js"></script>
   {{/if}}
 </body>
+{{!--
+<script src="/public/js/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
 
 </html>

@@ -113,7 +113,11 @@ const createUser = async (
     email: email,
   });
 
-  if (FoundUser) throw "Username Already Exist!";
+  if (FoundUser)
+    throw {
+      code: 400,
+      message: "Username Already Exist!",
+    };
 
   dob = new moment(dob).format("MM-DD-YYYY");
 
@@ -220,12 +224,10 @@ const getUserNameWithComments = async (getProductById, getAllUsersName) => {
 
   //Converting the converting the comment Object User id to String
   for (let i = 0; i < commentObject.length; i++) {
-
     commentObject[i].user_id = commentObject[i].user_id.toString();
   }
 
   for (let i = 0; i < commentObject.length; i++) {
-
     let userName = idNameMap.get(commentObject[i].user_id);
     let temp = {
       name: userName,
@@ -249,12 +251,13 @@ const checkUser = async (email, password) => {
   const FoundUser = await userCollection.findOne({
     email: email,
   });
-  if (FoundUser === null) throw "No User found!";
+  if (FoundUser === null) throw { code: 404, message: "No User found!" };
 
   let compareToSherlock = false;
   compareToSherlock = await bcrypt.compare(password, FoundUser.password);
 
-  if (compareToSherlock === false) throw "Wrong Password! Try Again!";
+  if (compareToSherlock === false)
+    throw { code: 400, message: "Wrong Password! Try Again!" };
 
   result = {
     authenticatedUser: true,
@@ -264,7 +267,76 @@ const checkUser = async (email, password) => {
   return result;
 };
 
+const UpdateProfile = async (
+  id,
+  firstname,
+  lastname,
+  gender,
+  dob,
+  address,
+  zipcode,
+  cell,
+  password,
+  profile_image,
+  changeinImage,
+  changeinPassword
+) => {
+  //Code to check All the parameters
+  id = helper.checkObjectId(id);
+  firstname = helper.checkFirstName(firstname);
+  lastname = helper.checkLastName(lastname);
+  gender = helper.checkGender(gender);
+  dob = helper.checkDob(dob);
+  address = helper.checkAddress(address);
+  zipcode = helper.checkZipCode(zipcode);
+  cell = helper.checkNumber(cell);
+
+  if (changeinPassword === true) {
+    password = helper.checkPassword(password);
+  }
+
+  dob = new moment(dob).format("MM-DD-YYYY");
+
+  const userCollection = await user();
+
+  const SearchedUser = await userCollection.findOne({ _id: ObjectId(id) });
+
+  if (SearchedUser === null) throw { code: 404, message: "User not found" };
+
+  const updatedprofiledata = {
+    firstname: firstname,
+    lastname: lastname,
+    gender: gender,
+    dob: dob,
+    address: address,
+    zipcode: zipcode,
+    cell: cell,
+  };
+  if (changeinPassword === true) {
+    const hashPassword = await bcrypt.hash(password, saltRounds);
+    updatedprofiledata.password = hashPassword;
+  }
+
+  if (changeinImage === true) {
+    updatedprofiledata.profile_image = profile_image;
+  }
+
+  const updatedInfo = await userCollection.updateOne(
+    { _id: ObjectId(id) },
+    { $set: updatedprofiledata }
+  );
+  if (updatedInfo.modifiedCount === 0) {
+    throw { code: 500, message: "Could not insert" };
+  }
+
+  let result = await getUserById(id);
+  result.UpdateData = true;
+
+  return result;
+};
+
 module.exports = {
+  UpdateProfile,
   createUserGroup,
   getUserById,
   getUserGroupById,

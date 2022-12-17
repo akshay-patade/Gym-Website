@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const xss = require("xss");
 const data = require("../data");
 const helper = require("../helpers");
 const blog_category = data.blogs;
@@ -20,7 +21,6 @@ router.route("/").get(async (req, res) => {
   }
 
   try {
-
     res.status(200).render("index", {
       title: "Welcome",
       user_header: true,
@@ -52,12 +52,12 @@ router
     if (req.session.userdata) {
       return res.redirect("/dashboard");
     }
-
-    const userPostData = req.body;
-
+    const userPostData = {};
+    userPostData.email = xss(req.body.email);
+    userPostData.password = xss(req.body.password);
     try {
       if (!userPostData.email || !userPostData.password)
-        throw "Username and Password Must be supplied";
+        throw { code: 400, message: "Email and Password Must be supplied" };
 
       helper.checkEmail(userPostData.email);
       helper.checkPassword(userPostData.password);
@@ -78,13 +78,12 @@ router
       const { email, password } = userPostData;
 
       const ResultStatus = await users.checkUser(email, password);
-      // console.log(ResultStatus.user_id);
       if (ResultStatus.authenticatedUser === true) {
         req.session.userdata = {
           email: userPostData.email,
           user_id: ResultStatus.user_id,
-          name: ResultStatus.name,
         };
+
         const Result = await users.getUserById(req.session.userdata.user_id);
         req.session.other = {
           UserFullname: Result.firstname + " " + Result.lastname,
@@ -95,8 +94,8 @@ router
         res.redirect("/dashboard");
       }
     } catch (e) {
-      if (e == "No User found!" || e == "Wrong Password! Try Again!") {
-        res.status(404).render("login", {
+      if (e.message == "No User found!" || e == "Wrong Password! Try Again!") {
+        res.status(e.code).render("login", {
           error: e,
           hasErrors: true,
           title: "Login",
@@ -106,7 +105,14 @@ router
         });
         return;
       } else {
-        res.status(500).json({ error: e.message });
+        res.status(e.code).render("Error", {
+          hasErrors: true,
+          error: "Internal Server Error",
+          title: "Error",
+          user_header: true,
+          user_footer: true,
+          NotloggedIn: true,
+        });
       }
       return;
     }
@@ -128,33 +134,46 @@ router
     return;
   })
   .post(async (req, res) => {
-    if (req.session.userdata.user_id) {
+    if (req.session.userdata) {
       return res.redirect("/dashboard");
     }
     const group_id = await users.getUserGroupByName("user");
 
-    const userPostData = req.body;
-
-    // try {
-    //   if (!userPostData.usernameInput || !userPostData.passwordInput)
-    //     throw "Username and Password Must be supplied";
-    //   validation.CheckUsername(userPostData.usernameInput);
-    //   validation.CheckPassword(userPostData.passwordInput);
-    // } catch (e) {
-    //   res.status(400).render("userRegister", {
-    //     error: e,
-    //     hasErrors: true,
-    //     title: "User Register",
-    //   });
-    //   return;
-    // }
+    const userPostData = {};
+    userPostData.firstname = xss(req.body.firstname);
+    userPostData.lastname = xss(req.body.lastname);
+    userPostData.address = xss(req.body.address);
+    userPostData.email = xss(req.body.email);
+    userPostData.gender = xss(req.body.gender);
+    userPostData.dob = xss(req.body.dob);
+    userPostData.zipcode = xss(req.body.zipcode);
+    userPostData.cell = xss(req.body.cell);
+    userPostData.password = xss(req.body.password);
 
     try {
-      userPostData.firstname = userPostData.firstname.trim();
-      userPostData.lastname = userPostData.lastname.trim();
-      userPostData.address = userPostData.address.trim();
-      userPostData.email = userPostData.email.trim();
+      userPostData.firstname = helper.checkFirstName(userPostData.firstname);
+      userPostData.lastname = helper.checkLastName(userPostData.lastname);
+      userPostData.gender = helper.checkGender(userPostData.gender);
+      userPostData.dob = helper.checkDob(userPostData.dob);
+      userPostData.address = helper.checkAddress(userPostData.address);
+      userPostData.zipcode = helper.checkZipCode(userPostData.zipcode);
+      userPostData.cell = helper.checkNumber(userPostData.cell);
+      userPostData.email = helper.checkEmail(userPostData.email);
+      userPostData.password = helper.checkPassword(userPostData.password);
+    } catch (e) {
+      res.status(400).render("register", {
+        AlreadyExist: false,
+        BadInput: true,
+        error: e.message,
+        title: "Register",
+        user_header: true,
+        user_footer: true,
+        NotloggedIn: true,
+      });
+      return;
+    }
 
+    try {
       const {
         firstname,
         lastname,
@@ -181,7 +200,6 @@ router
       );
 
       if (ResultStatus.insertedUser === true) {
-        // res.redirect("/");
         res.status(200).render("userRegisterSuccess", {
           hasErrors: false,
           title: "User Registered Successfully",
@@ -192,8 +210,8 @@ router
         return;
       }
     } catch (e) {
-      if (e == "Username Already Exist!") {
-        res.status(400).render("register", {
+      if (e.message == "Username Already Exist!") {
+        res.status(e.code).render("register", {
           AlreadyExist: true,
           title: "Register",
           user_header: true,
@@ -210,7 +228,7 @@ router
           NotloggedIn: true,
         });
       } else {
-        res.status(400).render("register", {
+        res.status(e.code).render("register", {
           AlreadyExist: false,
           BadInput: true,
           error: e.message,
@@ -227,7 +245,6 @@ router
 router
   .route("/forgotPassword")
   .get(async (req, res) => {
-    //code here for GET
     res.status(200).render("forgotPassword", {
       title: "Forgot Password",
       user_header: true,
@@ -237,10 +254,11 @@ router
     return;
   })
   .post(async (req, res) => {
-    const data = req.body;
+    const data = {};
+    data.email = xss(req.body.email);
     try {
       if (!data.email) {
-        throw "No email id Provided";
+        throw { code: 400, message: "No email id Provided" };
       }
       let UserData = await users.getUserByEmail(data.email);
       if (UserData !== null) {
@@ -261,7 +279,7 @@ router
       }
       return;
     } catch (e) {
-      res.status(500).render("forgotPassword", {
+      res.status(e.code).render("forgotPassword", {
         title: "Forgot Password",
         user_header: true,
         user_footer: true,
@@ -281,29 +299,215 @@ router.route("/dashboard").get(async (req, res) => {
       UserFullname: req.session.other.UserFullname,
       profileimage: req.session.other.profileimage,
     });
-    return;
   } else {
     res.redirect("/404");
   }
+  return;
 });
-router.route("/UserProfile").get(async (req, res) => {
-  if (req.session.userdata) {
-    const Result = await users.getUserById(req.session.userdata.user_id);
-    //code here for GET
-    res.status(200).render("UserProfile", {
-      title: "My Profile",
-      dashHeader: true,
-      dashfooter: true,
-      loggedIn: true,
-      UserFullname: req.session.other.UserFullname,
-      profileimage: req.session.other.profileimage,
-      formdata: Result,
-    });
+router
+  .route("/UserProfile")
+  .get(async (req, res) => {
+    if (req.session.userdata) {
+      try {
+        const Result = await users.getUserById(req.session.userdata.user_id);
+        //code here for GET
+        res.status(200).render("UserProfile", {
+          title: "My Profile",
+          dashHeader: true,
+          dashfooter: true,
+          loggedIn: true,
+          UserFullname: req.session.other.UserFullname,
+          profileimage: req.session.other.profileimage,
+          formdata: Result,
+        });
+      } catch (e) {
+        res.status(e.code).render("Error", {
+          hasErrors: true,
+          error: e.message,
+          title: "Error",
+          user_header: true,
+          user_footer: true,
+          loggedIn: true,
+        });
+      }
+    } else {
+      res.redirect("/404");
+    }
     return;
-  } else {
-    res.redirect("/404");
-  }
-});
+  })
+  .post(async (req, res) => {
+    if (!req.session.userdata) {
+      res.redirect("/404");
+    }
+
+    const userPostData = {};
+    userPostData.firstname = xss(req.body.firstname);
+    userPostData.lastname = xss(req.body.lastname);
+    userPostData.gender = xss(req.body.gender);
+    userPostData.dob = xss(req.body.dob);
+    userPostData.address = xss(req.body.address);
+    userPostData.zipcode = xss(req.body.zipcode);
+    userPostData.cell = xss(req.body.cell);
+    userPostData.CurrImg = xss(req.body.CurrImg);
+    userPostData.new_password = xss(req.body.new_password);
+
+    let changeinImage = false;
+    let changeinPassword = false;
+
+    try {
+      const Result = await users.getUserById(req.session.userdata.user_id);
+    } catch (e) {
+      res.status(e.code).render("Error", {
+        hasErrors: true,
+        error: e.message,
+        title: "Error",
+        user_header: true,
+        user_footer: true,
+        NotloggedIn: true,
+      });
+    }
+
+    try {
+      userPostData.firstname = helper.checkFirstName(userPostData.firstname);
+      userPostData.lastname = helper.checkLastName(userPostData.lastname);
+      userPostData.gender = helper.checkGender(userPostData.gender);
+      userPostData.dob = helper.checkDob(userPostData.dob);
+      userPostData.address = helper.checkAddress(userPostData.address);
+      userPostData.zipcode = helper.checkZipCode(userPostData.zipcode);
+      userPostData.cell = helper.checkNumber(userPostData.cell);
+
+      if (userPostData.CurrImg === "") {
+        userPostData.profile_image = "";
+        changeinImage = true;
+      }
+
+      if (req.files) {
+        let { image } = req.files;
+
+        image.name = Date.now() + image.name;
+
+        if (!image) throw { code: 400, message: "Please upload the image" };
+
+        image.mv(__dirname + "/../public/images/UserProfile/" + image.name);
+
+        if (image.name != "") {
+          userPostData.profile_image = image.name;
+          changeinImage = true;
+        }
+      }
+
+      if (userPostData.new_password) {
+        userPostData.password = helper.checkPassword(userPostData.new_password);
+        changeinPassword = true;
+      }
+
+      if (changeinPassword === false) {
+        userPostData.password = "NoChange";
+      }
+      if (changeinImage === false) {
+        userPostData.profile_image = "NoChange";
+      }
+    } catch (e) {
+      if (req.session.userdata) {
+        res.status(e.code).render("UserProfile", {
+          error: e.message,
+          hasErrors: true,
+          title: "My Profile",
+          dashHeader: true,
+          dashfooter: true,
+          loggedIn: true,
+          UserFullname: req.session.other.UserFullname,
+          profileimage: req.session.other.profileimage,
+          formdata: Result,
+        });
+        return;
+      } else {
+        res.redirect("/404");
+      }
+    }
+
+    try {
+      const {
+        firstname,
+        lastname,
+        gender,
+        dob,
+        address,
+        zipcode,
+        cell,
+        password,
+        profile_image,
+      } = userPostData;
+
+      let id = req.session.userdata.user_id;
+      const ResultStatus = await users.UpdateProfile(
+        id,
+        firstname,
+        lastname,
+        gender,
+        dob,
+        address,
+        zipcode,
+        cell,
+        password,
+        profile_image,
+        changeinImage,
+        changeinPassword
+      );
+
+      if (ResultStatus.UpdateData === true) {
+        req.session.other.UserFullname =
+          ResultStatus.firstname + " " + ResultStatus.lastname;
+
+        req.session.other.profileimage =
+          ResultStatus.profile_image != ""
+            ? ResultStatus.profile_image
+            : "blank.webp";
+
+        res.status(200).render("dashboard", {
+          title: "Dashboard",
+          dashHeader: true,
+          dashfooter: true,
+          loggedIn: true,
+          UserFullname: req.session.other.UserFullname,
+          profileimage: req.session.other.profileimage,
+        });
+        return;
+      }
+    } catch (e) {
+      if (e.code === 400) {
+        res.status(400).render("UserProfile", {
+          hasErrors: true,
+          error: e.message,
+          title: "My Profile",
+          dashHeader: true,
+          dashfooter: true,
+          loggedIn: true,
+          UserFullname: req.session.other.UserFullname,
+          profileimage: req.session.other.profileimage,
+        });
+      } else if (e.code === 500) {
+        res.status(500).render("Error", {
+          hasErrors: true,
+          error: "Internal Server Error",
+          title: "Error",
+          user_header: true,
+          user_footer: true,
+          NotloggedIn: true,
+        });
+      } else {
+        res.status(e.code).render("Error", {
+          hasErrors: true,
+          error: e.message,
+          title: "Error",
+          user_header: true,
+          user_footer: true,
+          NotloggedIn: true,
+        });
+      }
+      return;
+    }
+  });
 router.route("/logout").get(async (req, res) => {
   req.session.destroy();
   res.redirect("/");
@@ -332,19 +536,15 @@ router.route("/404").get(async (req, res) => {
   }
 });
 
-
 router.route("/isLoggedIn").get(async (req, res) => {
-
   if (req.session.userdata) {
-
     return res.status(200).json({
-      status: true
+      status: true,
     });
   }
   return res.status(200).json({
-    status: false
-  })
-
+    status: false,
+  });
 });
 
 module.exports = router;
