@@ -1,5 +1,3 @@
-
-
 (function ($) {
   "use strict";
 
@@ -11,7 +9,6 @@
   });
 
   $("#thumbsup").on("click", function (e) {
-
     e.preventDefault();
     console.log("Thumbsup is pressed");
 
@@ -20,32 +17,21 @@
       type: "GET",
       url: "http://localhost:3000/isLoggedIn",
     }).done(function (response) {
-
       if (response.status) {
-
         if (!thumbsup) {
-
           thumbsup = true;
 
           $("#thumbsup").removeClass("icon-background-color");
           $("#thumbsup").addClass("thumbsup-enabled");
-        }
-
-        else {
-
+        } else {
           thumbsup = false;
           $("#thumbsup").removeClass("thumbsup-enabled");
           $("#thumbsup").addClass("icon-background-color");
         }
-      }
-
-      else {
-        alert("User must be logged in to drop a like")
-
+      } else {
+        alert("User must be logged in to drop a like");
       }
     });
-
-
   });
 
   $("#thumbsdown").on("click", function () {
@@ -180,7 +166,7 @@
           "Please enter valid lastname (No space or numeric values allowed, one word only)",
       },
       address: "Please enter your address",
-      gender: "This field is required",
+      gender: "Please Select Gender",
       dob: {
         required: "Please Select Date of Birth",
       },
@@ -283,18 +269,134 @@
     });
   });
 
+  //Profile Form
   $("#ProfileForm #email").prop("disabled", true);
   //ProfileForm
   let date_dob = new Date($("#ProfileForm #hiddendobVal").val());
   let final_dob =
     date_dob.getFullYear() +
     "-" +
-    (date_dob.getMonth() + 1) +
+    String(date_dob.getMonth() + 1).padStart(2, "0") +
     "-" +
-    date_dob.getDate();
-  console.log(final_dob);
+    String(date_dob.getDate()).padStart(2, "0");
+
+  $("#ProfileForm .ChooseImg").hide();
+  $("#ProfileForm #ChangeImg").on("click", function () {
+    $("#ProfileForm .ChooseImg").click();
+  });
+  $("#ProfileForm #RemoveImg").on("click", function () {
+    $("#ProfileForm #CurrImg").val("");
+    $(this).prop("disabled", true);
+    $("#ProfileForm #currentImage").attr(
+      "src",
+      "/public/images/UserProfile/blank.webp"
+    );
+  });
+
+  if ($("#ProfileForm #CurrImg").val() === "") {
+    $("#ProfileForm #RemoveImg").prop("disabled", true);
+  }
+
   $("#ProfileForm #gender").val($("#ProfileForm #hiddenGenderVal").val());
   $("#ProfileForm #dob").val(final_dob);
+  $("#ProfileForm").validate({
+    rules: {
+      firstname: {
+        required: true,
+        regex: /^[a-zA-Z]+$/,
+      },
+      lastname: {
+        required: true,
+        regex: /^[a-zA-Z]+$/,
+      },
+      address: "required",
+      gender: "required",
+      dob: {
+        required: true,
+      },
+      zipcode: {
+        required: true,
+        regex: /^\d{5}(-\d{4})?$/,
+      },
+      email: {
+        required: true,
+        regex:
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      },
+      cell: {
+        required: true,
+        regex: /^[0]?[0-9]\d{9}$/,
+      },
+      new_password: {
+        minlength: 8,
+        regex: /^[A-Za-z0-9\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/,
+      },
+      cnew_password: {
+        required: function () {
+          if ($("#new_password").val() != "") {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        minlength: 8,
+        regex: /^[A-Za-z0-9\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/,
+        equalTo: "#new_password",
+      },
+    },
+
+    messages: {
+      firstname: {
+        required: "Please enter your firstname",
+        regex:
+          "Please enter valid firstname (No space or numeric values allowed, one word only)",
+      },
+      lastname: {
+        required: "Please enter your lastname",
+        regex:
+          "Please enter valid lastname (No space or numeric values allowed, one word only)",
+      },
+      address: "Please enter your address",
+      gender: "Please Select Gender",
+      dob: {
+        required: "Please Select Date of Birth",
+      },
+      zipcode: {
+        required: "Please enter your zipcode",
+        regex: "Please enter valid zipcode",
+      },
+      new_password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 8 characters long",
+        regex: "Password must not include whitespace",
+      },
+      cnew_password: {
+        required: "Please enter Confirm Password",
+        minlength: "Your Confirm Password must be at least 8 characters long",
+        regex: "Password must not include whitespace",
+        equalTo: "Confirm Password must match with Password",
+      },
+      email: {
+        required: "Please provide an email",
+        regex: "Please enter a valid email address",
+      },
+      cell: {
+        required: "Please Enter Cell Number",
+        regex: "Please Enter valid Cell Number",
+      },
+    },
+
+    submitHandler: function (form) {
+      console.log(AgeMustBe12($("#dob").val()));
+      if (AgeMustBe12($("#dob").val()) === true) {
+        form.submit();
+      } else {
+        $("#AgeErr").append(
+          '<label id="dob-age-error" class="error" for="dob">Minimum age to register is 12</label>'
+        );
+      }
+    },
+  });
 
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);

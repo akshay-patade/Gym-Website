@@ -1,5 +1,6 @@
 //Here is where you'll set up your server as shown in lecture code
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const app = express();
 const session = require("express-session");
 const public = express.static(__dirname + "/public");
@@ -10,6 +11,7 @@ const exphbs = require("express-handlebars");
 app.use("/public", public);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
