@@ -6,6 +6,7 @@ const data = require("../data");
 const helper = require("../helpers");
 const blog_category = data.blogs;
 const users = data.users;
+const order = data.order;
 
 router.route("/").get(async (req, res) => {
   if (req.session.userdata) {
@@ -508,6 +509,23 @@ router
       return;
     }
   });
+
+router.route("/Orderdetails").get(async (req, res) => {
+  if (req.session.userdata) {
+    res.status(200).render("OrderDetails", {
+      title: "Orders",
+      dashHeader: true,
+      dashfooter: true,
+      loggedIn: true,
+      UserFullname: req.session.other.UserFullname,
+      profileimage: req.session.other.profileimage,
+    });
+  } else {
+    res.redirect("/404");
+  }
+  return;
+});
+
 router.route("/logout").get(async (req, res) => {
   req.session.destroy();
   res.redirect("/");

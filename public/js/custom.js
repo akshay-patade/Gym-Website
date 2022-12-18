@@ -92,12 +92,11 @@
   });
 
   $(".like").on("click", function (e) {
+    var temp = $(".like").attr("id");
+    temp = temp.split("-");
 
-    var temp = $(".like").attr('id');
-    temp = temp.split('-');
-
-    var like = '#' + $(".like").attr('id');
-    var dislike = '#' + temp[0] + '-dislike';
+    var like = "#" + $(".like").attr("id");
+    var dislike = "#" + temp[0] + "-dislike";
     var commentId = temp[0];
 
     e.preventDefault();
@@ -108,21 +107,17 @@
       url: "http://localhost:3000/isLoggedIn",
     }).done(function (response) {
       if (response.status) {
-
         $.ajax({
-
           type: "POST",
           url: "http://localhost:3000/products/addLike",
           data: JSON.stringify({ commentId: commentId }),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
         }).done(function (response) {
-
           if (response.result.like) {
             $(like).removeClass("icon-background-color");
             $(like).addClass("thumbsup-enabled");
-          }
-          else {
+          } else {
             $(like).addClass("icon-background-color");
             $(like).removeClass("thumbsup-enabled");
           }
@@ -130,21 +125,18 @@
           $(dislike).addClass("icon-background-color");
           $(dislike).removeClass("thumbsdown-enabled");
         });
-
-      }
-      else {
-        alert("User must be logged in to drop a like")
+      } else {
+        alert("User must be logged in to drop a like");
       }
     });
   });
 
   $(".dislike").on("click", function (e) {
+    var temp = $(".dislike").attr("id");
+    temp = temp.split("-");
 
-    var temp = $(".dislike").attr('id');
-    temp = temp.split('-');
-
-    var dislike = '#' + $(".dislike").attr('id');
-    var like = '#' + temp[0] + '-like';
+    var dislike = "#" + $(".dislike").attr("id");
+    var like = "#" + temp[0] + "-like";
     var commentId = temp[0];
 
     e.preventDefault();
@@ -154,23 +146,18 @@
       type: "GET",
       url: "http://localhost:3000/isLoggedIn",
     }).done(function (response) {
-
       if (response.status) {
-
         $.ajax({
-
           type: "POST",
           url: "http://localhost:3000/products/addDislike",
           data: JSON.stringify({ commentId: commentId }),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
         }).done(function (response) {
-
           if (response.result.dislike) {
             $(dislike).removeClass("icon-background-color");
             $(dislike).addClass("thumbsdown-enabled");
-          }
-          else {
+          } else {
             $(dislike).addClass("icon-background-color");
             $(dislike).removeClass("thumbsdown-enabled");
           }
@@ -178,9 +165,8 @@
           $(like).addClass("icon-background-color");
           $(like).removeClass("thumbsup-enabled");
         });
-      }
-      else {
-        alert("User must be logged in to drop a dislike")
+      } else {
+        alert("User must be logged in to drop a dislike");
       }
     });
   });
@@ -544,6 +530,27 @@
       }
     },
   });
+
+  // $(document).ready(function () {
+  $("#CartTable .close").on("click", function () {
+    // console.log(this.id);
+    let cart_id = this.id.toString();
+    var formData = {
+      cart_id: cart_id,
+    };
+    $.ajax({
+      type: "PUT",
+      url: "http://localhost:3000/cart",
+      data: formData,
+      dataType: "json",
+      encode: true,
+    }).done(function (response) {
+      if (response.url === "/cart") {
+        window.location.replace(response.url);
+      }
+    });
+  });
+  // });
 
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);
