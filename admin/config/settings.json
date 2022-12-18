@@ -1,0 +1,6 @@
+{
+    "mongoConfig": {
+      "serverUrl": "mongodb://root:4Tk9TKAFu7BtiIFw@postmaker-shard-00-00.jzz5m.mongodb.net:27017,postmaker-shard-00-01.jzz5m.mongodb.net:27017,postmaker-shard-00-02.jzz5m.mongodb.net:27017/Aradhana?ssl=true&replicaSet=atlas-144ew9-shard-0&authSource=admin&retryWrites=true&w=majority",
+      "database": "RockBottom"
+    }
+  }

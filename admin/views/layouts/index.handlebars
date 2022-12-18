@@ -1,0 +1,93 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GYM - Website</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{base_url}}/images/favicon.png"
+    />
+    <link href="{{base_url}}/css/style.css" rel="stylesheet" />
+    <link
+      href="{{base_url}}/plugins/tables/css/datatable/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{base_url}}/plugins/pg-calendar/css/pignose.calendar.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom Stylesheet -->
+    <link
+      href="{{base_url}}/plugins/select2/css/select2.min.css"
+      rel="stylesheet"
+    />
+
+  </head>
+
+  <body>
+
+    <div id="preloader">
+      <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle
+            class="path"
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          ></circle>
+        </svg>
+      </div>
+    </div>
+    {{{body}}}
+    <script src="{{base_url}}/plugins/common/common.min.js"></script>
+    <script src="{{base_url}}/js/custom.min.js"></script>
+    <script src="{{base_url}}/js/settings.js"></script>
+    <script src="{{base_url}}/js/gleek.js"></script>
+    <script src="{{base_url}}/js/styleSwitcher.js"></script>
+    <script
+      src="{{base_url}}/plugins/tables/js/jquery.dataTables.min.js"
+    ></script>
+    <script
+      src="{{base_url}}/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"
+    ></script>
+    <script
+      src="{{base_url}}/plugins/tables/js/datatable-init/datatable-basic.min.js"
+    ></script>
+    <script src="{{base_url}}/plugins/select2/js/select2.full.min.js"></script>
+    <script>
+      $(".select2").select2({ placeholder: ' Select an option', allowClear: true
+      });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+
+  
+     function status(id,url){
+           const status = $(`#`+id).is(":checked");
+            $.ajax({
+                 type: "PATCH",
+                 url: url,
+                 data: {status:status},
+                 success: function (data) {
+                     alert('successfully updated')
+                 },
+                 error: function () {
+                    
+                 },
+                 complete: function () {
+                     
+                 }
+             });
+        }
+    </script>
+  </body>
+
+</html>
