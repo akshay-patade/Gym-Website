@@ -6,25 +6,23 @@
   });
 
   $("#buysubscription").click(function () {
-
-    var value = $('#plan option:selected').val();
-    if (value == "select-plan")
-      alert("Please select the plan");
+    var value = $("#plan option:selected").val();
+    if (value == "select-plan") alert("Please select the plan");
 
     console.log(value);
-  })
+  });
   $("#plan").change(function (e) {
-
     e.preventDefault();
 
-    var value = $('#plan option:selected').val();
+    var value = $("#plan option:selected").val();
     if (value == "select-plan") {
       console.log("Don't do anything");
+    } else {
+      console.log(
+        "Go to the server fetch the price and calculate the discount and final price"
+      );
     }
-    else {
-      console.log("Go to the server fetch the price and calculate the discount and final price");
-    }
-  })
+  });
 
   $(".like").on("click", function (e) {
     var temp = $(".like").attr("id");
@@ -453,9 +451,7 @@
         regex: "Please Enter valid Cell Number",
       },
     },
-
     submitHandler: function (form) {
-      console.log(AgeMustBe12($("#dob").val()));
       if (AgeMustBe12($("#dob").val()) === true) {
         form.submit();
       } else {
@@ -466,7 +462,43 @@
     },
   });
 
-  // $(document).ready(function () {
+  //AddToCart
+  // $("#AddToCartForm #size").error(function () {
+  //   // $("img").replaceWith("<p>Error loading image!</p>");
+  //   alert("Please Select Size");
+  // });
+
+  $("#AddToCartForm").validate({
+    rules: {
+      size: {
+        required: true,
+      },
+      quantity: {
+        required: true,
+      },
+    },
+
+    messages: {
+      size: "Please Select one size",
+      quantity: "Please Select quantity",
+    },
+    errorPlacement: function (error, element) {
+      // if(element)
+      var placement = $(element).data("error");
+      // console.log(placement);
+      if (placement) {
+        $(placement).append(error);
+      } else {
+        if (element.attr("name") == "size") {
+          alert("Please Select one size");
+        }
+      }
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
   $("#CartTable .close").on("click", function () {
     // console.log(this.id);
     let cart_id = this.id.toString();
@@ -485,7 +517,6 @@
       }
     });
   });
-  // });
 
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);

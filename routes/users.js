@@ -301,7 +301,7 @@ router.route("/dashboard").get(async (req, res) => {
       profileimage: req.session.other.profileimage,
     });
   } else {
-    res.redirect("/404");
+    res.redirect("/login");
   }
   return;
 });
