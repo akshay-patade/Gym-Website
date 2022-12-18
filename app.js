@@ -32,6 +32,7 @@ app.use(
 //   next();
 // });
 
+
 configRoutes(app);
 
 app.listen(3000, () => {
