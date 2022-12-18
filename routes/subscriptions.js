@@ -109,6 +109,13 @@ router.route("/success").get(async (req, res) => {
     })
 })
 
+router.route("/history").get(async (req, res) => {
+
+    res.status(200).render("subscriptions/subscriptionSuccess", {
+        title: "Congratulations"
+    })
+})
+
 
 
 module.exports = router;
