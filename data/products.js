@@ -2,7 +2,6 @@ const mongoCollections = require("../config/mongoCollections");
 const product = mongoCollections.product;
 const { ObjectId } = require("mongodb");
 const moment = require("moment");
-const helper = require("../helpers");
 
 //Function to create a product
 const createProduct = async (
@@ -15,14 +14,6 @@ const createProduct = async (
   color
 ) => {
   //Code to check all the parameters
-  name = helper.checkProductName(name);
-  description = helper.checkProductDescription(description);
-  price = helper.checkProductPrice(price);
-  category = helper.checkProductCategory(category);
-  product_img = helper.checkProductImage(product_img);
-
-  //Converting the price to float
-  price = parseFloat(price);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -57,27 +48,25 @@ const createProduct = async (
   const newId = insertInfo.insertedId.toString();
 
   //Retriving the product from the id and returning it
-  const productAdded = await getProductById(newId);
-  return productAdded;
+  //   const product = await getProductById(newId);
+  //   return product;
 };
 
 //Function to get a product By Id
 const getProductById = async (productId) => {
-
   //Code to check the productId parameters
-  productId = helper.checkObjectId(productId);
 
   //Retriving product collections from the database
   const productCollection = await product();
 
   //Retriving a product by Id
-  const productById = await productCollection.findOne({ _id: ObjectId(productId) });
+  const product = await productCollection.findOne({ _id: ObjectId(productId) });
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (productById === null) throw { code: 404, message: `Can't find the product. Please check after some time` };
+  if (product === null) throw { code: 404, message: `movie not found` };
 
-  productById._id = productById._id.toString();
-  return productById;
+  product._id = product._id.toString();
+  return product;
 };
 
 //Function to get all the Products
@@ -90,7 +79,7 @@ const getAllProducts = async () => {
 
   //Checking if the movieList is null or not
   if (!productList || productList.length === 0)
-    throw { code: 404, message: `No Products Found. Sorry for the inconvenience. Please check after some time` };
+    throw { code: 404, message: `Could not get all the products` };
 
   //Converting the product id to string
   for (let i = 0; i < productList.length; i++) {
@@ -113,11 +102,6 @@ const updateProduct = async (
   color
 ) => {
   //Code to check all the parameters
-  name = helper.checkProductName(name);
-  description = helper.checkProductDescription(description);
-  price = helper.checkProductPrice(price);
-  category = helper.checkProductCategory(category);
-  product_img = helper.checkProductImage(product_img);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -148,10 +132,7 @@ const updateProduct = async (
 
 //Function to get a product By Name
 const getProductByName = async (name) => {
-
   //Code to check all the parameters
-
-  //name = helper.checkProductName(name);
 
   //Retriving product collections from the database
   const productCollection = await product();
@@ -159,219 +140,18 @@ const getProductByName = async (name) => {
   let regexp = new RegExp(name, "i");
 
   //Retriving a product by Name
-  const products = await productCollection.find({ name: regexp }).toArray();
+  const product = await productCollection.find({ name: regexp });
 
   //Checing if the product is retrived from the database. If not throw an error
-  if (!products || products.length === 0) throw { code: 404, message: `No products found related to ${name} found. Please go back and try again` };
-  return products;
+  if (product === null) throw { code: 404, message: `products not found` };
+
+  return product;
 };
-
-//Function to get a product By Name
-const addLikeProduct = async (commentId, productId, userId) => {
-
-  //Code to check all the parameters
-  commentId = helper.checkObjectId(commentId);
-  productId = helper.checkObjectId(productId);
-  userId = helper.checkObjectId(userId);
-
-  //Retriving product collections from the database
-  const productCollection = await product();
-
-  //Checking if the like is present in our product
-  let findLike = await productCollection.findOne({
-    "comments.likes.user_id": ObjectId(userId)
-  });
-
-  //Checking if the dislike is present in our product
-  let findDisLike = await productCollection.findOne({
-    "comments.dislikes.user_id": ObjectId(userId)
-  });
-
-  //User liked the comment when he has already disliked the comment
-  if (findDisLike) {
-
-    //Remove the dislike from the product
-    let insertedInfoDislike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$pull": {
-        "comments.$.dislikes": {
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    //Add the like in the database
-    let insertedInfoLike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$push": {
-        "comments.$.likes": {
-          "_id": new ObjectId(),
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    let status = {
-      like: true,
-      dislike: false
-    }
-    return status;
-  }
-
-  //User is liking the comment twice. So we will remove the like
-  if (findLike) {
-
-    //Remove the like from the product
-    let insertedInfolike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$pull": {
-        "comments.$.likes": {
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    let status = {
-      like: false,
-      dislike: false
-    }
-
-    return status;
-  }
-
-
-  //Insert the like in the product collection
-  let insertedInfo = await productCollection.updateOne(
-    {
-      "comments._id": ObjectId(commentId)
-    }, {
-    "$push": {
-      "comments.$.likes": {
-        "_id": new ObjectId(),
-        "user_id": ObjectId(userId)
-      }
-    }
-  });
-
-  let status = {
-    like: true,
-    dislike: false
-  }
-  return status;
-};
-
-//Function to get a product By Name
-const addDislikeProduct = async (commentId, productId, userId) => {
-
-  //Code to check all the parameters
-  commentId = helper.checkObjectId(commentId);
-  productId = helper.checkObjectId(productId);
-  userId = helper.checkObjectId(userId);
-
-  //Retriving product collections from the database
-  const productCollection = await product();
-
-  //Checking if the like is present in our product
-  let findLike = await productCollection.findOne({
-    "comments.likes.user_id": ObjectId(userId)
-  });
-
-  //Checking if the dislike is present in our product
-  let findDisLike = await productCollection.findOne({
-    "comments.dislikes.user_id": ObjectId(userId)
-  });
-
-  //User disliked the comment when he has already liked the comment
-  if (findLike) {
-
-    //Remove the like from the product
-    let insertedInfolike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$pull": {
-        "comments.$.likes": {
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    //Insert the dislike in the product
-    let insertedInfoDisLike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$push": {
-        "comments.$.dislikes": {
-          "_id": new ObjectId(),
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    let status = {
-      like: false,
-      dislike: true
-    }
-    return status;
-  }
-
-  if (findDisLike) {
-
-    //Remove the dislike from the product
-    let insertedInfolike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$pull": {
-        "comments.$.dislikes": {
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
-
-    let status = {
-      like: false,
-      dislike: false
-    }
-
-    return status;
-  }
-
-  //Insert the like in the product collection
-  let insertedInfo = await productCollection.updateOne(
-    {
-      "comments._id": ObjectId(commentId)
-    }, {
-    "$push": {
-      "comments.$.dislikes": {
-        "_id": new ObjectId(),
-        "user_id": ObjectId(userId)
-      }
-    }
-  });
-
-  let status = {
-    like: false,
-    dislike: true
-  }
-  return status;
-};
-
-
 
 module.exports = {
   createProduct,
   getProductById,
   getAllProducts,
   updateProduct,
-  getProductByName,
-  addLikeProduct,
-  addDislikeProduct
+  getProductByName
 };

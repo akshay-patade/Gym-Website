@@ -167,6 +167,7 @@
           <li><a href="#tabs-2"><img src="/public/images/tabs-first-icon.png" alt="" />Second Training Class</a></li>
           <li><a href="#tabs-3"><img src="/public/images/tabs-first-icon.png" alt="" />Third Training Class</a></li>
           <li><a href="#tabs-4"><img src="/public/images/tabs-first-icon.png" alt="" />Fourth Training Class</a></li>
+          <div class="main-rounded-button"><a href="#">View All Schedules</a></div>
         </ul>
       </div>
       <div class="col-lg-8">
@@ -303,56 +304,163 @@
 </section>
 <!-- ***** Testimonials Ends ***** -->
 
+<!-- ******* Products Starts ********* -->
 
-
-
-
-<!-- ******* Filter Code start ********* -->
-{{!-- <div class="container text-center">
+<section class="section" id="products">
 
   <div class="row">
+    <div class="col">
+      <div class="section-heading">
 
-    <div class="col-sm-12 col-md-3 col-xl-3">
-      <input class="form-check-input" type="radio" name="filter_by_price" id="price_low_to_high"
-        value="price_low_to_high">
-      <label class="form-check-label" for="price_low_to_high">
-        Price, Low to High
-      </label>
+        <h2 class="text-center">Our <em>Products</em></h2>
+      </div>
     </div>
-
-    <div class="col-sm-12 col-md-3 col-xl-3">
-      <input class=" form-check-input" type="radio" name="filter_by_price" id="price_high_to_low"
-        value="price_high_to_low">
-      <label class="form-check-label" for="price_high_to_low">
-        Price, High to Low
-      </label>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-xl-3">
-      <input class="form-check-input" type="radio" name="filter_by_price" id="date_low_to_high"
-        value="date_low_to_high">
-      <label class="form-check-label" for="date_low_to_high">
-        Date, Old to New
-      </label>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-xl-3">
-      <input class=" form-check-input" type="radio" name="filter_by_price" id="date_high_to_low"
-        value="date_high_to_low">
-      <label class="form-check-label" for="date_high_to_low">
-        Date, New to Old
-      </label>
-    </div>
-
-
-
   </div>
-</div> --}}
-<!-- ******* Filter Code Ends ********* -->
 
 
+  <!-- ******* Filter Code start ********* -->
+  <div class="container text-center">
+
+    <div class="row">
+
+      <div class="col-sm-12 col-md-3 col-xl-3">
+        <input class="form-check-input" type="radio" name="filter_by_price" id="price_low_to_high"
+          value="price_low_to_high">
+        <label class="form-check-label" for="price_low_to_high">
+          Price, Low to High
+        </label>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-xl-3">
+        <input class=" form-check-input" type="radio" name="filter_by_price" id="price_high_to_low"
+          value="price_high_to_low">
+        <label class="form-check-label" for="price_high_to_low">
+          Price, High to Low
+        </label>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-xl-3">
+        <input class="form-check-input" type="radio" name="filter_by_price" id="date_low_to_high"
+          value="date_low_to_high">
+        <label class="form-check-label" for="date_low_to_high">
+          Date, Old to New
+        </label>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-xl-3">
+        <input class=" form-check-input" type="radio" name="filter_by_price" id="date_high_to_low"
+          value="date_high_to_low">
+        <label class="form-check-label" for="date_high_to_low">
+          Date, New to Old
+        </label>
+      </div>
+
+
+
+    </div>
+  </div>
+  <!-- ******* Filter Code Ends ********* -->
+
+
+
+  <!-- ******* Live Search Start ********* -->
+  <input type="text" id="product-search" name="product-search" class="form-control mt-5 mx-auto text-center"
+    placeholder="Live Searching" style="width: 30%" /><br /><br />
+  <label for="product-search" class="mx-auto"></label>
+
+  <div class="container">
+    <h3 class="text-danger mt-5 text-center" id="not-found">No Products found</h3>
+    <div class="row" id="card">
+    </div>
+  </div>
+
+  <!-- ******* Live Search End ********* -->
+</section>
 <!-- ******* Products Ends ********* -->
 
-<!--- ********************* BLOG code End ********************************* --->
+<!--- ********************* BLOG code Start ********************************* --->
 
-<!-- ***** Footer Start ***** -->
+<section class="section" id="blogs">
+
+  <div class="row">
+    <div class="col">
+      <div class="section-heading">
+
+        <h2 class="text-center">Our <em>Blogs</em></h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+        <div class="card h-100 text-center" style="width: 18rem;">
+          <img src="../public/images/product/dieting.jpeg" class="card-img-top h-100" alt="dieting" />
+          <div class="card-body">
+            <h5 class="card-title">Dieting</h5>
+            <a href="/blog/dieting" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+        <div class="card h-100 text-center" style="width: 18rem;">
+          <img src="../public/images/product/muscle-growth.webp" class="card-img-top h-100" alt="muscle growth" />
+          <div class="card-body">
+            <h5 class="card-title">Muscle growth</h5>
+            <a href="/blog/muscle-growth" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--- ********************* BLOG code End ********************************* --->
+
+
+  <!-- ***** Contact Us Area Starts ***** -->
+  <section class=" section" id="contact-us">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <div class="contact-form">
+            <form id="contact" action="" method="post">
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <fieldset>
+                    <input name="name" type="text" id="name" placeholder="Your Name*" required="" />
+                  </fieldset>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <fieldset>
+                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email*"
+                      required="" />
+                  </fieldset>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <fieldset>
+                    <input name="subject" type="text" id="subject" placeholder="Subject" />
+                  </fieldset>
+                </div>
+                <div class="col-lg-12">
+                  <fieldset>
+                    <textarea name="message" rows="6" id="message" placeholder="Message" required=""></textarea>
+                  </fieldset>
+                </div>
+                <div class="col-lg-12">
+                  <fieldset>
+                    <button type="submit" id="form-submit" class="main-button">Send Message</button>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ***** Contact Us Area Ends ***** -->
+
+  <!-- ***** Footer Start ***** -->

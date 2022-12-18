@@ -20,7 +20,6 @@ NOTE: YOU WILL NEED TO CHANGE THE CODE BELOW TO HAVE THE COLLECTION(S) REQUIRED 
 module.exports = {
   blog: getCollectionFn("blog"),
   blog_category: getCollectionFn("blog_category"),
-  cart: getCollectionFn("cart"),
   member: getCollectionFn("member"),
   membership_detail: getCollectionFn("membership_detail"),
   order: getCollectionFn("order"),
