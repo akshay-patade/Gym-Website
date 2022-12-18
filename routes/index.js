@@ -3,6 +3,7 @@ const api = require("./api");
 const admin = require("./admin");
 const blogs = require("./blogs");
 const products = require("./products");
+const cart = require("./cart");
 const path = require("path");
 
 const constructorMethod = (app) => {
@@ -11,6 +12,7 @@ const constructorMethod = (app) => {
   app.use("/admin", admin);
   app.use("/blogs", blogs);
   app.use("/products", products);
+  app.use("/cart", cart);
 
   app.use("*", (req, res) => {
     res.redirect("/404");

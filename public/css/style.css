@@ -45,3 +45,8 @@
     cursor: pointer;
     border: solid 1px #BA68C8
 }
+.close{
+    margin-left: auto;
+    font-size: 0.8rem;
+    cursor: pointer;
+}

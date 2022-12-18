@@ -55,9 +55,13 @@
               <li class="scroll-to-section"><a href="/">Buy Subscriptions</a></li>
               <li class="scroll-to-section"><a href="/products">Products</a></li>
               <li class="scroll-to-section"><a href="/blogs">Blogs</a></li>
+              <li>
+                <a href="/cart">My Cart</a>
+              </li>
               {{#if NotloggedIn}}
               <li class="main-button"><a href="/login">Sign Up / Login</a></li>
               {{/if}}
+
               {{#if loggedIn}}
               <li>
                 <a href="/dashboard">Hello, {{UserFullname}}</a>
@@ -140,7 +144,7 @@
       <!-- Nav Item - Products -->
       <li class="nav-item">
         <a class="nav-link" href="products">
-          <i class="fas fa-fw fa-shopping-cart"></i>
+          <i class="fas fa-fw fa-shopping-bag"></i>
           <span>Products</span></a>
       </li>
       <!-- Divider -->
@@ -157,9 +161,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="/">
-          <i class="fas fa-fw fa-info"></i>
-          <span>About</span></a>
+        <a class="nav-link" href="/cart">
+          <i class="fas fa-fw fa-shopping-cart"></i>
+          <span>My Cart</span></a>
       </li>
 
 
