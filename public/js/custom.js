@@ -1,6 +1,8 @@
 (function ($) {
   "use strict";
 
+
+
   $(function () {
     $("#tabs").tabs();
   });
@@ -372,6 +374,12 @@
 
   //Forgot Password with Ajax
   $(document).ready(function () {
+
+    if (sessionStorage.getItem("visited") == null) {
+      sessionStorage.setItem("visited", 1);
+      alert("New user will get 10% discount on gym subscriptions");
+    }
+
     $("#forgotPasswordForm").validate({
       rules: {
         email: {
