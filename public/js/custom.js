@@ -573,6 +573,57 @@
     });
   });
 
+  // Add new Blog Form
+  $("#BlogForm").validate({
+    rules: {
+      blogname: {
+        required: true,
+      },
+      blogcategory: {
+        required: true,
+      },
+      blogdesc: {
+        required: true,
+      },
+    },
+
+    messages: {
+      blogname: "Please Enter Blog Title",
+      blogcategory: "Please Select Blog Category",
+      blogdesc: "Please Enter Blog Description",
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
+  $("#AddSubscriptionForm").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      duration: {
+        required: true,
+      },
+      price: {
+        required: true,
+      },
+      description: {
+        required: true,
+      },
+    },
+
+    messages: {
+      name: "Please Enter Title",
+      duration: "Please Enter Duration",
+      price: "Please Enter Price",
+      description: "Please Enter Description",
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);
 
