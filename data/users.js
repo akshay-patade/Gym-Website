@@ -208,7 +208,6 @@ const getAllUsersByName = async () => {
 };
 
 const getUserNameWithComments = async (getProductById, getAllUsersName) => {
-
   let idNameMap = new Map();
   let result = [];
 
@@ -232,7 +231,7 @@ const getUserNameWithComments = async (getProductById, getAllUsersName) => {
     let temp = {
       name: userName,
       comment: commentObject[i].comment,
-      id: commentObject[i]._id.toString()
+      id: commentObject[i]._id.toString(),
     };
 
     result.push(temp);
@@ -244,6 +243,7 @@ const checkUser = async (email, password) => {
   helper.checkEmail(email);
   helper.checkPassword(password);
   let result;
+  let isadmin = false;
   email = email.toLowerCase();
 
   const userCollection = await user();
@@ -259,11 +259,18 @@ const checkUser = async (email, password) => {
   if (compareToSherlock === false)
     throw { code: 400, message: "Wrong Password! Try Again!" };
 
+  let grouprole = await getUserGroupById(FoundUser.user_group_id);
+  if (grouprole.name === "admin") {
+    isadmin = true;
+  }
   result = {
     authenticatedUser: true,
     user_id: FoundUser._id.toString(),
     name: FoundUser.firstname,
+    groupid: FoundUser.user_group_id,
+    role: isadmin,
   };
+
   return result;
 };
 

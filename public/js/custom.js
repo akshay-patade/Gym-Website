@@ -6,21 +6,71 @@
   });
 
   $("#buysubscription").click(function () {
+    var text = $("#plan option:selected").text();
     var value = $("#plan option:selected").val();
-    if (value == "select-plan") alert("Please select the plan");
 
-    console.log(value);
+    if (value == "select-plan") {
+      alert("Please select the plan");
+    } else {
+      var actualPrice = parseInt($("#actual-price").html());
+      var discountPrice = parseInt($("#discount-price").html());
+      var finalPrice = parseInt($("#final-price").html());
+
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/subscriptions/buyMembership",
+        data: JSON.stringify({
+          subscriptionPlanId: value,
+          amount: actualPrice,
+          discount: discountPrice,
+          final_amount: finalPrice,
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+      }).done(function (response) {
+        if (response.result) {
+          window.location.replace(response.url);
+        } else {
+          alert(
+            "User is already a member. Please try once your membership is expired"
+          );
+        }
+      });
+    }
   });
+
   $("#plan").change(function (e) {
     e.preventDefault();
-
+    var text = $("#plan option:selected").text();
     var value = $("#plan option:selected").val();
+
+    // var text = $('#plan option:selected').text();
+
     if (value == "select-plan") {
-      console.log("Don't do anything");
-    } else {
-      console.log(
-        "Go to the server fetch the price and calculate the discount and final price"
-      );
+      alert("Please select the plan");
+    }
+
+    //AJAX Call to check if the discounted price if any
+    else {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/subscriptions/checkDiscount",
+        data: JSON.stringify({ subscriptionPlanId: value }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+      }).done(function (response) {
+        if (response.result) {
+          var discountPrice = 0.1 * parseInt(response.actualPrice);
+          var finalPrice = Math.round(response.actualPrice - discountPrice);
+          $("#actual-price").html(response.actualPrice);
+          $("#discount-price").html(discountPrice);
+          $("#final-price").html(finalPrice);
+        } else {
+          $("#actual-price").html(response.actualPrice);
+          $("#discount-price").html(0);
+          $("#final-price").html(response.actualPrice);
+        }
+      });
     }
   });
 
@@ -305,6 +355,11 @@
 
   //Forgot Password with Ajax
   $(document).ready(function () {
+    if (sessionStorage.getItem("visited") == null) {
+      sessionStorage.setItem("visited", 1);
+      alert("New user will get 10% discount on gym subscriptions");
+    }
+
     $("#forgotPasswordForm").validate({
       rules: {
         email: {

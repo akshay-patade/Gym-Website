@@ -17,6 +17,7 @@ router.route("/").get(async (req, res) => {
       UserFullname: req.session.other.UserFullname,
       profileimage: req.session.other.profileimage,
       loggedIn: true,
+      adminUsergroup: req.session.userdata.isadmin,
     });
     return;
   }
@@ -83,6 +84,8 @@ router
         req.session.userdata = {
           email: userPostData.email,
           user_id: ResultStatus.user_id,
+          group_id: ResultStatus.groupid,
+          isadmin: ResultStatus.role,
         };
 
         const Result = await users.getUserById(req.session.userdata.user_id);
@@ -97,7 +100,7 @@ router
     } catch (e) {
       if (e.message == "No User found!" || e == "Wrong Password! Try Again!") {
         res.status(e.code).render("login", {
-          error: e,
+          error: e.message,
           hasErrors: true,
           title: "Login",
           user_header: true,
@@ -299,6 +302,7 @@ router.route("/dashboard").get(async (req, res) => {
       loggedIn: true,
       UserFullname: req.session.other.UserFullname,
       profileimage: req.session.other.profileimage,
+      adminUsergroup: req.session.userdata.isadmin,
     });
   } else {
     res.redirect("/login");
@@ -320,6 +324,7 @@ router
           UserFullname: req.session.other.UserFullname,
           profileimage: req.session.other.profileimage,
           formdata: Result,
+          adminUsergroup: req.session.userdata.isadmin,
         });
       } catch (e) {
         res.status(e.code).render("Error", {
@@ -329,6 +334,7 @@ router
           user_header: true,
           user_footer: true,
           loggedIn: true,
+          adminUsergroup: req.session.userdata.isadmin,
         });
       }
     } else {
@@ -364,7 +370,8 @@ router
         title: "Error",
         user_header: true,
         user_footer: true,
-        NotloggedIn: true,
+        loggedIn: true,
+        adminUsergroup: req.session.userdata.isadmin,
       });
     }
 
@@ -420,6 +427,7 @@ router
           UserFullname: req.session.other.UserFullname,
           profileimage: req.session.other.profileimage,
           formdata: Result,
+          adminUsergroup: req.session.userdata.isadmin,
         });
         return;
       } else {
@@ -472,6 +480,7 @@ router
           loggedIn: true,
           UserFullname: req.session.other.UserFullname,
           profileimage: req.session.other.profileimage,
+          adminUsergroup: req.session.userdata.isadmin,
         });
         return;
       }
@@ -486,6 +495,7 @@ router
           loggedIn: true,
           UserFullname: req.session.other.UserFullname,
           profileimage: req.session.other.profileimage,
+          adminUsergroup: req.session.userdata.isadmin,
         });
       } else if (e.code === 500) {
         res.status(500).render("Error", {
@@ -495,6 +505,7 @@ router
           user_header: true,
           user_footer: true,
           NotloggedIn: true,
+          adminUsergroup: req.session.userdata.isadmin,
         });
       } else {
         res.status(e.code).render("Error", {
@@ -504,6 +515,7 @@ router
           user_header: true,
           user_footer: true,
           NotloggedIn: true,
+          adminUsergroup: req.session.userdata.isadmin,
         });
       }
       return;

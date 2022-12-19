@@ -51,7 +51,6 @@
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
-              <li class="scroll-to-section"><a href="/">About</a></li>
               <li class="scroll-to-section"><a href="/subscriptions">Buy Subscriptions</a></li>
               <li class="scroll-to-section"><a href="/products">Products</a></li>
               <li class="scroll-to-section"><a href="/blogs">Blogs</a></li>
@@ -86,15 +85,16 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-dumbbell"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">RockBottom</div>
-      </a>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <!-- <div class="sidebar-brand-icon rotate-n-15"> 
+      <i class="fas fa-dumbbell"></i>
+      </div>-->
+      <!-- <div class="sidebar-brand-text mx-3"> -->
+      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+          RockBottom</a></li>
+      <!-- </div> -->
+      <!-- Divider  -->
+      <!-- <hr class="sidebar-divider my-0"> -->
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
@@ -104,13 +104,33 @@
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <!--  <hr class="sidebar-divider"> -->
 
       {{!--
       <!-- Heading -->
       <div class="sidebar-heading">
         Interface
       </div> --}}
+      {{#if adminUsergroup}}
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-history"></i>
+          <span>Administrator</span>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
+            <a class="collapse-item" href="buttons.html">Product</a>
+            <a class="collapse-item" href="utilities-color.html">Blog</a>
+            <a class="collapse-item" href="utilities-color.html">Users</a>
+            <a class="collapse-item" href="utilities-color.html">Subscriptions</a>
+            {{!-- <a class="collapse-item" href="cards.html">Cards</a> --}}
+          </div>
+        </div>
+      </li>
+      {{/if}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -119,7 +139,7 @@
           <i class="fas fa-fw fa-history"></i>
           <span>My Orders</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
             <a class="collapse-item" href="buttons.html">Order History</a>
@@ -130,7 +150,7 @@
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <!-- <hr class="sidebar-divider my-0">  -->
 
       <!-- Nav Item - Buy Subscriptions -->
       <li class="nav-item">
@@ -139,7 +159,7 @@
           <span>Buy Subscriptions</span></a>
       </li>
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <!-- <hr class="sidebar-divider my-0">  -->
 
       <!-- Nav Item - Products -->
       <li class="nav-item">
@@ -148,7 +168,7 @@
           <span>Products</span></a>
       </li>
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <!--  <hr class="sidebar-divider my-0"> -->
 
       <!-- Nav Item - blogs -->
       <li class="nav-item">
@@ -157,7 +177,7 @@
           <span>Blogs</span></a>
       </li>
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <!--  <hr class="sidebar-divider my-0"> -->
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
@@ -174,16 +194,18 @@
 
 
       <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
       <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
+      {{!-- <div class="text-center d-none d-md-inline"> --}}
 
-
+        <li><button class="rounded-circle border-0" id="sidebarToggle"></button></li>
+        {{!--
+      </div> --}}
 
     </ul>
+
+
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -202,14 +224,15 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{UserFullname}}</span>
-                <img class="img-profile rounded-circle" src="/public/images/UserProfile/{{profileimage}}">
+                <img class="img-profile rounded-circle" src="/public/images/UserProfile/{{profileimage}}"
+                  alt="profile image">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

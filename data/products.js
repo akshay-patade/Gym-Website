@@ -303,23 +303,7 @@ const addDislikeProduct = async (commentId, productId, userId) => {
     });
 
     //Insert the dislike in the product
-    let insertedInfoDisLike = await productCollection.updateOne(
-      {
-        "comments._id": ObjectId(commentId)
-      }, {
-      "$push": {
-        "comments.$.dislikes": {
-          "_id": new ObjectId(),
-          "user_id": ObjectId(userId)
-        }
-      }
-    });
 
-    let status = {
-      like: false,
-      dislike: true
-    }
-    return status;
   }
 
   if (findDisLike) {
@@ -365,6 +349,32 @@ const addDislikeProduct = async (commentId, productId, userId) => {
 };
 
 
+const addComment = async (comment, productId, userId) => {
+
+  //Retriving product collections from the database
+  const productCollection = await product();
+
+  //Insert the like in the product collection
+  let insertedInfo = await productCollection.updateOne(
+    {
+      _id: ObjectId(productId)
+    }, {
+    "$push": {
+      "comments":
+      {
+        _id: new ObjectId(),
+        user_id: ObjectId(userId),
+        comment: comment,
+        status: true,
+        likes: [],
+        dislikes: []
+      }
+    }
+  });
+
+}
+
+
 
 module.exports = {
   createProduct,
@@ -373,5 +383,6 @@ module.exports = {
   updateProduct,
   getProductByName,
   addLikeProduct,
-  addDislikeProduct
+  addDislikeProduct,
+  addComment
 };
