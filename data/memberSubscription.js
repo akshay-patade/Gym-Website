@@ -65,6 +65,7 @@ const buyingMembership = async (memberId, userId, subscriptionPlanId) => {
     let amount = subscriptionObject.membership_amount;
     let discount = 0.1 * amount;
     let final_amount = amount - discount;
+    let end_date = moment().add(30, 'days').format("MM-DD-YYYY");
 
     let newMembership = {
         member_id: ObjectId(memberId),

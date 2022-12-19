@@ -3,8 +3,9 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const users = data.users;
-const members = data.members;
+const members = data.member;
 const subscriptions = data.subscriptions;
+const memberSubscriptions = data.memberSubscriptions;
 const xss = require("xss");
 const { member } = require("../config/mongoCollections");
 
@@ -95,8 +96,36 @@ router.route("/success").get(async (req, res) => {
 });
 
 router.route("/history").get(async (req, res) => {
-  res.status(200).render("subscriptions/subscriptionSuccess", {
-    title: "Congratulations",
+  if (req.session.userdata === null || req.session.userdata === undefined)
+    res.redirect("/login");
+
+  let Id = req.session.userdata.user_id;
+
+  //Get the userIds. IF there are no userIds in the member collection that means user has not purchased gym subscriptions
+  let userIds = await members.getMemberIdsWithUserid(Id);
+
+  if (userIds.length === 0)
+    return res.status(200).render("subscriptions/subscriptionsNotFound", {
+      title: "Not found",
+      dashHeader: true,
+      dashfooter: true,
+      loggedIn: true,
+      UserFullname: req.session.other.UserFullname,
+      profileimage: req.session.other.profileimage,
+      adminUsergroup: req.session.userdata.isadmin,
+    });
+
+  let result = await members.getMembershipInfo(userIds);
+
+  return res.status(200).render("subscriptions/subscriptionList", {
+    title: "Membership Info",
+    dashHeader: true,
+    dashfooter: true,
+    loggedIn: true,
+    UserFullname: req.session.other.UserFullname,
+    profileimage: req.session.other.profileimage,
+    result: result,
+    adminUsergroup: req.session.userdata.isadmin,
   });
 });
 
