@@ -17,12 +17,12 @@ email: admin@stevens.edu
 password: Admin@123
 
 User1
-email:apatade@stevens.edu
-password:Akshay@123
-
-User2
 email: smehta@stevens.edu
 password: Shuchi@123
+
+User2
+email:apatade@stevens.edu
+password:Akshay@123
 
 Then you can start the app by 'npm start'
 
