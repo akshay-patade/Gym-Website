@@ -10,8 +10,8 @@ const createProduct = async (
   description,
   price,
   category,
+   size,
   product_img,
-  size,
   color
 ) => {
   //Code to check all the parameters
