@@ -3,9 +3,9 @@ const router = express.Router();
 const path = require("path");
 const data = require("../data");
 const users = data.users;
-const members = data.members;
+const members = data.member;
 const subscriptions = data.subscriptions;
-const memberSubscriptions = data.memberSubscriptions;
+const memberSubscriptions = data.memberSubscriptions
 const xss = require("xss");
 const { member } = require("../config/mongoCollections");
 
