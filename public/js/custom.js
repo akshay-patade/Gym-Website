@@ -624,6 +624,33 @@
     },
   });
 
+  $("#AddProductForm").validate({
+    rules: {
+      name: {
+        required: true,
+      },
+      category: {
+        required: true,
+      },
+      price: {
+        required: true,
+      },
+      description: {
+        required: true,
+      },
+    },
+
+    messages: {
+      name: "Please Enter Title",
+      category: "Please Enter category",
+      price: "Please Enter Price",
+      description: "Please Enter Description",
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);
 

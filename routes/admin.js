@@ -8,6 +8,7 @@ const blog = data.blogs;
 const users = data.users;
 const order = data.order;
 const subscriptions = data.subscriptions;
+const product = data.products;
 
 router.route("/").get(async (req, res) => {
   //code here for GET
@@ -260,7 +261,164 @@ router
               dashHeader: true,
               dashfooter: true,
               loggedIn: true,
-              formdata: Result,
+              UserFullname: req.session.other.UserFullname,
+              profileimage: req.session.other.profileimage,
+              adminUsergroup: req.session.userdata.isadmin,
+            });
+          } else if (e.code === 500) {
+            res.status(500).render("Error", {
+              hasErrors: true,
+              error: "Internal Server Error",
+              title: "Error",
+              user_header: true,
+              user_footer: true,
+              NotloggedIn: true,
+              adminUsergroup: req.session.userdata.isadmin,
+            });
+          } else {
+            res.status(e.code).render("Error", {
+              hasErrors: true,
+              error: e.message,
+              title: "Error",
+              user_header: true,
+              user_footer: true,
+              NotloggedIn: true,
+              adminUsergroup: req.session.userdata.isadmin,
+            });
+          }
+          return;
+        }
+      } else {
+        res.redirect("/404");
+      }
+    } else {
+      res.redirect("/404");
+    }
+  });
+
+router
+  .route("/AddProduct")
+  .get(async (req, res) => {
+    if (req.session.userdata) {
+      if (req.session.userdata.isadmin == true) {
+        try {
+          // const Result = await product.getAllProducts();
+          //code here for GET
+          res.status(200).render("admin/AddProduct", {
+            title: "Add New Product",
+            dashHeader: true,
+            dashfooter: true,
+            loggedIn: true,
+            UserFullname: req.session.other.UserFullname,
+            profileimage: req.session.other.profileimage,
+            adminUsergroup: req.session.userdata.isadmin,
+          });
+        } catch (e) {
+          res.status(e.code).render("Error", {
+            hasErrors: true,
+            error: e.message,
+            title: "Error",
+            user_header: true,
+            user_footer: true,
+            loggedIn: true,
+            adminUsergroup: req.session.userdata.isadmin,
+          });
+        }
+      } else {
+        res.redirect("/404");
+      }
+    } else {
+      res.redirect("/404");
+    }
+    return;
+  })
+  .post(async (req, res) => {
+    if (req.session.userdata) {
+      if (req.session.userdata.isadmin == true) {
+        const PostData = {};
+        PostData.name = xss(req.body.name);
+        PostData.description = xss(req.body.description);
+        PostData.price = xss(req.body.price);
+        PostData.category = xss(req.body.category);
+        PostData.size = xss(req.body.size);
+        PostData.color = xss(req.body.color);
+        try {
+          PostData.name = helper.checkProductName(PostData.name);
+          PostData.description = helper.checkProductDescription(
+            PostData.description
+          );
+          PostData.price = helper.checkProductPrice(PostData.price);
+          PostData.category = helper.checkProductCategory(PostData.category);
+          console.log(__dirname);
+          if (req.files) {
+            let { image } = req.files;
+
+            image.name = Date.now() + image.name;
+
+            if (!image) throw { code: 400, message: "Please upload the image" };
+
+            image.mv(__dirname + "/../public/images/product/" + image.name);
+
+            if (image.name != "") {
+              PostData.product_img = image.name;
+            }
+          }
+        } catch (e) {
+          res.status(e.code).render("admin/AddProduct", {
+            error: e.message,
+            hasErrors: true,
+            title: "Add Product",
+            dashHeader: true,
+            dashfooter: true,
+            loggedIn: true,
+            UserFullname: req.session.other.UserFullname,
+            profileimage: req.session.other.profileimage,
+            adminUsergroup: req.session.userdata.isadmin,
+          });
+          return;
+        }
+        try {
+          const {
+            name,
+            description,
+            price,
+            category,
+            product_img,
+            size,
+            color,
+          } = PostData;
+
+          const InsertProduct = await product.createProduct(
+            name,
+            description,
+            price,
+            category,
+            product_img,
+            size,
+            color
+          );
+
+          if (InsertProduct) {
+            res.status(200).render("dashboard", {
+              title: "Dashboard",
+              dashHeader: true,
+              dashfooter: true,
+              loggedIn: true,
+              UserFullname: req.session.other.UserFullname,
+              profileimage: req.session.other.profileimage,
+              adminUsergroup: req.session.userdata.isadmin,
+            });
+            return;
+          }
+        } catch (e) {
+          if (e.code === 400) {
+            res.status(400).render("admin/AddProduct", {
+              hasErrors: true,
+              error: e.message,
+              title: "Add Product",
+              dashHeader: true,
+              dashfooter: true,
+              loggedIn: true,
               UserFullname: req.session.other.UserFullname,
               profileimage: req.session.other.profileimage,
               adminUsergroup: req.session.userdata.isadmin,
