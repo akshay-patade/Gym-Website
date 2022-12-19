@@ -349,7 +349,7 @@ router
           );
           PostData.price = helper.checkProductPrice(PostData.price);
           PostData.category = helper.checkProductCategory(PostData.category);
-          console.log(__dirname);
+          // console.log(__dirname);
           if (req.files) {
             let { image } = req.files;
 
@@ -383,8 +383,8 @@ router
             description,
             price,
             category,
-            product_img,
             size,
+            product_img,
             color,
           } = PostData;
 
@@ -393,8 +393,8 @@ router
             description,
             price,
             category,
-            product_img,
             size,
+            product_img,
             color
           );
 
