@@ -1,62 +1,48 @@
 (function ($) {
   "use strict";
 
-
-
   $(function () {
     $("#tabs").tabs();
   });
 
   $("#buysubscription").click(function () {
-
-    var text = $('#plan option:selected').text();
-    var value = $('#plan option:selected').val();
+    var text = $("#plan option:selected").text();
+    var value = $("#plan option:selected").val();
 
     if (value == "select-plan") {
       alert("Please select the plan");
-    }
-
-    else {
-
+    } else {
       var actualPrice = parseInt($("#actual-price").html());
       var discountPrice = parseInt($("#discount-price").html());
       var finalPrice = parseInt($("#final-price").html());
 
       $.ajax({
-
         type: "POST",
         url: "http://localhost:3000/subscriptions/buyMembership",
         data: JSON.stringify({
           subscriptionPlanId: value,
           amount: actualPrice,
           discount: discountPrice,
-          final_amount: finalPrice
+          final_amount: finalPrice,
         }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-
       }).done(function (response) {
-
         if (response.result) {
           window.location.replace(response.url);
-        }
-
-        else {
-          alert("User is already a member. Please try once your membership is expired");
+        } else {
+          alert(
+            "User is already a member. Please try once your membership is expired"
+          );
         }
       });
-
-
     }
   });
 
-
   $("#plan").change(function (e) {
-
     e.preventDefault();
-    var text = $('#plan option:selected').text();
-    var value = $('#plan option:selected').val();
-
+    var text = $("#plan option:selected").text();
+    var value = $("#plan option:selected").val();
 
     // var text = $('#plan option:selected').text();
 
@@ -67,24 +53,19 @@
     //AJAX Call to check if the discounted price if any
     else {
       $.ajax({
-
         type: "POST",
         url: "http://localhost:3000/subscriptions/checkDiscount",
         data: JSON.stringify({ subscriptionPlanId: value }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-
       }).done(function (response) {
-
         if (response.result) {
-
           var discountPrice = 0.1 * parseInt(response.actualPrice);
           var finalPrice = Math.round(response.actualPrice - discountPrice);
           $("#actual-price").html(response.actualPrice);
           $("#discount-price").html(discountPrice);
           $("#final-price").html(finalPrice);
-        }
-        else {
+        } else {
           $("#actual-price").html(response.actualPrice);
           $("#discount-price").html(0);
           $("#final-price").html(response.actualPrice);
@@ -374,7 +355,6 @@
 
   //Forgot Password with Ajax
   $(document).ready(function () {
-
     if (sessionStorage.getItem("visited") == null) {
       sessionStorage.setItem("visited", 1);
       alert("New user will get 10% discount on gym subscriptions");
@@ -526,9 +506,7 @@
         regex: "Please Enter valid Cell Number",
       },
     },
-
     submitHandler: function (form) {
-      console.log(AgeMustBe12($("#dob").val()));
       if (AgeMustBe12($("#dob").val()) === true) {
         form.submit();
       } else {
@@ -539,7 +517,43 @@
     },
   });
 
-  // $(document).ready(function () {
+  //AddToCart
+  // $("#AddToCartForm #size").error(function () {
+  //   // $("img").replaceWith("<p>Error loading image!</p>");
+  //   alert("Please Select Size");
+  // });
+
+  $("#AddToCartForm").validate({
+    rules: {
+      size: {
+        required: true,
+      },
+      quantity: {
+        required: true,
+      },
+    },
+
+    messages: {
+      size: "Please Select one size",
+      quantity: "Please Select quantity",
+    },
+    errorPlacement: function (error, element) {
+      // if(element)
+      var placement = $(element).data("error");
+      // console.log(placement);
+      if (placement) {
+        $(placement).append(error);
+      } else {
+        if (element.attr("name") == "size") {
+          alert("Please Select one size");
+        }
+      }
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
+
   $("#CartTable .close").on("click", function () {
     // console.log(this.id);
     let cart_id = this.id.toString();
@@ -558,7 +572,6 @@
       }
     });
   });
-  // });
 
   $(document).ready(function () {
     // $(document).on("scroll", onScroll);

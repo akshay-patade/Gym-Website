@@ -111,6 +111,26 @@
       <div class="sidebar-heading">
         Interface
       </div> --}}
+      {{#if adminUsergroup}}
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-history"></i>
+          <span>Administrator</span>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
+            <a class="collapse-item" href="buttons.html">Product</a>
+            <a class="collapse-item" href="utilities-color.html">Blog</a>
+            <a class="collapse-item" href="utilities-color.html">Users</a>
+            <a class="collapse-item" href="utilities-color.html">Subscriptions</a>
+            {{!-- <a class="collapse-item" href="cards.html">Cards</a> --}}
+          </div>
+        </div>
+      </li>
+      {{/if}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
