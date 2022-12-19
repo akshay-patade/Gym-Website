@@ -6,6 +6,9 @@ Group Members: Akshay Pradeep Patade, Shuchi Paragbhai Mehta, Jeel Sanjaybhai Sa
 This is a simple application written in Node.js and using MongoDB that allows the users to buy gym subscription and products.
 
 Getting started with Node app
+
+You need to clone the repository which is present in the main branch.
+
 Before running the app you will need to the seed file by running npm run seed command. This command will create 1 admin
 and 2 users. The credentials are mentioned below:
 
