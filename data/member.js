@@ -1,7 +1,11 @@
 const mongoCollections = require("../config/mongoCollections");
 const member = mongoCollections.member;
+const membershipDetail = mongoCollections.membership_detail;
+const subscriptionPlan = mongoCollections.subscription_plan;
 const { ObjectId } = require("mongodb");
 const helper = require("../helpers");
+
+const subscription = require("./subscriptionsPlans");
 
 
 const createMember = async (userId) => {
@@ -68,10 +72,56 @@ const removeMemberById = async (id) => {
         };
 }
 
+//Get Membership Ids for particular User ID
+const getMemberIdsWithUserid = async (id) => {
+
+
+    const memberCollection = await member();
+
+
+    const result = await memberCollection.find({
+        user_id: ObjectId(id),
+    }).toArray();
+
+    return result;
+}
+
+const getMembershipInfo = async (arr) => {
+
+    const membershipDetailCollection = await membershipDetail();
+    const subscriptionPlanCollection = await subscriptionPlan();
+
+    let result = [];
+
+    for (let i = 0; i < arr.length; i++) {
+
+        let temp = await membershipDetailCollection.findOne({
+            member_id: ObjectId(arr[i]._id)
+        });
+        let subscriptionId = temp.subscription_id.toString();
+        let temp1 = await subscription.getSubscriptionPlanById(subscriptionId);
+
+        let obj = {}
+
+        obj.name = temp1.name;
+        obj.date = temp.date;
+        obj.end_date = temp.end_date;
+        obj.amount = temp.amount;
+        obj.discount = temp.discount;
+        obj.final_amount = temp.final_amount;
+
+        result.push(obj);
+    }
+
+    return result;
+}
+
 
 module.exports = {
     createMember,
     getMemberById,
-    removeMemberById
+    removeMemberById,
+    getMemberIdsWithUserid,
+    getMembershipInfo
 }
 

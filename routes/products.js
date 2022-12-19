@@ -131,6 +131,7 @@ router.route("/:id").get(async (req, res) => {
 
     try {
 
+
         let id = xss(req.params.id);
         //Getting the product by Particular Id
         let getProductById = await product.getProductById(id);
