@@ -51,7 +51,7 @@ const main = async () => {
 
 
 
-  //***************************** Popultating Proudcts *********************************************/
+  //***************************** Popultating Products *********************************************/
   //Creating a hoddie product
 
   const hoodies = await product.createProduct(
@@ -121,6 +121,14 @@ const main = async () => {
   );
 
   //***************************** Popultating Proudcts End *********************************************/
+
+
+  //*****************************Add comments Start *************************************************************/
+
+  await product.addComment("Awesome Product will recommend to my friends", hoodies._id, user1._id);
+
+
+  //*****************************Add comments END  *************************************************************/
 
 
   // ****************************** Populating Blogs ***************************************************/
@@ -253,6 +261,7 @@ const main = async () => {
   const muscle_blog_3 = await blogs.createBlog("6369ccc4f932b955cbb794e6", "MUSCLE BUILDING MYTHS", muscle_growth_category._id, muscle_content_3)
 
   // ****************************** Populating Blogs End ***************************************************/
+
 
   console.log("Done seeding database");
   await dbConnection.closeConnection();

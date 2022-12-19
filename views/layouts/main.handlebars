@@ -86,19 +86,16 @@
 
       <!-- Sidebar - Brand -->
 
-      <!-- <div class="sidebar-brand-icon rotate-n-15"> 
-      <i class="fas fa-dumbbell"></i>
-      </div>-->
       <!-- <div class="sidebar-brand-text mx-3"> -->
       <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
           RockBottom</a></li>
       <!-- </div> -->
       <!-- Divider  -->
-      <!-- <hr class="sidebar-divider my-0"> -->
+
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="dashboard">
+        <a class="nav-link" href="/dashboard">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -111,6 +108,24 @@
       <div class="sidebar-heading">
         Interface
       </div> --}}
+      {{#if adminUsergroup}}
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-history"></i>
+          <span>Administrator</span>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
+            <a class="collapse-item" href="/admin/AddProduct">Product</a>
+            <a class="collapse-item" href="/admin/AddBlog">Blog</a>
+            <a class="collapse-item" href="/admin/AddSubscription">Subscriptions</a>
+          </div>
+        </div>
+      </li>
+      {{/if}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -121,10 +136,9 @@
         </a>
         <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            {{!-- <h6 class="collapse-header">Custom Components:</h6> --}}
+
             <a class="collapse-item" href="buttons.html">Order History</a>
-            <a class="collapse-item" href="utilities-color.html">Subscription History</a>
-            {{!-- <a class="collapse-item" href="cards.html">Cards</a> --}}
+            <a class="collapse-item" href="/subscriptions/history">Subscription History</a>
           </div>
         </div>
       </li>
@@ -134,7 +148,7 @@
 
       <!-- Nav Item - Buy Subscriptions -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard">
+        <a class="nav-link" href="/subscriptions">
           <i class="fas fa-fw fa-tags"></i>
           <span>Buy Subscriptions</span></a>
       </li>
@@ -143,7 +157,7 @@
 
       <!-- Nav Item - Products -->
       <li class="nav-item">
-        <a class="nav-link" href="products">
+        <a class="nav-link" href="/products">
           <i class="fas fa-fw fa-shopping-bag"></i>
           <span>Products</span></a>
       </li>
@@ -152,7 +166,7 @@
 
       <!-- Nav Item - blogs -->
       <li class="nav-item">
-        <a class="nav-link" href="blogs">
+        <a class="nav-link" href="/blogs">
           <i class="fas fa-fw fa-th"></i>
           <span>Blogs</span></a>
       </li>
